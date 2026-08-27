@@ -4,18 +4,28 @@ import Hero from './sections/Hero';
 import DataStory from './sections/DataStory';
 import Demands from './sections/Demands';
 import Timeline from './sections/Timeline';
+import SignBoard from './sections/SignBoard';
+import Endorsements from './sections/Endorsements';
+import PetitionForm from './sections/PetitionForm';
+import About from './sections/About';
+import Footer from './sections/Footer';
 import { useSheetData } from './hooks/useSheetData';
-import { fetchCandidates } from './data/sheets';
+import { fetchCandidates, fetchEndorsingOrgs } from './data/sheets';
 import { fetchPetitionStats, type PetitionStats } from './data/petition';
 
 export default function App() {
   const candidates = useSheetData(fetchCandidates);
+  const endorsingOrgs = useSheetData(fetchEndorsingOrgs);
   const [petitionStats, setPetitionStats] = useState<PetitionStats | null>(null);
+  const [statsFailed, setStatsFailed] = useState(false);
 
   const loadStats = useCallback(() => {
     fetchPetitionStats()
-      .then(setPetitionStats)
-      .catch(() => setPetitionStats(null));
+      .then((stats) => {
+        setPetitionStats(stats);
+        setStatsFailed(false);
+      })
+      .catch(() => setStatsFailed(true));
   }, []);
 
   useEffect(() => {
@@ -35,7 +45,17 @@ export default function App() {
         <DataStory />
         <Demands />
         <Timeline />
+        <SignBoard state={candidates.state} candidates={candidates.data} onRetry={candidates.retry} />
+        <Endorsements
+          orgsState={endorsingOrgs.state}
+          orgs={endorsingOrgs.data}
+          stats={petitionStats}
+          statsFailed={statsFailed}
+        />
+        <PetitionForm onSigned={loadStats} />
+        <About />
       </main>
+      <Footer />
     </>
   );
 }
