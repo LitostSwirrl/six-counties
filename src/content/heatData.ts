@@ -15,6 +15,32 @@ export const INJURY_PERIOD = '2026 年 8 月 1 日至 8 月 16 日';
 export const HEAT_NOTE = '年高溫 36°C 天數計算是取平地（海拔低於 500 公尺）區域平均';
 export const HEAT_SOURCE = '資料來源：全台縣市高溫風險數據整理（發起團體彙整）';
 
+export type HazardKey = 'heat' | 'flood' | 'rain' | 'drought' | 'sea' | 'slope' | 'wind';
+
+export interface Hazard {
+  key: HazardKey;
+  label: string;
+}
+
+export const HAZARDS: Hazard[] = [
+  { key: 'heat', label: '高溫' },
+  { key: 'flood', label: '淹水・水災' },
+  { key: 'rain', label: '強降雨' },
+  { key: 'drought', label: '乾旱' },
+  { key: 'sea', label: '海平面上升' },
+  { key: 'slope', label: '坡地・土砂' },
+  { key: 'wind', label: '強風' },
+];
+
+export const SIX_HAZARDS: { city: string; hazards: HazardKey[] }[] = [
+  { city: '臺北市', hazards: ['heat', 'rain', 'drought'] },
+  { city: '新北市', hazards: ['heat', 'flood', 'slope'] },
+  { city: '桃園市', hazards: ['heat', 'wind', 'rain', 'drought'] },
+  { city: '臺中市', hazards: ['heat', 'rain', 'drought', 'sea', 'wind'] },
+  { city: '臺南市', hazards: ['heat', 'flood', 'drought', 'slope'] },
+  { city: '高雄市', hazards: ['heat', 'rain', 'sea', 'drought'] },
+];
+
 export const COUNTY_HEAT: CountyHeat[] = [
   { city: '高雄市', six: true, delta: [7.2, 16, 43.3, 78.5], elderlyPct: 21.27, injuries: 16, riskListed: '是（有風險理論分析及分級）', otherRisks: '強降雨、海平面上升、乾旱' },
   { city: '臺北市', six: true, delta: [7.5, 15.3, 34.1, 57.5], elderlyPct: 24.67, injuries: 33, riskListed: '是（有脆弱度分析與行動方案）', otherRisks: '強降雨、乾旱' },

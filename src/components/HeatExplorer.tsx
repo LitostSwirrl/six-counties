@@ -182,19 +182,6 @@ export default function HeatExplorer() {
           values={SIX.map((c) => ({ city: c.city, value: c.injuries ?? 0 }))}
         />
       </div>
-      <div className="mt-6 rounded-3xl border border-ink/10 bg-white/80 p-5 md:p-8">
-        <p className="font-display text-lg text-ink">六都的氣候調適計畫，怎麼看待高溫？</p>
-        <p className="mt-1 text-sm text-ink/55">整理自各縣市氣候變遷調適執行方案</p>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {SIX.map((c) => (
-            <div key={c.city} className="rounded-xl bg-cream/70 p-4">
-              <p className="font-display text-base text-ink">{c.city}</p>
-              <p className="mt-1.5 text-sm leading-6 text-ink/75">高溫列為主要風險：{c.riskListed}</p>
-              <p className="mt-1 text-sm leading-6 text-ink/60">其他主要風險：{c.otherRisks}</p>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }

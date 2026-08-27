@@ -3,6 +3,7 @@ import { SITE } from '../content/site';
 import CountUp from '../components/CountUp';
 import Skyline from '../components/Skyline';
 import HeatExplorer from '../components/HeatExplorer';
+import RiskMatrix from '../components/RiskMatrix';
 
 export default function DataStory() {
   return (
@@ -27,6 +28,7 @@ export default function DataStory() {
       <div data-motif="power" className="skyline-stage mt-14 w-full">
         <Skyline className="block w-full" />
       </div>
+      <RiskMatrix />
       <HeatExplorer />
     </section>
   );
