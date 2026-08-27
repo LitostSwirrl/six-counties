@@ -56,7 +56,7 @@ export default function PetitionForm({ onSigned }: PetitionFormProps) {
           {SITE.sections.join.title}
         </h2>
         <p className="mt-4 text-center text-[15px] leading-7 text-ink/75">
-          你的連署會和上萬名市民的聲音一起，送到六都每一位市長候選人面前。留下資訊，一起要求候選人公開承諾。
+          連署名單會在十月的記者會上，連同候選人簽署結果一起公開。留下你的名字，一起要求候選人公開承諾。
         </p>
         {APPS_SCRIPT_URL === '' ? (
           <p className="mx-auto mt-5 w-fit rounded-full bg-sky-pale/60 px-4 py-1.5 text-sm text-ink/75">

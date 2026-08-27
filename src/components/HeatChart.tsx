@@ -21,7 +21,7 @@ export default function HeatChart() {
   return (
     <figure className="mx-auto w-full max-w-2xl">
       <figcaption className="text-center">
-        <p className="font-display text-xl text-ink">高溫天氣不是未來式：六都一年會多幾天 36 度以上高溫？</p>
+        <p className="font-display text-xl text-ink">暖化情境下，六都一年會多出幾天 36 度以上的高溫？</p>
         <div className="mt-3 flex flex-wrap items-center justify-center gap-4 text-xs text-ink/70">
           {SCENARIOS.map((s, i) => (
             <span key={s} className="flex items-center gap-1.5">

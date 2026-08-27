@@ -8,7 +8,7 @@ export default function About() {
         {SITE.sections.about.title}
       </h2>
       <p className="mx-auto mt-4 max-w-2xl text-center text-[15px] leading-7 text-ink/75">
-        這場行動由九個長期關注能源、環境、交通與居住議題的公民團體共同發起。我們各自在不同領域累積多年經驗，這次為了同一件事走在一起：讓永續與韌性成為六都市政的核心承諾。
+        這場行動由九個公民團體共同發起，成員長期分別耕耘能源、氣候、防災、河川、交通與障礙者權益等領域，這次共同要求六都市長候選人把永續與韌性納入市政承諾。
       </p>
       <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {ORGS.map((org) => (

@@ -84,7 +84,7 @@ export default function DataStory() {
         {SITE.sections.whySix.title}
       </h2>
       <p className="mx-auto mt-4 max-w-2xl px-6 text-center text-[15px] leading-7 text-ink/75">
-        六都不只是人最多的地方，也是台灣能不能撐過極端氣候、走完能源轉型的關鍵戰場。三個數字，說明市長的決定有多重要。
+        台灣近七成的人口、六成五的用電、七成以上的碳排，都集中在六都。這三個數字，決定了下一任市長的責任有多大。
       </p>
       {pinned ? (
         <div className="relative mt-8 h-[300vh]">
