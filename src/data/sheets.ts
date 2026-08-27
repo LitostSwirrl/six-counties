@@ -1,0 +1,79 @@
+import { SHEET_ID, gvizUrl } from './config';
+import { parseGviz } from './gviz';
+import { DEMO_CANDIDATES, DEMO_ENDORSING_ORGS } from './demo';
+import type { Candidate, EndorsingOrg, SignStatus } from './types';
+
+const CHECK_START = 4;
+const CHECK_END = 22;
+const DEMO_DELAY_MS = 300;
+
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function cell(row: string[], index: number): string {
+  return (row[index] ?? '').trim();
+}
+
+export function parseStatus(raw: string): SignStatus {
+  if (raw === '已簽署') return 'signed';
+  if (raw === '部分簽署') return 'partial';
+  if (raw === '已拜會') return 'met';
+  return 'none';
+}
+
+export function parseCheck(raw: string): boolean {
+  const value = raw.trim().toUpperCase();
+  return value === '1' || value === 'TRUE' || value === '是';
+}
+
+export function mapCandidateRow(row: string[]): Candidate {
+  const checks: boolean[] = [];
+  for (let i = CHECK_START; i < CHECK_END; i += 1) {
+    checks.push(parseCheck(cell(row, i)));
+  }
+  return {
+    city: cell(row, 0),
+    name: cell(row, 1),
+    party: cell(row, 2),
+    status: parseStatus(cell(row, 3)),
+    checks,
+    signedDate: cell(row, 22),
+    photoUrl: cell(row, 23),
+    isDemo: false,
+  };
+}
+
+export function mapCandidateRows(rows: string[][]): Candidate[] {
+  const body = rows.length > 0 && cell(rows[0], 0) === '縣市' ? rows.slice(1) : rows;
+  return body.map(mapCandidateRow).filter((c) => c.name !== '');
+}
+
+export function mapOrgRows(rows: string[][]): EndorsingOrg[] {
+  const body = rows.length > 0 && cell(rows[0], 0) === '名稱' ? rows.slice(1) : rows;
+  return body
+    .map((row) => ({ name: cell(row, 0), url: cell(row, 1), logoUrl: cell(row, 2) }))
+    .filter((org) => org.name !== '');
+}
+
+async function fetchSheet(sheetName: string): Promise<string[][]> {
+  const res = await fetch(gvizUrl(sheetName));
+  if (!res.ok) throw new Error(`讀取「${sheetName}」失敗（HTTP ${res.status}）`);
+  return parseGviz(await res.text());
+}
+
+export async function fetchCandidates(): Promise<Candidate[]> {
+  if (SHEET_ID === '') {
+    await delay(DEMO_DELAY_MS);
+    return DEMO_CANDIDATES;
+  }
+  return mapCandidateRows(await fetchSheet('候選人簽署'));
+}
+
+export async function fetchEndorsingOrgs(): Promise<EndorsingOrg[]> {
+  if (SHEET_ID === '') {
+    await delay(DEMO_DELAY_MS);
+    return DEMO_ENDORSING_ORGS;
+  }
+  return mapOrgRows(await fetchSheet('團體連署'));
+}

@@ -1,1 +1,1 @@
-{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts"],"version":"5.9.3"}
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/content/content.test.ts","./src/content/demands.ts","./src/content/orgs.ts","./src/content/site.ts","./src/content/stats.ts","./src/content/timeline.ts","./src/data/config.ts","./src/data/demo.ts","./src/data/gviz.test.ts","./src/data/gviz.ts","./src/data/petition.test.ts","./src/data/petition.ts","./src/data/sheets.test.ts","./src/data/sheets.ts","./src/data/types.ts","./src/hooks/usesheetdata.ts"],"version":"5.9.3"}
