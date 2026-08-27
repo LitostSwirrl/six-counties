@@ -44,11 +44,7 @@ export default function Timeline() {
               <div className="pb-10 md:px-2 md:pt-4 md:pb-0 md:text-center">
                 <p className={`font-display text-lg ${isCurrent ? 'text-purple-deep' : 'text-ink'}`}>{node.date}</p>
                 <p className="mt-1 text-sm leading-6 text-ink/75">{node.label}</p>
-                {isCurrent ? (
-                  <p className="mt-2 inline-block rounded-full bg-purple-deep/10 px-3 py-0.5 text-xs font-bold text-purple-deep">
-                    進行中
-                  </p>
-                ) : null}
+                {isCurrent ? <p className="tag-box mt-2 text-xs text-purple-deep">進行中</p> : null}
               </div>
             </li>
           );

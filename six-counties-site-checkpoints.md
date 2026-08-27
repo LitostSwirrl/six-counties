@@ -11,6 +11,32 @@
 - **Phase 2 -- 視覺段落（plan Tasks 5-8）**：完成（2026-08-27）
 - **Phase 3 -- 互動段落與組裝（plan Tasks 9-11）**：完成（2026-08-27）
 - **Phase 4 -- 稽核與部署（plan Task 12）**：完成（2026-08-27）。上線 https://litostswirrl.github.io/six-counties/ ；剩餘人工待辦見 progress.md「Next／待辦」
+- **Phase 5 -- 修訂第一輪（Joseph 七項）**：進行中（2026-08-27），resume prompt 見下方
+
+## Phase 5 Resume Prompt
+
+（2026-08-27 產生，Joseph 回覆七項修訂後）
+
+```
+繼續 Phase 5：六都倡議網站修訂第一輪
+Working directory: /Users/jinsoon/Docs/Projects/gcaa/six_counties
+
+狀態：Phase 1-4 完成，網站已上線 https://litostswirrl.github.io/six-counties/ （GitHub repo LitostSwirrl/six-counties，push main 自動部署）。spec 在 docs/superpowers/specs/2026-08-27-six-counties-site-design.md，決策紀錄在 progress.md。
+
+開始前讀序：CLAUDE.md -> progress.md -> six-counties-site-checkpoints.md -> src/ 相關檔案
+
+目標（Joseph 2026-08-27 七項修訂）：
+1. top nav 標題更大更顯眼，不要「永續韌性城市」
+2. 六都關鍵三個數字同一畫面呈現，移除逐一 emerge 的 pinned 滾動
+3. SVG 線稿（天際線、pillar icons）太簡略，重畫更複雜精緻版（選擇手繪不用 CC 圖庫，色板可控）
+4. 全站字級調大，尤其 15px 內文
+5. scrollspy：捲動時 nav 對應項目 highlight
+6. 去除小標籤 pill 設計（如時程「進行中」）；資訊性標籤改主視覺的方框語言，按鈕可留圓角
+7. 深化六都數據段：真實可查證資料（來源 URL 必附），互動式視覺化；方向＝五大訴求面向各配六都比較指標＋三個總量占比。高溫試算表 1uUUZHqTtvYOS2vgG-sg3GZ-w5UuAQrwPAAYn09zkhc8 另有熱傷害、推估天數分頁可用
+
+慣例：見 checkpoints Cross-cutting contracts；doc 原文逐字照搬、生成文案過 humanizer-zh-tw；dataviz skill 規則（sequential ramp、validator）
+完成後：progress.md append What/Why/Next＋更新 checkpoints 狀態；視窗 30%+ 才產下一個 resume prompt
+```
 
 ## Cross-cutting contracts（每個 session 共用）
 

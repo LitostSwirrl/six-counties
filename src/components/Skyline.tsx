@@ -3,51 +3,20 @@ interface SkylineProps {
   animateIn?: boolean;
 }
 
-interface BuildingSpec {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  fill: string;
-  windows?: { cols: number; rows: number };
-  antenna?: boolean;
-}
+const INK = 'var(--color-ink)';
+const GREEN = 'var(--color-green)';
+const GREEN_PALE = 'var(--color-green-pale)';
+const TEAL = 'var(--color-teal)';
+const SKY = 'var(--color-sky)';
+const SKY_PALE = 'var(--color-sky-pale)';
+const CREAM = 'var(--color-cream)';
+const WINDOW_LIT = '#FFE9A3';
 
-const BACK: BuildingSpec[] = [
-  { x: 60, y: 140, w: 90, h: 110, fill: 'var(--color-sky-pale)' },
-  { x: 300, y: 160, w: 70, h: 90, fill: 'var(--color-green-pale)' },
-  { x: 520, y: 120, w: 100, h: 130, fill: 'var(--color-sky-pale)' },
-  { x: 780, y: 150, w: 80, h: 100, fill: 'var(--color-green-pale)' },
-  { x: 1020, y: 130, w: 90, h: 120, fill: 'var(--color-sky-pale)' },
-  { x: 1280, y: 155, w: 70, h: 95, fill: 'var(--color-green-pale)' },
-];
-
-const MID: BuildingSpec[] = [
-  { x: 140, y: 120, w: 80, h: 130, fill: 'var(--color-teal)', windows: { cols: 3, rows: 4 } },
-  { x: 420, y: 100, w: 70, h: 150, fill: 'var(--color-sky)', windows: { cols: 2, rows: 5 }, antenna: true },
-  { x: 680, y: 130, w: 90, h: 120, fill: 'var(--color-teal)', windows: { cols: 3, rows: 3 } },
-  { x: 940, y: 95, w: 75, h: 155, fill: 'var(--color-sky)', windows: { cols: 2, rows: 5 } },
-  { x: 1180, y: 125, w: 85, h: 125, fill: 'var(--color-teal)', windows: { cols: 3, rows: 4 }, antenna: true },
-];
-
-const FRONT: BuildingSpec[] = [
-  { x: 20, y: 160, w: 100, h: 90, fill: 'var(--color-green)', windows: { cols: 3, rows: 2 } },
-  { x: 240, y: 140, w: 90, h: 110, fill: 'var(--color-green-pale)', windows: { cols: 3, rows: 3 } },
-  { x: 560, y: 150, w: 110, h: 100, fill: 'var(--color-green)', windows: { cols: 4, rows: 2 } },
-  { x: 820, y: 145, w: 95, h: 105, fill: 'var(--color-green-pale)', windows: { cols: 3, rows: 3 } },
-  { x: 1080, y: 155, w: 100, h: 95, fill: 'var(--color-green)', windows: { cols: 3, rows: 2 }, antenna: true },
-  { x: 1320, y: 140, w: 100, h: 110, fill: 'var(--color-green-pale)', windows: { cols: 3, rows: 3 } },
-];
-
-const TREES = [370, 730, 1250];
-
-function Windows({ b }: { b: BuildingSpec }) {
-  if (!b.windows) return null;
-  const { cols, rows } = b.windows;
-  const cellW = 10;
-  const cellH = 12;
-  const gapX = (b.w - cols * cellW) / (cols + 1);
-  const gapY = (b.h - rows * cellH) / (rows + 1);
+function WindowGrid({ x, y, w, h, cols, rows, lit = false }: { x: number; y: number; w: number; h: number; cols: number; rows: number; lit?: boolean }) {
+  const cellW = 8;
+  const cellH = 10;
+  const gapX = (w - cols * cellW) / (cols + 1);
+  const gapY = (h - rows * cellH) / (rows + 1);
   const cells = [];
   for (let r = 0; r < rows; r += 1) {
     for (let c = 0; c < cols; c += 1) {
@@ -55,13 +24,13 @@ function Windows({ b }: { b: BuildingSpec }) {
         <rect
           key={`${r}-${c}`}
           className="skyline-window"
-          x={b.x + gapX + c * (cellW + gapX)}
-          y={b.y + gapY + r * (cellH + gapY)}
+          x={x + gapX + c * (cellW + gapX)}
+          y={y + gapY + r * (cellH + gapY)}
           width={cellW}
           height={cellH}
-          rx={2}
-          fill="var(--color-cream)"
-          opacity={0.85}
+          rx={1.5}
+          fill={lit && (r + c) % 3 === 0 ? WINDOW_LIT : CREAM}
+          opacity={0.9}
         />
       );
     }
@@ -69,50 +38,212 @@ function Windows({ b }: { b: BuildingSpec }) {
   return <g>{cells}</g>;
 }
 
-function Building({ b, stroke }: { b: BuildingSpec; stroke: number }) {
+function WaterTank({ x, y }: { x: number; y: number }) {
+  return (
+    <g>
+      <line x1={x - 5} y1={y + 12} x2={x - 5} y2={y + 2} stroke={INK} strokeWidth={1.2} />
+      <line x1={x + 5} y1={y + 12} x2={x + 5} y2={y + 2} stroke={INK} strokeWidth={1.2} />
+      <ellipse cx={x} cy={y} rx={9} ry={7} fill={SKY_PALE} stroke={INK} strokeWidth={1.2} />
+      <ellipse cx={x} cy={y - 5} rx={9} ry={2.5} fill={CREAM} stroke={INK} strokeWidth={1} />
+    </g>
+  );
+}
+
+function AcUnit({ x, y }: { x: number; y: number }) {
+  return (
+    <g>
+      <rect x={x} y={y} width={10} height={7} rx={1} fill={CREAM} stroke={INK} strokeWidth={1} />
+      <circle cx={x + 5} cy={y + 3.5} r={2} fill="none" stroke={INK} strokeWidth={0.8} />
+    </g>
+  );
+}
+
+function Tree({ cx, kind = 'round' }: { cx: number; kind?: 'round' | 'pine' }) {
+  if (kind === 'pine') {
+    return (
+      <g className="skyline-building">
+        <line x1={cx} y1={290} x2={cx} y2={262} stroke={INK} strokeWidth={2} />
+        <path d={`M${cx} 232 L${cx + 13} 254 H${cx - 13} Z`} fill={GREEN} stroke={INK} strokeWidth={1.3} />
+        <path d={`M${cx} 244 L${cx + 16} 268 H${cx - 16} Z`} fill={GREEN} stroke={INK} strokeWidth={1.3} />
+      </g>
+    );
+  }
   return (
     <g className="skyline-building">
-      <rect
-        x={b.x}
-        y={b.y}
-        width={b.w}
-        height={b.h}
-        rx={6}
-        fill={b.fill}
-        stroke="var(--color-ink)"
-        strokeWidth={stroke}
+      <line x1={cx} y1={290} x2={cx} y2={260} stroke={INK} strokeWidth={2} />
+      <circle cx={cx - 8} cy={252} r={10} fill={GREEN} stroke={INK} strokeWidth={1.3} />
+      <circle cx={cx + 8} cy={254} r={9} fill={GREEN} stroke={INK} strokeWidth={1.3} />
+      <circle cx={cx} cy={244} r={11} fill={GREEN} stroke={INK} strokeWidth={1.3} />
+    </g>
+  );
+}
+
+function Cloud({ cx, cy, scale = 1 }: { cx: number; cy: number; scale?: number }) {
+  return (
+    <g className="skyline-cloud" fill="#ffffff" stroke={INK} strokeWidth={1} opacity={0.85} transform={`translate(${cx} ${cy}) scale(${scale})`}>
+      <path d="M-34 8 Q-34 -6 -20 -6 Q-16 -18 -2 -16 Q10 -22 18 -12 Q32 -12 32 0 Q38 8 28 8 Z" />
+    </g>
+  );
+}
+
+function Taipei101({ x }: { x: number }) {
+  const segs = [];
+  for (let i = 0; i < 7; i += 1) {
+    const top = 96 + i * 22;
+    segs.push(
+      <path
+        key={i}
+        d={`M${x - 20} ${top + 4} L${x + 20} ${top + 4} L${x + 15} ${top + 22} L${x - 15} ${top + 22} Z`}
+        fill={GREEN_PALE}
+        stroke={INK}
+        strokeWidth={1.2}
       />
-      {b.antenna ? (
-        <line
-          x1={b.x + b.w / 2}
-          y1={b.y}
-          x2={b.x + b.w / 2}
-          y2={b.y - 22}
-          stroke="var(--color-ink)"
-          strokeWidth={stroke}
-          strokeLinecap="round"
-        />
-      ) : null}
-      <Windows b={b} />
-    </g>
-  );
-}
-
-function Tree({ cx }: { cx: number }) {
+    );
+  }
   return (
     <g className="skyline-building">
-      <line x1={cx} y1={250} x2={cx} y2={222} stroke="var(--color-ink)" strokeWidth={2} />
-      <circle cx={cx} cy={212} r={20} fill="var(--color-green)" stroke="var(--color-ink)" strokeWidth={1.5} />
+      <line x1={x} y1={96} x2={x} y2={58} stroke={INK} strokeWidth={2} strokeLinecap="round" />
+      <path d={`M${x - 11} 96 L${x + 11} 96 L${x + 8} 78 L${x - 8} 78 Z`} fill={GREEN_PALE} stroke={INK} strokeWidth={1.2} />
+      {segs}
+      <rect x={x - 17} y={250} width={34} height={40} fill={GREEN_PALE} stroke={INK} strokeWidth={1.2} />
+      <WindowGrid x={x - 17} y={252} w={34} h={36} cols={2} rows={2} />
     </g>
   );
 }
 
-function Cloud({ cx, cy }: { cx: number; cy: number }) {
+function TwinTowers({ x }: { x: number }) {
   return (
-    <g className="skyline-cloud" fill="var(--color-sky-pale)" opacity={0.6}>
-      <ellipse cx={cx} cy={cy} rx={38} ry={16} />
-      <ellipse cx={cx + 28} cy={cy + 6} rx={30} ry={13} />
-      <ellipse cx={cx - 30} cy={cy + 7} rx={26} ry={11} />
+    <g className="skyline-building">
+      <rect x={x} y={140} width={30} height={150} rx={3} fill={SKY} stroke={INK} strokeWidth={1.2} />
+      <rect x={x + 46} y={140} width={30} height={150} rx={3} fill={SKY} stroke={INK} strokeWidth={1.2} />
+      <rect x={x + 26} y={166} width={24} height={12} fill={SKY_PALE} stroke={INK} strokeWidth={1.2} />
+      <WindowGrid x={x} y={144} w={30} h={142} cols={2} rows={5} lit />
+      <WindowGrid x={x + 46} y={144} w={30} h={142} cols={2} rows={5} lit />
+      <line x1={x + 15} y1={140} x2={x + 15} y2={126} stroke={INK} strokeWidth={1.5} strokeLinecap="round" />
+      <line x1={x + 61} y1={140} x2={x + 61} y2={126} stroke={INK} strokeWidth={1.5} strokeLinecap="round" />
+    </g>
+  );
+}
+
+function ControlTower({ x }: { x: number }) {
+  return (
+    <g className="skyline-building">
+      <path d={`M${x - 7} 290 L${x - 4} 190 H${x + 4} L${x + 7} 290 Z`} fill={CREAM} stroke={INK} strokeWidth={1.2} />
+      <path d={`M${x - 16} 190 L${x + 16} 190 L${x + 12} 168 L${x - 12} 168 Z`} fill={TEAL} stroke={INK} strokeWidth={1.2} />
+      <rect x={x - 13} y={172} width={26} height={8} rx={2} fill={WINDOW_LIT} stroke={INK} strokeWidth={0.9} className="skyline-window" />
+      <line x1={x} y1={168} x2={x} y2={152} stroke={INK} strokeWidth={1.5} strokeLinecap="round" />
+      <circle cx={x} cy={150} r={2.5} fill={SKY} stroke={INK} strokeWidth={1} />
+      <path d={`M${x + 22} 290 L${x + 22} 258 L${x + 70} 250 L${x + 70} 290 Z`} fill={SKY_PALE} stroke={INK} strokeWidth={1.2} />
+      <rect x={x + 30} y={264} width={32} height={9} rx={4.5} fill={CREAM} stroke={INK} strokeWidth={1} />
+    </g>
+  );
+}
+
+function FerrisWheel({ x }: { x: number }) {
+  const spokes = [];
+  const gondolas = [];
+  for (let i = 0; i < 8; i += 1) {
+    const angle = (Math.PI / 4) * i;
+    const sx = x + Math.cos(angle) * 44;
+    const sy = 218 + Math.sin(angle) * 44;
+    spokes.push(<line key={`s${i}`} x1={x} y1={218} x2={sx} y2={sy} stroke={INK} strokeWidth={1} />);
+    gondolas.push(
+      <circle key={`g${i}`} cx={sx} cy={sy} r={5} fill={i % 2 === 0 ? GREEN_PALE : SKY_PALE} stroke={INK} strokeWidth={1} />
+    );
+  }
+  return (
+    <g className="skyline-building">
+      <circle cx={x} cy={218} r={44} fill="none" stroke={INK} strokeWidth={1.5} />
+      {spokes}
+      <path d={`M${x - 22} 290 L${x} 222 L${x + 22} 290`} fill="none" stroke={INK} strokeWidth={1.8} />
+      {gondolas}
+      <circle cx={x} cy={218} r={4} fill={TEAL} stroke={INK} strokeWidth={1} />
+    </g>
+  );
+}
+
+function TempleRoof({ x }: { x: number }) {
+  return (
+    <g className="skyline-building">
+      <rect x={x - 40} y={252} width={80} height={38} fill={CREAM} stroke={INK} strokeWidth={1.3} />
+      <line x1={x - 26} y1={252} x2={x - 26} y2={290} stroke={INK} strokeWidth={1} />
+      <line x1={x + 26} y1={252} x2={x + 26} y2={290} stroke={INK} strokeWidth={1} />
+      <rect x={x - 12} y={266} width={24} height={24} fill={TEAL} stroke={INK} strokeWidth={1.1} />
+      <path d={`M${x - 50} 252 Q${x - 44} 246 ${x - 46} 238 Q${x - 20} 248 ${x} 248 Q${x + 20} 248 ${x + 46} 238 Q${x + 44} 246 ${x + 50} 252 Z`} fill={TEAL} stroke={INK} strokeWidth={1.3} />
+      <path d={`M${x - 34} 236 Q${x - 29} 231 ${x - 31} 224 Q${x - 12} 232 ${x} 232 Q${x + 12} 232 ${x + 31} 224 Q${x + 29} 231 ${x + 34} 236 Z`} fill={TEAL} stroke={INK} strokeWidth={1.3} />
+      <path d={`M${x - 4} 224 Q${x} 218 ${x + 4} 224`} fill="none" stroke={INK} strokeWidth={1.3} />
+    </g>
+  );
+}
+
+function Tower85({ x }: { x: number }) {
+  return (
+    <g className="skyline-building">
+      <rect x={x - 38} y={170} width={24} height={120} fill={SKY} stroke={INK} strokeWidth={1.2} />
+      <rect x={x + 14} y={170} width={24} height={120} fill={SKY} stroke={INK} strokeWidth={1.2} />
+      <rect x={x - 38} y={96} width={76} height={54} rx={3} fill={SKY} stroke={INK} strokeWidth={1.2} />
+      <rect x={x - 12} y={150} width={24} height={140} fill={SKY} stroke={INK} strokeWidth={1.2} />
+      <WindowGrid x={x - 38} y={100} w={76} h={48} cols={5} rows={3} lit />
+      <WindowGrid x={x - 38} y={176} w={24} h={110} cols={2} rows={5} />
+      <WindowGrid x={x + 14} y={176} w={24} h={110} cols={2} rows={5} />
+      <path d={`M${x - 6} 96 L${x} 62 L${x + 6} 96`} fill={SKY} stroke={INK} strokeWidth={1.2} />
+      <line x1={x} y1={62} x2={x} y2={48} stroke={INK} strokeWidth={1.5} strokeLinecap="round" />
+    </g>
+  );
+}
+
+function HarborCrane({ x }: { x: number }) {
+  return (
+    <g className="skyline-building">
+      <path d={`M${x - 20} 290 L${x - 6} 216 H${x + 2} L${x + 16} 290`} fill="none" stroke={INK} strokeWidth={2} />
+      <line x1={x - 34} y1={216} x2={x + 52} y2={208} stroke={INK} strokeWidth={2.2} strokeLinecap="round" />
+      <line x1={x - 2} y1={216} x2={x + 20} y2={186} stroke={INK} strokeWidth={1.3} />
+      <line x1={x + 20} y1={186} x2={x + 50} y2={208} stroke={INK} strokeWidth={1.3} />
+      <line x1={x + 36} y1={210} x2={x + 36} y2={238} stroke={INK} strokeWidth={1} />
+      <rect x={x + 26} y={238} width={20} height={13} rx={1.5} fill={GREEN} stroke={INK} strokeWidth={1.2} />
+      <rect x={x - 16} y={262} width={44} height={28} fill={TEAL} stroke={INK} strokeWidth={1.2} />
+      <WindowGrid x={x - 16} y={264} w={44} h={24} cols={3} rows={1} />
+    </g>
+  );
+}
+
+function Shophouse({ x, w, h, fill, awning, lit = false }: { x: number; w: number; h: number; fill: string; awning?: boolean; lit?: boolean }) {
+  const top = 290 - h;
+  const floors = Math.max(Math.floor((h - 26) / 30), 1);
+  const rails = [];
+  for (let f = 0; f < floors; f += 1) {
+    const ry = top + 12 + f * 30;
+    rails.push(
+      <g key={f}>
+        <rect x={x + 5} y={ry} width={w - 10} height={14} rx={1.5} fill={lit && f % 2 === 0 ? WINDOW_LIT : CREAM} stroke={INK} strokeWidth={0.9} className="skyline-window" />
+        <line x1={x + 5} y1={ry + 7} x2={x + w - 5} y2={ry + 7} stroke={INK} strokeWidth={0.5} opacity={0.6} />
+        <line x1={x + w / 2} y1={ry} x2={x + w / 2} y2={ry + 14} stroke={INK} strokeWidth={0.5} opacity={0.6} />
+      </g>
+    );
+  }
+  return (
+    <g className="skyline-building">
+      <rect x={x} y={top} width={w} height={h} rx={2} fill={fill} stroke={INK} strokeWidth={1.4} />
+      <line x1={x - 3} y1={top} x2={x + w + 3} y2={top} stroke={INK} strokeWidth={1.4} strokeLinecap="round" />
+      {rails}
+      {awning ? (
+        <g>
+          <path d={`M${x + 2} 268 L${x + w - 2} 268 L${x + w - 6} 276 L${x + 6} 276 Z`} fill={GREEN_PALE} stroke={INK} strokeWidth={1} />
+          <line x1={x + w * 0.33} y1={268} x2={x + w * 0.35} y2={276} stroke={INK} strokeWidth={0.6} />
+          <line x1={x + w * 0.66} y1={268} x2={x + w * 0.65} y2={276} stroke={INK} strokeWidth={0.6} />
+          <rect x={x + w / 2 - 7} y={278} width={14} height={12} fill={CREAM} stroke={INK} strokeWidth={0.9} />
+        </g>
+      ) : null}
+    </g>
+  );
+}
+
+function Birds({ x, y }: { x: number; y: number }) {
+  return (
+    <g stroke={INK} strokeWidth={1.2} fill="none" strokeLinecap="round" opacity={0.7}>
+      <path d={`M${x} ${y} q4 -5 8 0 q4 -5 8 0`} />
+      <path d={`M${x + 30} ${y - 12} q3 -4 6 0 q3 -4 6 0`} />
+      <path d={`M${x + 14} ${y + 10} q3 -4 6 0 q3 -4 6 0`} />
     </g>
   );
 }
@@ -120,32 +251,69 @@ function Cloud({ cx, cy }: { cx: number; cy: number }) {
 export default function Skyline({ className = '', animateIn = false }: SkylineProps) {
   return (
     <svg
-      viewBox="0 0 1440 260"
+      viewBox="0 0 1440 300"
       className={`${className} ${animateIn ? 'skyline-animate' : ''}`.trim()}
       role="img"
-      aria-label="六都城市天際線插圖"
+      aria-label="六都城市天際線插圖：台北一〇一、雙子星大樓、機場塔台、摩天輪、廟宇與高雄八五大樓"
       preserveAspectRatio="xMidYMax meet"
     >
-      <g data-layer="back" opacity={0.45}>
-        {BACK.map((b) => (
-          <rect key={b.x} x={b.x} y={b.y} width={b.w} height={b.h} rx={6} fill={b.fill} />
-        ))}
+      <g data-layer="back">
+        <path d="M0 214 Q160 168 340 200 T700 196 Q900 176 1080 198 T1440 190 V300 H0 Z" fill={GREEN_PALE} opacity={0.35} />
+        <g opacity={0.5}>
+          <rect x={130} y={170} width={46} height={120} rx={3} fill={SKY_PALE} />
+          <rect x={330} y={186} width={38} height={104} rx={3} fill={GREEN_PALE} />
+          <rect x={640} y={176} width={50} height={114} rx={3} fill={SKY_PALE} />
+          <rect x={868} y={192} width={40} height={98} rx={3} fill={GREEN_PALE} />
+          <rect x={1150} y={178} width={46} height={112} rx={3} fill={SKY_PALE} />
+          <rect x={1372} y={190} width={40} height={100} rx={3} fill={GREEN_PALE} />
+        </g>
       </g>
       <g data-layer="mid">
-        <Cloud cx={210} cy={52} />
-        <Cloud cx={1130} cy={40} />
-        {MID.map((b) => (
-          <Building key={b.x} b={b} stroke={1} />
-        ))}
+        <circle cx={1348} cy={56} r={22} fill={WINDOW_LIT} stroke={INK} strokeWidth={1.3} opacity={0.9} />
+        <Cloud cx={250} cy={62} />
+        <Cloud cx={820} cy={44} scale={0.8} />
+        <Cloud cx={1180} cy={70} scale={0.65} />
+        <Birds x={520} y={70} />
+        <Taipei101 x={200} />
+        <TwinTowers x={330} />
+        <ControlTower x={520} />
+        <FerrisWheel x={730} />
+        <TempleRoof x={905} />
+        <Tower85 x={1060} />
+        <HarborCrane x={1250} />
       </g>
       <g data-layer="front">
-        {FRONT.map((b) => (
-          <Building key={b.x} b={b} stroke={1.5} />
-        ))}
-        {TREES.map((cx) => (
-          <Tree key={cx} cx={cx} />
-        ))}
-        <line x1={0} y1={250} x2={1440} y2={250} stroke="var(--color-ink)" strokeWidth={2} />
+        <Shophouse x={30} w={64} h={96} fill={GREEN} awning lit />
+        <Shophouse x={102} w={54} h={78} fill={GREEN_PALE} awning />
+        <Tree cx={182} />
+        <Shophouse x={252} w={60} h={86} fill={TEAL} awning />
+        <Tree cx={438} kind="pine" />
+        <Shophouse x={452} w={58} h={92} fill={GREEN_PALE} awning lit />
+        <Shophouse x={610} w={62} h={82} fill={GREEN} awning />
+        <Tree cx={690} />
+        <Shophouse x={806} w={56} h={88} fill={SKY_PALE} awning />
+        <Tree cx={968} kind="pine" />
+        <Shophouse x={984} w={60} h={80} fill={GREEN_PALE} awning lit />
+        <Shophouse x={1132} w={58} h={94} fill={GREEN} awning />
+        <Tree cx={1216} />
+        <Shophouse x={1320} w={62} h={84} fill={GREEN_PALE} awning />
+        <Tree cx={1408} />
+        <g>
+          <WaterTank x={62} y={180} />
+          <WaterTank x={482} y={184} />
+          <WaterTank x={1014} y={196} />
+          <WaterTank x={1352} y={192} />
+          <AcUnit x={266} y={216} />
+          <AcUnit x={624} y={220} />
+          <AcUnit x={1146} y={208} />
+        </g>
+        <line x1={0} y1={290} x2={1440} y2={290} stroke={INK} strokeWidth={2.2} />
+        <g stroke={INK} strokeWidth={1} opacity={0.5}>
+          <line x1={140} y1={295} x2={168} y2={295} />
+          <line x1={560} y1={295} x2={588} y2={295} />
+          <line x1={950} y1={295} x2={978} y2={295} />
+          <line x1={1290} y1={295} x2={1318} y2={295} />
+        </g>
       </g>
     </svg>
   );

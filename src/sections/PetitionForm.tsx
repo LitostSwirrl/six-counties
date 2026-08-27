@@ -55,18 +55,18 @@ export default function PetitionForm({ onSigned }: PetitionFormProps) {
         <h2 className="text-center font-display text-3xl tracking-[0.2em] text-ink md:text-4xl">
           {SITE.sections.join.title}
         </h2>
-        <p className="mt-4 text-center text-[15px] leading-7 text-ink/75">
+        <p className="mt-4 text-center text-base leading-7 text-ink/75">
           連署名單會在十月的記者會上，連同候選人簽署結果一起公開。留下你的名字，一起要求候選人公開承諾。
         </p>
         {APPS_SCRIPT_URL === '' ? (
-          <p className="mx-auto mt-5 w-fit rounded-full bg-sky-pale/60 px-4 py-1.5 text-sm text-ink/75">
+          <p className="tag-box mx-auto mt-6 block w-fit text-sm text-ink/80">
             示意模式：目前送出的資料不會被保存
           </p>
         ) : null}
         {submitState === 'done' ? (
           <div className="mt-10 rounded-3xl border border-green bg-white/80 px-8 py-12 text-center">
             <p className="font-display text-2xl text-green">感謝你的連署！</p>
-            <p className="mt-3 text-[15px] leading-7 text-ink/75">
+            <p className="mt-3 text-base leading-7 text-ink/75">
               我們會把你的聲音帶到候選人面前。把這個網站分享給更多人，連署的力量會更大。
             </p>
           </div>
@@ -82,7 +82,7 @@ export default function PetitionForm({ onSigned }: PetitionFormProps) {
               ).map(([value, label]) => (
                 <label
                   key={value}
-                  className={`flex-1 cursor-pointer rounded-full border px-4 py-2.5 text-center text-sm font-bold transition-colors ${
+                  className={`flex-1 cursor-pointer rounded-xl border px-4 py-2.5 text-center text-sm font-bold transition-colors ${
                     kind === value ? 'border-purple-deep bg-purple-deep text-white' : 'border-ink/20 text-ink/70'
                   }`}
                 >
@@ -104,7 +104,7 @@ export default function PetitionForm({ onSigned }: PetitionFormProps) {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="rounded-2xl border border-ink/20 bg-white px-4 py-3 text-[15px] outline-none focus:border-purple-mid"
+                className="rounded-2xl border border-ink/20 bg-white px-4 py-3 text-base outline-none focus:border-purple-mid"
                 autoComplete={kind === 'group' ? 'organization' : 'name'}
               />
             </label>
@@ -114,7 +114,7 @@ export default function PetitionForm({ onSigned }: PetitionFormProps) {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="rounded-2xl border border-ink/20 bg-white px-4 py-3 text-[15px] outline-none focus:border-purple-mid"
+                className="rounded-2xl border border-ink/20 bg-white px-4 py-3 text-base outline-none focus:border-purple-mid"
                 autoComplete="email"
               />
               <span className="text-xs text-ink/50">只用於必要時與你聯繫，不會出現在網站上。</span>
@@ -124,7 +124,7 @@ export default function PetitionForm({ onSigned }: PetitionFormProps) {
               <select
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                className="rounded-2xl border border-ink/20 bg-white px-4 py-3 text-[15px] outline-none focus:border-purple-mid"
+                className="rounded-2xl border border-ink/20 bg-white px-4 py-3 text-base outline-none focus:border-purple-mid"
               >
                 <option value="">請選擇</option>
                 {TAIWAN_CITIES.map((c) => (
@@ -140,7 +140,7 @@ export default function PetitionForm({ onSigned }: PetitionFormProps) {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 rows={3}
-                className="rounded-2xl border border-ink/20 bg-white px-4 py-3 text-[15px] outline-none focus:border-purple-mid"
+                className="rounded-2xl border border-ink/20 bg-white px-4 py-3 text-base outline-none focus:border-purple-mid"
               />
             </label>
             <label className="flex items-start gap-2.5 text-sm text-ink/75">

@@ -13,14 +13,14 @@ interface EndorsementsProps {
 
 function OrgChip({ name, url }: { name: string; url: string }) {
   if (!url) {
-    return <span className="rounded-full border border-ink/15 bg-white/80 px-4 py-2 text-sm">{name}</span>;
+    return <span className="rounded-lg border border-ink/15 bg-white/80 px-4 py-2 text-sm">{name}</span>;
   }
   return (
     <a
       href={url}
       target="_blank"
       rel="noreferrer"
-      className="flex items-center gap-1.5 rounded-full border border-ink/15 bg-white/80 px-4 py-2 text-sm transition-colors hover:border-purple-mid hover:text-purple-deep"
+      className="flex items-center gap-1.5 rounded-lg border border-ink/15 bg-white/80 px-4 py-2 text-sm transition-colors hover:border-purple-mid hover:text-purple-deep"
     >
       {name}
       <svg viewBox="0 0 16 16" className="h-3 w-3 opacity-50" aria-hidden="true">

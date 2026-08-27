@@ -21,6 +21,16 @@
   font-display: swap;
 }
 
+.tag-box {
+  display: inline-block;
+  border: 2px solid var(--color-ink);
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 0.15rem 0.65rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
 .gradient-title {
   background: linear-gradient(180deg, #4E3C64 0%, #7D5184 55%, #925D91 100%);
   background-clip: text;
@@ -30,6 +40,7 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: 17px;
 }
 
 section[id] {

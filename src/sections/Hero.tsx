@@ -15,7 +15,7 @@ interface HeroProps {
 
 function StatChip({ label, count }: { label: string; count: number | null }) {
   return (
-    <div className="flex items-baseline gap-2 rounded-full border border-ink/15 bg-white/70 px-5 py-2">
+    <div className="flex items-baseline gap-2 rounded-xl border border-ink/15 bg-white/70 px-5 py-2">
       <span className="text-sm text-ink/70">{label}</span>
       <span className="font-display text-2xl text-purple-deep">{count === null ? '—' : count}</span>
       <span className="text-sm text-ink/70">{label.includes('連署') ? '人' : '位'}</span>
@@ -64,8 +64,8 @@ export default function Hero({ signedCount, petitionCount }: HeroProps) {
         <p className="hero-enter mt-5 font-display text-[clamp(1.1rem,3.5vw,1.5rem)] text-ink">
           {SITE.slogan}
         </p>
-        <p className="hero-enter mt-4 max-w-2xl text-[15px] leading-7 text-ink/80">{SITE.heroSub}</p>
-        <p className="hero-enter mt-2 max-w-2xl text-[15px] leading-7 text-ink/80">{SITE.heroSub2}</p>
+        <p className="hero-enter mt-4 max-w-2xl text-base leading-7 text-ink/80">{SITE.heroSub}</p>
+        <p className="hero-enter mt-2 max-w-2xl text-base leading-7 text-ink/80">{SITE.heroSub2}</p>
         <div className="hero-enter mt-6 flex flex-wrap items-center justify-center gap-3">
           <a
             href={`#${SITE.sections.join.id}`}
