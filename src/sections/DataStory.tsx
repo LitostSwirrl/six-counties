@@ -2,7 +2,7 @@ import { KEY_STATS } from '../content/stats';
 import { SITE } from '../content/site';
 import CountUp from '../components/CountUp';
 import Skyline from '../components/Skyline';
-import HeatChart from '../components/HeatChart';
+import HeatExplorer from '../components/HeatExplorer';
 
 export default function DataStory() {
   return (
@@ -27,9 +27,7 @@ export default function DataStory() {
       <div data-motif="power" className="skyline-stage mt-14 w-full">
         <Skyline className="block w-full" />
       </div>
-      <div className="mx-auto mt-20 max-w-4xl rounded-3xl border border-ink/10 bg-white/70 px-5 py-10 md:px-10">
-        <HeatChart />
-      </div>
+      <HeatExplorer />
     </section>
   );
 }

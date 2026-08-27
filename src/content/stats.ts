@@ -32,32 +32,3 @@ export const KEY_STATS: KeyStat[] = [
     motif: 'carbon',
   },
 ];
-
-export interface HeatDatum {
-  city: string;
-  scenario: string;
-  extraDays: number;
-}
-
-export const HEAT_DATA: HeatDatum[] = [
-  { city: '臺北市', scenario: '暖化 1.5 度', extraDays: 7.5 },
-  { city: '臺北市', scenario: '暖化 2 度', extraDays: 15.3 },
-  { city: '臺北市', scenario: '暖化 4 度', extraDays: 57.5 },
-  { city: '新北市', scenario: '暖化 1.5 度', extraDays: 5.1 },
-  { city: '新北市', scenario: '暖化 2 度', extraDays: 10.8 },
-  { city: '新北市', scenario: '暖化 4 度', extraDays: 49.9 },
-  { city: '桃園市', scenario: '暖化 1.5 度', extraDays: 4.7 },
-  { city: '桃園市', scenario: '暖化 2 度', extraDays: 10 },
-  { city: '桃園市', scenario: '暖化 4 度', extraDays: 50 },
-  { city: '臺中市', scenario: '暖化 1.5 度', extraDays: 5.6 },
-  { city: '臺中市', scenario: '暖化 2 度', extraDays: 12.4 },
-  { city: '臺中市', scenario: '暖化 4 度', extraDays: 63.9 },
-  { city: '臺南市', scenario: '暖化 1.5 度', extraDays: 5.6 },
-  { city: '臺南市', scenario: '暖化 2 度', extraDays: 13 },
-  { city: '臺南市', scenario: '暖化 4 度', extraDays: 69.6 },
-  { city: '高雄市', scenario: '暖化 1.5 度', extraDays: 7.2 },
-  { city: '高雄市', scenario: '暖化 2 度', extraDays: 16 },
-  { city: '高雄市', scenario: '暖化 4 度', extraDays: 78.5 },
-];
-
-export const HEAT_SOURCE: string = '資料來源：全台縣市高溫風險數據整理（發起團體彙整）';
