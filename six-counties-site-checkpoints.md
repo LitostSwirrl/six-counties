@@ -7,10 +7,10 @@
 ## 狀態
 
 - **Phase 0 -- 研究與設計**：完成（2026-08-27）。素材讀取（構想 doc、附件 doc、高溫試算表、主視覺）、四參考網站分析、Joseph 方向確認、spec 與 plan 已 commit
-- **Phase 1 -- 基礎建設（plan Tasks 1-4：scaffold、內容、資料層、連署後端）**：待執行
-- **Phase 2 -- 視覺段落（plan Tasks 5-8：hero、數據敘事、訴求、時程）**：待執行
-- **Phase 3 -- 互動段落與組裝（plan Tasks 9-11）**：待執行
-- **Phase 4 -- 稽核與部署（plan Task 12）**：待執行
+- **Phase 1 -- 基礎建設（plan Tasks 1-4）**：完成（2026-08-27）
+- **Phase 2 -- 視覺段落（plan Tasks 5-8）**：完成（2026-08-27）
+- **Phase 3 -- 互動段落與組裝（plan Tasks 9-11）**：完成（2026-08-27）
+- **Phase 4 -- 稽核與部署（plan Task 12）**：完成（2026-08-27）。上線 https://litostswirrl.github.io/six-counties/ ；剩餘人工待辦見 progress.md「Next／待辦」
 
 ## Cross-cutting contracts（每個 session 共用）
 

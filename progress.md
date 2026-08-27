@@ -34,6 +34,20 @@ Slogan:「面對城市的下一個十年，六都市長準備好了嗎？」
 - 字型決策：數字也用 huninn（圓體 Latin 同家族），不另引 mono
 - 已知風險：woff2 全字集 2.1MB，正式上線前可 subset（教育部常用字＋內容用字）
 
+## Phase 1-4 完成紀錄（2026-08-27）
+- What：網站完成並上線 https://litostswirrl.github.io/six-counties/ 。九個段落全數實作；29 個測試通過；375/1280 寬度與表單送出流程驗證完畢；GitHub Actions 自動部署
+- Why 重要決策：
+  - 資料層 demo fallback：SHEET_ID/APPS_SCRIPT_URL 留空即示意模式，畫面明確標示「示意資料」；填入即切換真實資料，不用改元件
+  - 滾動敘事用 sticky + IntersectionObserver sentinels 而非 GSAP pin（更穩、mobile 直接退化為靜態卡片）；GSAP 只用在 hero 視差與進場
+  - 高溫圖表為 sequential 紫色 ramp（情境是有序強度非類別），最淺紫對米色底對比不足以 bar 端直接標值補救（dataviz validator 結論）
+  - 原文照搬原則（Joseph 中途指正）：構想 doc／附件一的文字逐字進 content 模組，humanizer 只處理我們生成的過場與介面文案
+- Next／待辦（需要人工或小組動作）：
+  - 建正式 Google Sheet 四工作表＋Apps Script 部署（指南在 docs/apps-script-deploy.md），填 src/data/config.ts 兩值後重佈
+  - gcaa.org.tw 子網域：repo Settings→Pages 設 custom domain＋DNS CNAME；vite.config.ts base 改 '/'
+  - repo 目前在個人帳號（LitostSwirrl），要移轉到 gcaa-org-tw org 可用 gh repo transfer
+  - OG image 待主視覺完稿；woff2 2.1MB 上線前可 subset；簽署狀態四分類需與詩婷對齊
+  - 高溫資料來源：試算表內無出處註記，HEAT_SOURCE 暫寫「發起團體彙整」，發布前要跟建表同事確認
+
 ## 進度
 - [x] 讀取主 doc、comments、第二層 doc、試算表樣本、主視覺圖
 - [ ] 四個參考網站分析（agents 執行中：還路於民、下一代人本交通、淨零觀測站、排碳大戶觀測站）
