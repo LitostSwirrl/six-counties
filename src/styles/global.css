@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #EEEBE2;
+  --color-ink: #111111;
+  --color-purple-deep: #4E3C64;
+  --color-purple-mid: #7D5184;
+  --color-purple-light: #925D91;
+  --color-green: #66B564;
+  --color-green-pale: #D1F6CA;
+  --color-teal: #639BA8;
+  --color-sky: #6CB5EC;
+  --color-sky-pale: #B0C5D6;
+  --font-display: "jf-openhuninn", "Noto Sans TC", sans-serif;
+  --font-body: "Noto Sans TC", sans-serif;
+}
+
+@font-face {
+  font-family: "jf-openhuninn";
+  src: url("/six-counties/fonts/jf-openhuninn-2.1.woff2") format("woff2");
+  font-display: swap;
+}
+
+.gradient-title {
+  background: linear-gradient(180deg, #4E3C64 0%, #7D5184 55%, #925D91 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
