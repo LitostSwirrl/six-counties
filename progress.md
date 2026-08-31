@@ -77,6 +77,13 @@ Slogan:「面對城市的下一個十年，六都市長準備好了嗎？」
 - 驗證：`npm run test` 37 項通過；`npm run build` 通過，僅有既有字型路徑警告；`git diff --check` 已修正檢查點文件尾端空白；本機 390px 與 1200px 瀏覽器檢查確認天際線只出現一次、未使用裁切、導覽錨點與表單連結正確，手機穩定畫面無水平溢出。
 - Next：提交並推送 `main`，確認 GitHub Actions 與公開網址，再補記部署結果；正式團體資料到位後，人工確認數量與完整名稱。
 
+## Phase 5 頁尾夜間天際線追加（2026-08-31）
+- What：恢復頁尾天際線，新增同一構圖的夜間版 `public/images/city-skyline-night.webp`；`CityBackdrop` 增加日間／夜間素材切換，首頁使用日間版，頁尾使用夜間版。
+- Why：保留頁尾天際線的收尾作用，同時讓頁尾與首頁有清楚的日夜視覺區分；不重新引入資料段的重複圖片。
+- 驗證：`npm run test` 38 項通過；`npm run build` 通過，僅有既有字型路徑警告；`git diff --check` 通過；公開網址 390px 與 1200px 均確認兩張天際線完整載入、原始比例顯示、無水平溢出，頁尾夜間圖實際存在。
+- 發布：提交 `e4de681` 已推送 `main`；GitHub Actions 工作流程 `33385157680` 的建置與部署均成功；公開網址為 https://litostswirrl.github.io/six-counties/?rev=e4de681。
+- Next：等待 Joseph 指定下一個明確範圍；正式團體資料到位後，人工確認數量與完整名稱。
+
 ## 待決問題（提問清單草稿）
 - 部署位置與網域、與淨零觀測站的關係
 - 簽署／連署資料更新機制（10月記者會前後要更新，靜態 rebuild 或接 Google Sheet）
