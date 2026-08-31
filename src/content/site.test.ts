@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { DEMO_ENDORSING_ORGS } from '../data/demo';
-import { JOIN_SECTION_HREF, PETITION_URL, SITE } from './site';
+import { CITY_SKYLINE_URLS, JOIN_SECTION_HREF, PETITION_URL, SITE } from './site';
 
 describe('網站固定文案與連署入口', () => {
   it('使用指定的 Google 表單網址', () => {
@@ -24,5 +24,9 @@ describe('網站固定文案與連署入口', () => {
 
   it('上方加入連署導向頁面內的加入連署區段', () => {
     expect(JOIN_SECTION_HREF).toBe('#join');
+  });
+
+  it('提供頁尾夜間天際線素材', () => {
+    expect(CITY_SKYLINE_URLS.night).toBe('/six-counties/images/city-skyline-night.webp');
   });
 });
