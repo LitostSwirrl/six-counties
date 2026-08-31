@@ -7,7 +7,7 @@ export default function CityBackdrop({ className = '' }: CityBackdropProps) {
     <img
       src="/six-counties/images/city-skyline.webp"
       alt="臺灣城市與水岸插圖"
-      className={`block object-cover object-bottom ${className}`.trim()}
+      className={`block h-auto w-full ${className}`.trim()}
     />
   );
 }

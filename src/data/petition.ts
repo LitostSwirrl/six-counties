@@ -1,4 +1,5 @@
 import { APPS_SCRIPT_URL } from './config';
+import { DEMO_ENDORSING_ORGS } from './demo';
 
 export interface PetitionStats {
   individualCount: number;
@@ -52,7 +53,7 @@ export async function fetchPetitionStats(): Promise<PetitionStats> {
   if (APPS_SCRIPT_URL === '') {
     return {
       individualCount: 128,
-      groupCount: 9,
+      groupCount: DEMO_ENDORSING_ORGS.length,
       publicMessages: [
         { name: '林○安', message: '希望市長候選人把永續城市當成任期內就要交出成績的事。' },
         { name: '陳○宇', message: '我住的社區夏天愈來愈熱，很想看到具體的降溫與綠地規劃。' },

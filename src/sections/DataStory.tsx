@@ -1,7 +1,6 @@
 import { KEY_STATS } from '../content/stats';
 import { SITE } from '../content/site';
 import CountUp from '../components/CountUp';
-import CityBackdrop from '../components/CityBackdrop';
 import HeatExplorer from '../components/HeatExplorer';
 import RiskMatrix from '../components/RiskMatrix';
 
@@ -24,9 +23,6 @@ export default function DataStory() {
             <p className="mt-4 max-w-sm text-base leading-8 text-ink/80">{stat.description}</p>
           </div>
         ))}
-      </div>
-      <div className="mt-14 h-[180px] w-full overflow-hidden sm:h-[250px]">
-        <CityBackdrop className="h-full w-full" />
       </div>
       <RiskMatrix />
       <HeatExplorer />

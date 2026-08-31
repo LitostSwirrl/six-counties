@@ -35,7 +35,7 @@ function GroupNames({ names, state }: { names: string[]; state: HeroProps['group
 
   return (
     <div className="min-h-20 border border-ink/15 bg-white/70 px-5 py-3 text-left sm:col-span-2 lg:col-span-1">
-      <span className="text-sm text-ink/70">團體名稱</span>
+      <span className="text-sm text-ink/70">{SITE.endorsementLabel}</span>
       <p className="mt-1 text-sm leading-6 text-ink/85">{content}</p>
     </div>
   );
@@ -93,8 +93,8 @@ export default function Hero({ signedCount, groupCount, groupNames, groupState }
           <GroupNames names={groupNames} state={groupState} />
         </div>
       </div>
-      <div className="pointer-events-none h-[180px] w-full overflow-hidden sm:h-[250px]">
-        <CityBackdrop className="h-full w-full" />
+      <div className="pointer-events-none w-full">
+        <CityBackdrop className="h-auto w-full" />
       </div>
     </section>
   );

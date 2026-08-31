@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { PETITION_URL, SITE } from '../content/site';
+import { JOIN_SECTION_HREF, SITE } from '../content/site';
 
 const LINKS = [
   SITE.sections.whySix,
@@ -79,9 +79,7 @@ export default function Nav() {
         </ul>
         <div className="flex items-center gap-2">
           <a
-            href={PETITION_URL}
-            target="_blank"
-            rel="noreferrer"
+            href={JOIN_SECTION_HREF}
             className="rounded-full bg-purple-deep px-5 py-2.5 text-[0.95rem] font-bold text-white transition-colors hover:bg-purple-mid"
           >
             加入連署

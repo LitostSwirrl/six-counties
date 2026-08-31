@@ -7,7 +7,7 @@ interface PillarIconProps {
 
 const S = {
   stroke: 'var(--color-ink)',
-  strokeWidth: 1.8,
+  strokeWidth: 2,
   strokeLinecap: 'round',
   strokeLinejoin: 'round',
 } as const;
@@ -18,52 +18,43 @@ export default function PillarIcon({ pillar, className = '' }: PillarIconProps) 
       {pillar === 'energy' ? (
         <>
           <circle cx={43} cy={12} r={6} fill="#FFE9A3" {...S} />
-          <path d="M43 2 V5 M43 19 V22 M33 12 H30 M56 12 H53 M36 5 L34 3 M50 5 L52 3" fill="none" {...S} strokeWidth={1.4} />
-          <path d="M8 27 L35 23 L43 39 L16 43 Z" fill="var(--color-sky-pale)" {...S} />
-          <path d="M14 28 L20 41 M22 27 L28 40 M30 25 L36 38 M11 34 L39 30 M14 39 L41 35" fill="none" {...S} strokeWidth={1.1} />
-          <path d="M28 43 V50 M20 50 H36" fill="none" {...S} />
-          <path d="M10 50 L15 44 H12 L18 37" fill="none" stroke="var(--color-purple-mid)" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M43 2 V5 M43 19 V22 M33 12 H30 M56 12 H53 M36 5 L34 3 M50 5 L52 3" fill="none" {...S} strokeWidth={1.5} />
+          <path d="M8 29 L35 24 L43 40 L16 45 Z" fill="var(--color-sky-pale)" {...S} />
+          <path d="M14 30 L20 43 M22 28 L28 42 M30 26 L36 40 M11 36 L39 31 M14 41 L41 37" fill="none" {...S} strokeWidth={1.2} />
+          <path d="M28 45 V51 M20 51 H36" fill="none" {...S} />
         </>
       ) : null}
       {pillar === 'resilience' ? (
         <>
-          <path d="M8 27 L28 10 L48 27" fill="var(--color-green-pale)" {...S} />
-          <path d="M13 24 V47 H43 V24" fill="var(--color-green-pale)" {...S} />
-          <path d="M20 47 V34 H29 V47 M35 47 V37 H39 V47" fill="var(--color-cream)" {...S} strokeWidth={1.4} />
-          <path d="M38 4 V10 M35 7 H41" fill="none" stroke="var(--color-purple-mid)" strokeWidth={1.6} strokeLinecap="round" />
-          <path d="M50 29 V45" fill="none" stroke="var(--color-green)" strokeWidth={5} strokeLinecap="round" />
-          <path d="M50 32 L47 38 H50 L47.5 43" fill="none" stroke="white" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M7 27 L28 9 L45 23 V48 H11 V24" fill="var(--color-green-pale)" {...S} />
+          <path d="M20 48 V34 H31 V48 M36 28 H42 V34 H36 Z" fill="var(--color-cream)" {...S} />
+          <path d="M47 34 C51 29 55 32 54 36 C53 40 49 42 47 47 C45 42 41 40 40 36 C39 32 43 29 47 34 Z" fill="var(--color-purple-light)" {...S} />
         </>
       ) : null}
       {pillar === 'heat' ? (
         <>
-          <circle cx={13} cy={12} r={6} fill="var(--color-purple-light)" {...S} />
-          <path d="M13 2 V5 M13 19 V22 M3 12 H6 M20 12 H23 M6 5 L8 7 M20 5 L18 7" fill="none" {...S} strokeWidth={1.4} />
-          <rect x={29} y={7} width={10} height={29} rx={5} fill="var(--color-cream)" {...S} />
-          <circle cx={34} cy={42} r={8} fill="var(--color-purple-light)" {...S} />
-          <path d="M34 42 V15" fill="none" stroke="var(--color-purple-light)" strokeWidth={3.5} strokeLinecap="round" />
-          <path d="M43 17 H47 M43 23 H47 M43 29 H47" fill="none" {...S} strokeWidth={1.1} />
-          <path d="M7 50 Q14 43 21 47" fill="none" stroke="var(--color-green)" strokeWidth={2.2} strokeLinecap="round" />
+          <circle cx={14} cy={14} r={7} fill="var(--color-purple-light)" {...S} />
+          <path d="M14 3 V6 M14 22 V25 M3 14 H6 M22 14 H25 M6 6 L8 8 M22 6 L20 8" fill="none" {...S} strokeWidth={1.5} />
+          <rect x={32} y={9} width={10} height={28} rx={5} fill="var(--color-cream)" {...S} />
+          <circle cx={37} cy={43} r={8} fill="var(--color-purple-light)" {...S} />
+          <path d="M37 43 V16 M46 19 H51 M46 26 H51 M46 33 H51" fill="none" {...S} />
         </>
       ) : null}
       {pillar === 'flood' ? (
         <>
-          <path d="M10 20 Q10 13 17 13 Q20 7 26 11 Q32 7 36 13 Q44 13 44 20 Q44 24 39 24 H16 Q10 24 10 20 Z" fill="var(--color-sky-pale)" {...S} />
-          <path d="M18 28 L16 33 M27 28 L25 33 M36 28 L34 33" fill="none" stroke="var(--color-sky)" strokeWidth={2} strokeLinecap="round" />
-          <path d="M4 39 Q10 34 16 39 T28 39 T40 39 T52 37 M4 48 Q10 43 16 48 T28 48 T40 48 T52 46" fill="none" stroke="var(--color-teal)" strokeWidth={2.2} strokeLinecap="round" />
-          <path d="M43 24 L50 30 V39 H43 Z" fill="var(--color-green-pale)" {...S} strokeWidth={1.3} />
-          <circle cx={47} cy={34} r={1.5} fill="var(--color-green)" />
+          <path d="M9 24 C9 18 14 15 19 16 C21 10 29 9 33 15 C40 14 46 18 46 24 C46 28 43 30 39 30 H16 C12 30 9 28 9 24 Z" fill="var(--color-sky-pale)" {...S} />
+          <path d="M18 34 L16 39 M28 34 L26 39 M38 34 L36 39" fill="none" stroke="var(--color-sky)" strokeWidth={2.2} strokeLinecap="round" />
+          <path d="M5 46 Q12 40 19 46 T33 46 T47 43 M5 53 Q12 47 19 53 T33 53 T47 50" fill="none" stroke="var(--color-teal)" strokeWidth={2.3} strokeLinecap="round" />
         </>
       ) : null}
       {pillar === 'transport' ? (
         <>
-          <rect x={8} y={13} width={34} height={23} rx={4} fill="var(--color-green)" {...S} />
-          <path d="M13 17 H23 V26 H13 Z M27 17 H37 V26 H27 Z" fill="var(--color-cream)" {...S} strokeWidth={1.2} />
-          <path d="M8 31 H42" fill="none" {...S} strokeWidth={1.2} />
-          <circle cx={17} cy={37} r={3.5} fill="var(--color-ink)" />
-          <circle cx={34} cy={37} r={3.5} fill="var(--color-ink)" />
-          <path d="M7 48 H49 M14 44 L10 48 M42 44 L46 48" fill="none" stroke="var(--color-purple-mid)" strokeWidth={1.8} strokeLinecap="round" />
-          <path d="M49 16 Q54 19 51 23" fill="none" stroke="var(--color-teal)" strokeWidth={2} strokeLinecap="round" />
+          <path d="M8 18 C8 15 11 13 14 13 H38 C41 13 44 16 44 19 V39 H8 Z" fill="var(--color-green)" {...S} />
+          <path d="M13 18 H24 V28 H13 Z M28 18 H39 V28 H28 Z" fill="var(--color-cream)" {...S} strokeWidth={1.4} />
+          <path d="M8 33 H44 M14 40 H38" fill="none" {...S} />
+          <circle cx={17} cy={40} r={4} fill="var(--color-ink)" />
+          <circle cx={35} cy={40} r={4} fill="var(--color-ink)" />
+          <path d="M47 20 H53 M50 17 L53 20 L50 23" fill="none" stroke="var(--color-purple-mid)" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
         </>
       ) : null}
     </svg>

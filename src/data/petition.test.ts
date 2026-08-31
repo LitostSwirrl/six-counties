@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { validatePetition, maskName, type PetitionPayload } from './petition';
+import { DEMO_ENDORSING_ORGS } from './demo';
+import { fetchPetitionStats, validatePetition, maskName, type PetitionPayload } from './petition';
 
 function payload(overrides: Partial<PetitionPayload> = {}): PetitionPayload {
   return {
@@ -51,5 +52,12 @@ describe('maskName', () => {
 
   it('四字遮第二字', () => {
     expect(maskName('歐陽小明')).toBe('歐○小明');
+  });
+});
+
+describe('fetchPetitionStats', () => {
+  it('示意團體數量與示意連署名單同步', async () => {
+    const stats = await fetchPetitionStats();
+    expect(stats.groupCount).toBe(DEMO_ENDORSING_ORGS.length);
   });
 });

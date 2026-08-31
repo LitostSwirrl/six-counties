@@ -13,14 +13,14 @@ interface EndorsementsProps {
 
 function OrgChip({ name, url }: { name: string; url: string }) {
   if (!url) {
-    return <span className="rounded-lg border border-ink/15 bg-white/80 px-4 py-2 text-sm">{name}</span>;
+    return <span className="block min-w-0 break-words rounded-lg border border-ink/15 bg-white/80 px-4 py-2 text-sm">{name}</span>;
   }
   return (
     <a
       href={url}
       target="_blank"
       rel="noreferrer"
-      className="flex items-center gap-1.5 rounded-lg border border-ink/15 bg-white/80 px-4 py-2 text-sm transition-colors hover:border-purple-mid hover:text-purple-deep"
+      className="flex min-w-0 items-center justify-between gap-1.5 break-words rounded-lg border border-ink/15 bg-white/80 px-4 py-2 text-sm transition-colors hover:border-purple-mid hover:text-purple-deep"
     >
       {name}
       <svg viewBox="0 0 16 16" className="h-3 w-3 opacity-50" aria-hidden="true">
@@ -46,7 +46,7 @@ export default function Endorsements({ orgsState, orgs, stats, statsFailed }: En
               <OrgChip key={org.name} name={org.name} url={org.url} />
             ))}
           </div>
-          <h3 className="mt-8 font-display text-lg text-purple-deep">連署響應團體</h3>
+          <h3 className="mt-8 font-display text-lg text-purple-deep">{SITE.endorsementLabel}</h3>
           {orgsState === 'loading' ? (
             <p className="mt-4 text-sm text-ink/60">連署團體名單載入中⋯</p>
           ) : null}
@@ -57,7 +57,7 @@ export default function Endorsements({ orgsState, orgs, stats, statsFailed }: En
             <p className="mt-4 text-sm text-ink/60">開放團體連署中，歡迎成為第一個響應的團體。</p>
           ) : null}
           {orgsState === 'ready' ? (
-            <div className="mt-4 flex flex-wrap gap-2.5">
+            <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
               {orgs.map((org) => (
                 <OrgChip key={org.name} name={org.name} url={org.url} />
               ))}

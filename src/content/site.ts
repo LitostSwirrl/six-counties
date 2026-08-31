@@ -9,6 +9,7 @@ export const SITE = {
     '面對極端高溫、豪雨淹水、交通安全風險、能源與產業轉型挑戰，城市現在的每一個決定，都將影響未來數百萬人的生活。',
   heroSub2:
     '2026年，我們提出五大面向、18項訴求，要求六都市長候選人公開承諾，打造更安全、更永續、更有韌性的城市。',
+  endorsementLabel: '連署團體',
   sections: {
     whySix: { id: 'why-six', nav: '六都關鍵', title: '六都面對哪些氣候風險' },
     demands: { id: 'demands', nav: '五大訴求', title: '五大訴求，十八項政策' },
@@ -20,3 +21,5 @@ export const SITE = {
   },
   contactEmail: 'gcaa@gcaa.org.tw',
 } as const;
+
+export const JOIN_SECTION_HREF = `#${SITE.sections.join.id}`;

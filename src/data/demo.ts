@@ -46,4 +46,11 @@ export const DEMO_CANDIDATES: Candidate[] = [
   candidate('高雄市', '示意候選人（卯）', '示意政黨Ｂ', 'met', NONE, ''),
 ];
 
-export const DEMO_ENDORSING_ORGS: EndorsingOrg[] = [];
+export const DEMO_ENDORSING_ORGS: EndorsingOrg[] = [
+  { name: '示意團體（甲）', url: '', logoUrl: '' },
+  { name: '示意團體（乙）', url: '', logoUrl: '' },
+  { name: '示意團體（丙）', url: '', logoUrl: '' },
+  { name: '示意團體（丁）', url: '', logoUrl: '' },
+  { name: '示意團體（戊）', url: '', logoUrl: '' },
+  { name: '示意團體（己）', url: '', logoUrl: '' },
+];
