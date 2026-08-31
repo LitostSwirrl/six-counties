@@ -1,4 +1,4 @@
-import Skyline from '../components/Skyline';
+import CityBackdrop from '../components/CityBackdrop';
 import { SITE } from '../content/site';
 
 export default function Footer() {
@@ -13,17 +13,11 @@ export default function Footer() {
               {SITE.contactEmail}
             </a>
           </p>
-          <p>
-            <a href={SITE.donateUrl} target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-white">
-              捐款支持綠色公民行動聯盟
-            </a>
-            ，讓倡議走得更遠。
-          </p>
           <p>本網站內容以創用 CC 姓名標示－非商業性 4.0 授權釋出。</p>
         </div>
       </div>
       <div className="footer-skyline pointer-events-none opacity-50">
-        <Skyline className="block w-full" />
+        <CityBackdrop className="h-[180px] w-full" />
       </div>
     </footer>
   );

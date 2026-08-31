@@ -1,29 +1,47 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Skyline from '../components/Skyline';
+import CityBackdrop from '../components/CityBackdrop';
 import BallotBox from '../components/BallotBox';
-import { SITE } from '../content/site';
+import { PETITION_URL, SITE } from '../content/site';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface HeroProps {
   signedCount: number | null;
-  petitionCount: number | null;
+  groupCount: number | null;
+  groupNames: string[];
+  groupState: 'loading' | 'error' | 'empty' | 'ready';
 }
 
-function StatChip({ label, count }: { label: string; count: number | null }) {
+function StatChip({ label, count, unit }: { label: string; count: number | null; unit: string }) {
   return (
-    <div className="flex items-baseline gap-2 rounded-xl border border-ink/15 bg-white/70 px-5 py-2">
+    <div className="flex min-h-20 flex-col justify-center border border-ink/15 bg-white/70 px-5 py-3 text-left">
       <span className="text-sm text-ink/70">{label}</span>
-      <span className="font-display text-2xl text-purple-deep">{count === null ? '—' : count}</span>
-      <span className="text-sm text-ink/70">{label.includes('連署') ? '人' : '位'}</span>
+      <span className="mt-1 flex items-baseline gap-2">
+        <span className="font-display text-3xl leading-none text-purple-deep">{count === null ? '—' : count}</span>
+        <span className="text-sm text-ink/70">{unit}</span>
+      </span>
     </div>
   );
 }
 
-export default function Hero({ signedCount, petitionCount }: HeroProps) {
+function GroupNames({ names, state }: { names: string[]; state: HeroProps['groupState'] }) {
+  const content = state === 'loading'
+    ? '載入中'
+    : state === 'error'
+      ? '名單暫時無法載入'
+      : state === 'empty'
+        ? '尚無團體名單'
+        : names.join('、');
+
+  return (
+    <div className="min-h-20 border border-ink/15 bg-white/70 px-5 py-3 text-left sm:col-span-2 lg:col-span-1">
+      <span className="text-sm text-ink/70">團體名稱</span>
+      <p className="mt-1 text-sm leading-6 text-ink/85">{content}</p>
+    </div>
+  );
+}
+
+export default function Hero({ signedCount, groupCount, groupNames, groupState }: HeroProps) {
   const reduced = usePrefersReducedMotion();
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -33,19 +51,6 @@ export default function Hero({ signedCount, petitionCount }: HeroProps) {
     if (!root) return;
     const ctx = gsap.context(() => {
       gsap.from('.hero-enter', { y: 24, opacity: 0, duration: 0.8, stagger: 0.12, ease: 'power2.out' });
-      const layers: [string, number][] = [
-        ['[data-layer="back"]', 60],
-        ['[data-layer="mid"]', 30],
-        ['[data-layer="front"]', 0],
-      ];
-      layers.forEach(([selector, distance]) => {
-        if (distance === 0) return;
-        gsap.to(selector, {
-          y: -distance,
-          ease: 'none',
-          scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: true },
-        });
-      });
     }, root);
     return () => ctx.revert();
   }, [reduced]);
@@ -68,7 +73,9 @@ export default function Hero({ signedCount, petitionCount }: HeroProps) {
         <p className="hero-enter mt-2 max-w-2xl text-base leading-7 text-ink/80">{SITE.heroSub2}</p>
         <div className="hero-enter mt-6 flex flex-wrap items-center justify-center gap-3">
           <a
-            href={`#${SITE.sections.join.id}`}
+            href={PETITION_URL}
+            target="_blank"
+            rel="noreferrer"
             className="rounded-full bg-purple-deep px-7 py-3 font-bold text-white transition-colors hover:bg-purple-mid"
           >
             加入連署
@@ -80,13 +87,14 @@ export default function Hero({ signedCount, petitionCount }: HeroProps) {
             看簽署結果
           </a>
         </div>
-        <div className="hero-enter mt-8 flex flex-wrap justify-center gap-3">
-          <StatChip label="候選人已簽署" count={signedCount} />
-          <StatChip label="公民連署" count={petitionCount} />
+        <div className="hero-enter mt-8 grid w-full max-w-3xl grid-cols-2 gap-3 text-left lg:grid-cols-3">
+          <StatChip label="候選人連署數量" count={signedCount} unit="位" />
+          <StatChip label="團體連署數量" count={groupCount} unit="個" />
+          <GroupNames names={groupNames} state={groupState} />
         </div>
       </div>
-      <div className="pointer-events-none w-full">
-        <Skyline className="block w-full" animateIn />
+      <div className="pointer-events-none h-[180px] w-full overflow-hidden sm:h-[250px]">
+        <CityBackdrop className="h-full w-full" />
       </div>
     </section>
   );

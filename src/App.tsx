@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Nav from './components/Nav';
 import Hero from './sections/Hero';
 import DataStory from './sections/DataStory';
@@ -19,7 +19,7 @@ export default function App() {
   const [petitionStats, setPetitionStats] = useState<PetitionStats | null>(null);
   const [statsFailed, setStatsFailed] = useState(false);
 
-  const loadStats = useCallback(() => {
+  useEffect(() => {
     fetchPetitionStats()
       .then((stats) => {
         setPetitionStats(stats);
@@ -27,10 +27,6 @@ export default function App() {
       })
       .catch(() => setStatsFailed(true));
   }, []);
-
-  useEffect(() => {
-    loadStats();
-  }, [loadStats]);
 
   const signedCount =
     candidates.state === 'ready'
@@ -41,7 +37,12 @@ export default function App() {
     <>
       <Nav />
       <main>
-        <Hero signedCount={signedCount} petitionCount={petitionStats?.individualCount ?? null} />
+        <Hero
+          signedCount={signedCount}
+          groupCount={endorsingOrgs.state === 'ready' ? petitionStats?.groupCount ?? null : null}
+          groupNames={endorsingOrgs.data.map((org) => org.name)}
+          groupState={endorsingOrgs.state}
+        />
         <DataStory />
         <Demands />
         <Timeline />
@@ -52,7 +53,7 @@ export default function App() {
           stats={petitionStats}
           statsFailed={statsFailed}
         />
-        <PetitionForm onSigned={loadStats} />
+        <PetitionForm />
         <About />
       </main>
       <Footer />
