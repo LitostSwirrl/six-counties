@@ -1,7 +1,13 @@
+import type { CSSProperties } from 'react';
+
 interface SkylineProps {
   className?: string;
   animateIn?: boolean;
+  variant?: SkylineVariant;
 }
+
+export const SKYLINE_VARIANTS = ['day', 'night'] as const;
+type SkylineVariant = (typeof SKYLINE_VARIANTS)[number];
 
 const INK = 'var(--color-ink)';
 const GREEN = 'var(--color-green)';
@@ -80,7 +86,7 @@ function Tree({ cx, kind = 'round' }: { cx: number; kind?: 'round' | 'pine' }) {
 
 function Cloud({ cx, cy, scale = 1 }: { cx: number; cy: number; scale?: number }) {
   return (
-    <g className="skyline-cloud" fill="#ffffff" stroke={INK} strokeWidth={1} opacity={0.85} transform={`translate(${cx} ${cy}) scale(${scale})`}>
+    <g className="skyline-cloud" fill={CREAM} stroke={INK} strokeWidth={1} opacity={0.85} transform={`translate(${cx} ${cy}) scale(${scale})`}>
       <path d="M-34 8 Q-34 -6 -20 -6 Q-16 -18 -2 -16 Q10 -22 18 -12 Q32 -12 32 0 Q38 8 28 8 Z" />
     </g>
   );
@@ -111,16 +117,13 @@ function Taipei101({ x }: { x: number }) {
   );
 }
 
-function TwinTowers({ x }: { x: number }) {
+function OperaHouse({ x }: { x: number }) {
   return (
     <g className="skyline-building">
-      <rect x={x} y={140} width={30} height={150} rx={3} fill={SKY} stroke={INK} strokeWidth={1.2} />
-      <rect x={x + 46} y={140} width={30} height={150} rx={3} fill={SKY} stroke={INK} strokeWidth={1.2} />
-      <rect x={x + 26} y={166} width={24} height={12} fill={SKY_PALE} stroke={INK} strokeWidth={1.2} />
-      <WindowGrid x={x} y={144} w={30} h={142} cols={2} rows={5} lit />
-      <WindowGrid x={x + 46} y={144} w={30} h={142} cols={2} rows={5} lit />
-      <line x1={x + 15} y1={140} x2={x + 15} y2={126} stroke={INK} strokeWidth={1.5} strokeLinecap="round" />
-      <line x1={x + 61} y1={140} x2={x + 61} y2={126} stroke={INK} strokeWidth={1.5} strokeLinecap="round" />
+      <path d={`M${x - 72} 290 L${x - 62} 240 Q${x - 45} 218 ${x - 26} 240 Q${x} 202 ${x + 26} 240 Q${x + 45} 218 ${x + 62} 240 L${x + 72} 290 Z`} fill={CREAM} stroke={INK} strokeWidth={1.3} />
+      <path d={`M${x - 48} 290 V250 Q${x - 34} 229 ${x - 18} 250 V290 M${x + 18} 290 V250 Q${x + 34} 229 ${x + 48} 250 V290`} fill={SKY_PALE} stroke={INK} strokeWidth={1.1} />
+      <path d={`M${x - 26} 240 Q${x} 218 ${x + 26} 240`} fill="none" stroke={INK} strokeWidth={1.1} />
+      <line x1={x - 62} y1={270} x2={x + 62} y2={270} stroke={INK} strokeWidth={1} opacity={0.7} />
     </g>
   );
 }
@@ -139,39 +142,25 @@ function ControlTower({ x }: { x: number }) {
   );
 }
 
-function FerrisWheel({ x }: { x: number }) {
-  const spokes = [];
-  const gondolas = [];
-  for (let i = 0; i < 8; i += 1) {
-    const angle = (Math.PI / 4) * i;
-    const sx = x + Math.cos(angle) * 44;
-    const sy = 218 + Math.sin(angle) * 44;
-    spokes.push(<line key={`s${i}`} x1={x} y1={218} x2={sx} y2={sy} stroke={INK} strokeWidth={1} />);
-    gondolas.push(
-      <circle key={`g${i}`} cx={sx} cy={sy} r={5} fill={i % 2 === 0 ? GREEN_PALE : SKY_PALE} stroke={INK} strokeWidth={1} />
-    );
-  }
+function ChihkanTower({ x }: { x: number }) {
   return (
     <g className="skyline-building">
-      <circle cx={x} cy={218} r={44} fill="none" stroke={INK} strokeWidth={1.5} />
-      {spokes}
-      <path d={`M${x - 22} 290 L${x} 222 L${x + 22} 290`} fill="none" stroke={INK} strokeWidth={1.8} />
-      {gondolas}
-      <circle cx={x} cy={218} r={4} fill={TEAL} stroke={INK} strokeWidth={1} />
+      <rect x={x - 46} y={250} width={92} height={40} fill={CREAM} stroke={INK} strokeWidth={1.3} />
+      <path d={`M${x - 55} 250 Q${x - 44} 240 ${x - 48} 229 Q${x - 22} 240 ${x} 240 Q${x + 22} 240 ${x + 48} 229 Q${x + 44} 240 ${x + 55} 250 Z`} fill={TEAL} stroke={INK} strokeWidth={1.3} />
+      <path d={`M${x - 38} 229 Q${x - 30} 221 ${x - 33} 212 Q${x - 14} 222 ${x} 222 Q${x + 14} 222 ${x + 33} 212 Q${x + 30} 221 ${x + 38} 229 Z`} fill={TEAL} stroke={INK} strokeWidth={1.3} />
+      <rect x={x - 12} y={264} width={24} height={26} fill={SKY_PALE} stroke={INK} strokeWidth={1.1} />
+      <line x1={x - 29} y1={252} x2={x - 29} y2={290} stroke={INK} strokeWidth={1} />
+      <line x1={x + 29} y1={252} x2={x + 29} y2={290} stroke={INK} strokeWidth={1} />
     </g>
   );
 }
 
-function TempleRoof({ x }: { x: number }) {
+function SolarPanel({ x, y }: { x: number; y: number }) {
   return (
     <g className="skyline-building">
-      <rect x={x - 40} y={252} width={80} height={38} fill={CREAM} stroke={INK} strokeWidth={1.3} />
-      <line x1={x - 26} y1={252} x2={x - 26} y2={290} stroke={INK} strokeWidth={1} />
-      <line x1={x + 26} y1={252} x2={x + 26} y2={290} stroke={INK} strokeWidth={1} />
-      <rect x={x - 12} y={266} width={24} height={24} fill={TEAL} stroke={INK} strokeWidth={1.1} />
-      <path d={`M${x - 50} 252 Q${x - 44} 246 ${x - 46} 238 Q${x - 20} 248 ${x} 248 Q${x + 20} 248 ${x + 46} 238 Q${x + 44} 246 ${x + 50} 252 Z`} fill={TEAL} stroke={INK} strokeWidth={1.3} />
-      <path d={`M${x - 34} 236 Q${x - 29} 231 ${x - 31} 224 Q${x - 12} 232 ${x} 232 Q${x + 12} 232 ${x + 31} 224 Q${x + 29} 231 ${x + 34} 236 Z`} fill={TEAL} stroke={INK} strokeWidth={1.3} />
-      <path d={`M${x - 4} 224 Q${x} 218 ${x + 4} 224`} fill="none" stroke={INK} strokeWidth={1.3} />
+      <path d={`M${x - 16} ${y + 4} L${x + 12} ${y} L${x + 17} ${y + 11} L${x - 11} ${y + 15} Z`} fill={SKY_PALE} stroke={INK} strokeWidth={1.1} />
+      <path d={`M${x - 9} ${y + 3} L${x - 4} ${y + 13} M${x} ${y + 2} L${x + 5} ${y + 12} M${x - 14} ${y + 9} L${x + 15} ${y + 5}`} fill="none" stroke={INK} strokeWidth={0.8} />
+      <path d={`M${x + 1} ${y + 12} V${y + 21} M${x - 6} ${y + 21} H${x + 8}`} fill="none" stroke={INK} strokeWidth={1.1} />
     </g>
   );
 }
@@ -248,14 +237,30 @@ function Birds({ x, y }: { x: number; y: number }) {
   );
 }
 
-export default function Skyline({ className = '', animateIn = false }: SkylineProps) {
+export default function Skyline({ className = '', animateIn = false, variant = 'day' }: SkylineProps) {
+  const nightStyle: CSSProperties | undefined = variant === 'night'
+    ? {
+        '--color-ink': '#F5E9D5',
+        '--color-purple-deep': '#4E3C64',
+        '--color-purple-mid': '#B98AB2',
+        '--color-purple-light': '#C59ABE',
+        '--color-green': '#79B57D',
+        '--color-green-pale': '#6C8F7A',
+        '--color-teal': '#5D8D9A',
+        '--color-sky': '#7899AD',
+        '--color-sky-pale': '#7F909A',
+        '--color-cream': '#D8C7B0',
+      } as CSSProperties
+    : undefined;
+
   return (
     <svg
       viewBox="0 0 1440 300"
       className={`${className} ${animateIn ? 'skyline-animate' : ''}`.trim()}
       role="img"
-      aria-label="六都城市天際線插圖：台北一〇一、雙子星大樓、機場塔台、摩天輪、廟宇與高雄八五大樓"
+      aria-label="六都城市天際線插圖：臺北 101、桃園機場塔台、臺中國家歌劇院、臺南歷史建築、高雄 85 大樓與港區起重機"
       preserveAspectRatio="xMidYMax meet"
+      style={nightStyle}
     >
       <g data-layer="back">
         <path d="M0 214 Q160 168 340 200 T700 196 Q900 176 1080 198 T1440 190 V300 H0 Z" fill={GREEN_PALE} opacity={0.35} />
@@ -274,13 +279,12 @@ export default function Skyline({ className = '', animateIn = false }: SkylinePr
         <Cloud cx={820} cy={44} scale={0.8} />
         <Cloud cx={1180} cy={70} scale={0.65} />
         <Birds x={520} y={70} />
-        <Taipei101 x={200} />
-        <TwinTowers x={330} />
-        <ControlTower x={520} />
-        <FerrisWheel x={730} />
-        <TempleRoof x={905} />
-        <Tower85 x={1060} />
-        <HarborCrane x={1250} />
+        <Taipei101 x={180} />
+        <ControlTower x={430} />
+        <OperaHouse x={700} />
+        <ChihkanTower x={920} />
+        <Tower85 x={1130} />
+        <HarborCrane x={1330} />
       </g>
       <g data-layer="front">
         <Shophouse x={30} w={64} h={96} fill={GREEN} awning lit />
@@ -302,7 +306,9 @@ export default function Skyline({ className = '', animateIn = false }: SkylinePr
           <WaterTank x={62} y={180} />
           <WaterTank x={482} y={184} />
           <WaterTank x={1014} y={196} />
-          <WaterTank x={1352} y={192} />
+          <SolarPanel x={132} y={204} />
+          <SolarPanel x={620} y={201} />
+          <SolarPanel x={1160} y={178} />
           <AcUnit x={266} y={216} />
           <AcUnit x={624} y={220} />
           <AcUnit x={1146} y={208} />

@@ -149,20 +149,6 @@ section[id] {
   }
 }
 
-.footer-skyline .skyline-window {
-  fill: var(--color-purple-deep);
-}
-
-.footer-skyline svg line,
-.footer-skyline svg rect,
-.footer-skyline svg circle {
-  stroke: #ffffff;
-}
-
-.footer-skyline [data-layer='back'] rect {
-  stroke: none;
-}
-
 body {
   background: var(--color-cream);
   color: var(--color-ink);

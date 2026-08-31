@@ -1,10 +1,5 @@
 export const PETITION_URL = 'https://forms.gle/33wPJC2G4sYm2VBf6';
 
-export const CITY_SKYLINE_URLS = {
-  day: '/six-counties/images/city-skyline.webp',
-  night: '/six-counties/images/city-skyline-night.webp',
-} as const;
-
 export const SITE = {
   title: '2026 六都市長候選人永續韌性城市政策承諾',
   slogan: '面對城市的下一個十年，六都市長準備好了嗎？',
