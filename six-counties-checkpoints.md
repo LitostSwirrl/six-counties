@@ -151,6 +151,14 @@
 - 本機 `npm run test` 38 項通過、`npm run build` 通過，僅有既有字型路徑警告；`git diff --check` 通過；1200px 與 390px 檢查確認兩張圖完整載入，實際高度分別為 250px 與 81.25px，沒有水平溢出。
 - 尚未提交、推送或公開部署；下一步是建立提交、等待 GitHub Actions 完成，再以公開網址讀回確認。
 
+## Phase 12 公開完成紀錄
+
+- 提交 `bbef9a8` 已推送至 `main`；GitHub Actions 工作流程 `33474850943` 的建置與 GitHub Pages 部署均成功。
+- 公開網址：`https://litostswirrl.github.io/six-counties/?rev=bbef9a8`。
+- 公開頁面在 1200px 與 390px 均確認日間與夜間圖片完整載入，原始尺寸為 `1440×300`，實際高度分別為 250px 與 81.25px；首頁米色與頁尾深紫色背景正確承接透明圖檔，沒有水平溢出。
+- 公開日間圖檔與本機檔案雜湊一致：`bdd4aaf40d7a7b01af5d2b845682ef86f74d507688dee630a973e0c26bd52a7e`；公開夜間圖檔與本機檔案雜湊一致：`58f7abaa2cf080e28217bafbb39f6246031c7c1a3499d44c938961ef877d96aa`。
+- 本階段已完成；下一階段尚未決定，維持等待 Joseph 指定範圍。
+
 ## Phase 5 Resume Prompt
 
 ```text
