@@ -61,7 +61,7 @@ export default function Endorsements({ orgsState, orgs, stats }: EndorsementsPro
             <div
               role="region"
               aria-label="完整連署團體名單"
-              className="mt-3 max-h-72 overflow-y-auto rounded-xl border border-ink/10 bg-white/80 p-4 shadow-sm"
+              className="mt-3 max-h-56 overflow-y-auto rounded-xl border border-ink/10 bg-white/80 p-4 shadow-sm"
             >
               <div className="grid gap-2.5 sm:grid-cols-2">
                 {orgs.map((org) => (
@@ -73,18 +73,21 @@ export default function Endorsements({ orgsState, orgs, stats }: EndorsementsPro
         </div>
       </div>
       {messages.length > 0 ? (
-        <div className="marquee-wrap mt-12" aria-label="連署人留言">
-          <div className="marquee-track flex gap-4">
-            {[...messages, ...messages].map((m, i) => (
-              <figure
-                key={`${m.name}-${i}`}
-                className="w-64 shrink-0 rounded-2xl border border-ink/10 bg-white/85 p-4"
-                aria-hidden={i >= messages.length}
-              >
-                <blockquote className="text-sm leading-6 text-ink/80">{m.message}</blockquote>
-                <figcaption className="mt-2 text-xs font-bold text-purple-mid">{m.name}</figcaption>
-              </figure>
-            ))}
+        <div className="mt-12">
+          <h3 className="font-display text-lg text-purple-deep">公民連署意見</h3>
+          <div className="marquee-wrap mt-4" aria-label="連署人留言">
+            <div className="marquee-track marquee-track-fast flex gap-4">
+              {[...messages, ...messages].map((m, i) => (
+                <figure
+                  key={`${m.name}-${i}`}
+                  className="w-64 shrink-0 rounded-2xl border border-ink/10 bg-white/85 p-4"
+                  aria-hidden={i >= messages.length}
+                >
+                  <blockquote className="text-sm leading-6 text-ink/80">{m.message}</blockquote>
+                  <figcaption className="mt-2 text-xs font-bold text-purple-mid">{m.name}</figcaption>
+                </figure>
+              ))}
+            </div>
           </div>
         </div>
       ) : null}

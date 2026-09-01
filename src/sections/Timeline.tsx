@@ -1,9 +1,17 @@
+import { useEffect, useState } from 'react';
 import { SITE } from '../content/site';
 import { TIMELINE } from '../content/timeline';
-import { currentPhaseIndex } from '../utils/phase';
+import { currentPhaseIndex, millisecondsUntilNextTaiwanMidnight } from '../utils/phase';
 
 export default function Timeline() {
-  const current = currentPhaseIndex(TIMELINE, new Date());
+  const [today, setToday] = useState(() => new Date());
+  const current = currentPhaseIndex(TIMELINE, today);
+  const isComplete = current === -1;
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setToday(new Date()), millisecondsUntilNextTaiwanMidnight(today));
+    return () => window.clearTimeout(timer);
+  }, [today]);
 
   return (
     <section id={SITE.sections.timeline.id} className="mx-auto max-w-5xl px-6 py-24">
@@ -18,7 +26,7 @@ export default function Timeline() {
             <li key={node.deadline} className="relative flex flex-1 gap-4 md:flex-col md:gap-0">
               <div className="flex flex-col items-center md:w-full md:flex-row">
                 <div
-                  className={`hidden h-0.5 flex-1 md:block ${i === 0 ? 'bg-transparent' : isPast || isCurrent ? 'bg-green' : 'bg-ink/20'}`}
+                  className={`hidden h-0.5 flex-1 md:block ${i === 0 ? 'bg-transparent' : isComplete || isPast || isCurrent ? 'bg-green' : 'bg-ink/20'}`}
                 />
                 <div className="relative flex items-center justify-center">
                   {isCurrent ? (
@@ -28,17 +36,17 @@ export default function Timeline() {
                     className={`relative z-10 h-5 w-5 rounded-full border-2 ${
                       isCurrent
                         ? 'scale-125 border-purple-deep bg-purple-mid'
-                        : isPast
+                        : isComplete || isPast
                           ? 'border-green bg-green'
                           : 'border-ink/30 bg-cream'
                     }`}
                   />
                 </div>
                 <div
-                  className={`hidden h-0.5 flex-1 md:block ${i === TIMELINE.length - 1 ? 'bg-transparent' : i < current ? 'bg-green' : 'bg-ink/20'}`}
+                  className={`hidden h-0.5 flex-1 md:block ${i === TIMELINE.length - 1 ? 'bg-transparent' : isComplete || i < current ? 'bg-green' : 'bg-ink/20'}`}
                 />
                 <div
-                  className={`absolute top-6 bottom-0 left-[9px] w-0.5 md:hidden ${i === TIMELINE.length - 1 ? 'bg-transparent' : i < current ? 'bg-green' : 'bg-ink/20'}`}
+                  className={`absolute top-6 bottom-0 left-[9px] w-0.5 md:hidden ${i === TIMELINE.length - 1 ? 'bg-transparent' : isComplete || i < current ? 'bg-green' : 'bg-ink/20'}`}
                 />
               </div>
               <div className="pb-10 md:px-2 md:pt-4 md:pb-0 md:text-center">

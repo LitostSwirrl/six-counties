@@ -60,4 +60,9 @@ describe('fetchPetitionStats', () => {
     const stats = await fetchPetitionStats();
     expect(stats.groupCount).toBe(DEMO_ENDORSING_ORGS.length);
   });
+
+  it('提供六則公民連署意見樣板', async () => {
+    const stats = await fetchPetitionStats();
+    expect(stats.publicMessages).toHaveLength(6);
+  });
 });

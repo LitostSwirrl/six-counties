@@ -23,9 +23,26 @@ describe('團體連署名單', () => {
     expect(markup).not.toContain('<details');
     expect(markup).not.toContain('<summary');
     expect(markup).toContain('共 12 個');
-    expect(markup).toContain('max-h-72');
+    expect(markup).toContain('max-h-56');
     expect(markup).toContain('overflow-y-auto');
     expect(markup).toContain('示意團體（甲）');
     expect(markup).toContain('示意團體（壬）');
+  });
+
+  it('在團體名單下方標示公民連署意見並使用兩倍速度', () => {
+    const markup = renderToStaticMarkup(
+      <Endorsements
+        orgsState="ready"
+        orgs={DEMO_ENDORSING_ORGS}
+        stats={{
+          individualCount: 128,
+          groupCount: 12,
+          publicMessages: [{ name: '王○明', message: '測試意見' }],
+        }}
+      />
+    );
+
+    expect(markup).toContain('公民連署意見');
+    expect(markup).toContain('marquee-track-fast');
   });
 });

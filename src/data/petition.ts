@@ -58,6 +58,9 @@ export async function fetchPetitionStats(): Promise<PetitionStats> {
         { name: '林○安', message: '希望市長候選人把永續城市當成任期內就要交出成績的事。' },
         { name: '陳○宇', message: '我住的社區夏天愈來愈熱，很想看到具體的降溫與綠地規劃。' },
         { name: '黃○芳', message: '支持六都一起把永續城市的政策標準拉齊，不要各做各的。' },
+        { name: '張○庭', message: '希望城市把降溫、排水與行人安全一起納入長期規劃。' },
+        { name: '吳○哲', message: '支持候選人公開承諾，也期待未來定期說明執行進度。' },
+        { name: '蔡○玲', message: '讓不同城市都能安全生活，是公民參與地方治理的開始。' },
       ],
     };
   }
