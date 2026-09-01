@@ -10,12 +10,14 @@ if (!('window' in globalThis)) {
 }
 
 describe('首頁統計盒', () => {
-  it('將團體名單連結固定在第二盒右下角', () => {
+  it('將統計內容垂直置中並讓桌面入口對齊數量', () => {
     const markup = renderToStaticMarkup(
       <Hero signedCount={8} groupCount={6} citizenCount={128} citizenCountFailed={false} />
     );
 
     expect(markup).toContain('relative flex min-h-32');
+    expect(markup).toContain('justify-center');
     expect(markup).toContain('absolute bottom-3 right-5');
+    expect(markup).toContain('lg:static lg:ml-auto');
   });
 });
