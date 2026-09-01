@@ -165,3 +165,9 @@ Slogan:「面對城市的下一個十年，六都市長準備好了嗎？」
 - 驗證：新增 `src/components/iconArtwork.test.tsx`，先確認 7 項測試在舊圖示上失敗，再以新圖示通過；`npm test` 45 項通過；`npm run build` 通過，僅有既有字型路徑警告；`git diff --check` 通過；本機 1200px 與 390px 瀏覽器檢查確認投票箱、風險矩陣與五大訴求圖示均載入，手機無水平溢出。
 - 修改範圍：`src/components/BallotBox.tsx`、`src/components/PillarIcon.tsx`、`src/components/RiskMatrix.tsx` 與圖示完整性測試；未修改網站資料與文案。
 - Next：提交並推送 `main`，確認 GitHub Actions 與 GitHub Pages 部署，再以公開網址重新檢查 1200px 與 390px 畫面。
+
+## Phase 13 公開完成紀錄（2026-09-01）
+- 發布：提交 `23f9e25` 已合併並推送至 `main`；GitHub Actions 工作流程 `33476398937` 的建置與 GitHub Pages 部署均成功。
+- 公開網址：`https://litostswirrl.github.io/six-counties/?rev=23f9e25`。
+- 公開驗證：1200px 與 390px 均確認投票箱、七種氣候風險圖示與五大訴求圖示完整載入；公開頁面無水平溢出，首頁投票箱與五大訴求圖示在手機尺寸下仍保持清楚輪廓。
+- 後續：等待 Joseph 指定下一個明確範圍；正式團體資料到位後，人工確認數量與完整名稱。
