@@ -200,9 +200,12 @@ Slogan:「面對城市的下一個十年，六都市長準備好了嗎？」
 - 驗證：新增測試先在舊程式上失敗；目前目標測試 9 項通過，瀏覽器檢查確認手機連結單行靠右下、桌面三盒對齊、點擊首頁連結後自動展開底部名單、名單盒 `overflow-y: auto` 且有高度上限、底部按鈕可收合，桌面與手機均無水平溢出。
 - Next：完成最後一次 `npm test`、`npm run build` 與 `git diff --check` 後，若確認視覺方向，再提交並推送 `main`。
 
-## Phase 17 固定高度團體名單（本機驗證完成，待公開部署，2026-09-01）
+## Phase 17 固定高度團體名單（公開完成，2026-09-01）
 - What：依最新決定移除底部團體名單的展開／收合功能，改為頁面載入後直接顯示固定高度的完整名單區塊；區塊保留縱向捲軸，示意資料增加至十二個團體，以驗證超過六筆時的瀏覽方式。
 - Why：單頁式頁面不需要再維護名單的開關狀態；固定高度可以讓使用者直接看到前六筆，也不會因團體數量增加而推長整個頁面。
 - 修改範圍：`src/data/demo.ts`、`src/sections/Endorsements.tsx`、`src/sections/Endorsements.test.tsx` 與 `src/sections/Hero.tsx`、`src/sections/Hero.test.tsx`；同步更新示意數量測試。
 - 驗證：先確認新測試在舊實作上失敗；目前 `npm test` 49 項通過，`npm run build` 通過，`git diff --check` 通過；本機桌面與手機瀏覽器確認三個統計標籤頂端對齊，第二個盒子的入口固定在右下角，名單區塊為 `304px` 可捲動高度、十二筆資料內容高度為 `329px`（手機內容高度為 `634px`），沒有 `<details>`、`<summary>` 或水平溢出，瀏覽器錯誤訊息為零。
-- Next：提交並推送 `main`，確認 GitHub Actions 與 GitHub Pages 部署，再以公開網址重新檢查桌面與手機畫面。
+- 發布：提交 `da8ca39` 已推送至 `main`；GitHub Actions 工作流程 `33480344675` 的建置與 GitHub Pages 部署均成功。
+- 公開網址：`https://litostswirrl.github.io/six-counties/?rev=da8ca39`。
+- 公開驗證：公開網址在桌面與手機均確認三個統計標籤頂端對齊，第二個盒子的入口固定在右下角；名單區塊為 `304px` 可捲動高度、十二筆資料內容高度分別為桌面 `329px` 與手機 `634px`，沒有 `<details>`、`<summary>` 或水平溢出。
+- 已知訊息：公開頁面仍有既有 `/favicon.ico` 404；GitHub Actions 顯示既有 Node.js 20 動作棄用提示，均未阻擋建置或部署。
