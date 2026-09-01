@@ -2,46 +2,47 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import CityBackdrop from '../components/CityBackdrop';
 import BallotBox from '../components/BallotBox';
-import { PETITION_URL, SITE } from '../content/site';
+import { HERO_CITIZEN_LABEL, HERO_GROUP_LIST_HREF, HERO_GROUP_LIST_LABEL, PETITION_URL, SITE } from '../content/site';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 interface HeroProps {
   signedCount: number | null;
   groupCount: number | null;
-  groupNames: string[];
-  groupState: 'loading' | 'error' | 'empty' | 'ready';
+  citizenCount: number | null;
+  citizenCountFailed: boolean;
 }
 
-function StatChip({ label, count, unit }: { label: string; count: number | null; unit: string }) {
+interface StatChipProps {
+  label: string;
+  count: number | null;
+  unit: string;
+  actionLabel?: string;
+  actionHref?: string;
+  errorLabel?: string;
+}
+
+function StatChip({ label, count, unit, actionLabel, actionHref, errorLabel }: StatChipProps) {
   return (
-    <div className="flex min-h-20 flex-col justify-center border border-ink/15 bg-white/70 px-5 py-3 text-left">
+    <div className="flex min-h-24 flex-col justify-center border border-ink/15 bg-white/70 px-5 py-3 text-left">
       <span className="text-sm text-ink/70">{label}</span>
       <span className="mt-1 flex items-baseline gap-2">
         <span className="font-display text-3xl leading-none text-purple-deep">{count === null ? '—' : count}</span>
         <span className="text-sm text-ink/70">{unit}</span>
       </span>
+      {actionLabel && actionHref ? (
+        <a
+          href={actionHref}
+          className="mt-auto min-h-8 self-end whitespace-nowrap py-1 text-xs font-bold text-purple-deep transition-colors hover:text-purple-mid"
+        >
+          {actionLabel}
+        </a>
+      ) : null}
+      {errorLabel ? <span className="mt-1 text-xs text-ink/60">{errorLabel}</span> : null}
     </div>
   );
 }
 
-function GroupNames({ names, state }: { names: string[]; state: HeroProps['groupState'] }) {
-  const content = state === 'loading'
-    ? '載入中'
-    : state === 'error'
-      ? '名單暫時無法載入'
-      : state === 'empty'
-        ? '尚無團體名單'
-        : names.join('、');
-
-  return (
-    <div className="min-h-20 border border-ink/15 bg-white/70 px-5 py-3 text-left sm:col-span-2 lg:col-span-1">
-      <span className="text-sm text-ink/70">{SITE.endorsementLabel}</span>
-      <p className="mt-1 text-sm leading-6 text-ink/85">{content}</p>
-    </div>
-  );
-}
-
-export default function Hero({ signedCount, groupCount, groupNames, groupState }: HeroProps) {
+export default function Hero({ signedCount, groupCount, citizenCount, citizenCountFailed }: HeroProps) {
   const reduced = usePrefersReducedMotion();
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -89,8 +90,19 @@ export default function Hero({ signedCount, groupCount, groupNames, groupState }
         </div>
         <div className="hero-enter mt-8 grid w-full max-w-3xl grid-cols-2 gap-3 text-left lg:grid-cols-3">
           <StatChip label="候選人連署數量" count={signedCount} unit="位" />
-          <StatChip label="團體連署數量" count={groupCount} unit="個" />
-          <GroupNames names={groupNames} state={groupState} />
+          <StatChip
+            label="團體連署數量"
+            count={groupCount}
+            unit="個"
+            actionLabel={HERO_GROUP_LIST_LABEL}
+            actionHref={HERO_GROUP_LIST_HREF}
+          />
+          <StatChip
+            label={HERO_CITIZEN_LABEL}
+            count={citizenCount}
+            unit="位"
+            errorLabel={citizenCountFailed ? '暫時無法讀取' : undefined}
+          />
         </div>
       </div>
       <div className="pointer-events-none w-full">

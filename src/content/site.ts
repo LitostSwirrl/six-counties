@@ -27,4 +27,7 @@ export const SITE = {
   contactEmail: 'gcaa@gcaa.org.tw',
 } as const;
 
+export const HERO_CITIZEN_LABEL = '公民連署數量';
+export const HERO_GROUP_LIST_LABEL = '>> 查看完整名單';
+export const HERO_GROUP_LIST_HREF = `#${SITE.sections.endorse.id}`;
 export const JOIN_SECTION_HREF = `#${SITE.sections.join.id}`;

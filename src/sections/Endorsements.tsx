@@ -1,14 +1,13 @@
+import { useEffect, useState } from 'react';
 import type { EndorsingOrg } from '../data/types';
 import type { PetitionStats } from '../data/petition';
 import { ORGS } from '../content/orgs';
 import { SITE } from '../content/site';
-import CountUp from '../components/CountUp';
 
 interface EndorsementsProps {
   orgsState: 'loading' | 'error' | 'empty' | 'ready';
   orgs: EndorsingOrg[];
   stats: PetitionStats | null;
-  statsFailed: boolean;
 }
 
 function OrgChip({ name, url }: { name: string; url: string }) {
@@ -30,8 +29,18 @@ function OrgChip({ name, url }: { name: string; url: string }) {
   );
 }
 
-export default function Endorsements({ orgsState, orgs, stats, statsFailed }: EndorsementsProps) {
+export default function Endorsements({ orgsState, orgs, stats }: EndorsementsProps) {
   const messages = stats?.publicMessages ?? [];
+  const [orgListOpen, setOrgListOpen] = useState(false);
+
+  useEffect(() => {
+    const openFromHash = () => {
+      if (window.location.hash === `#${SITE.sections.endorse.id}`) setOrgListOpen(true);
+    };
+    openFromHash();
+    window.addEventListener('hashchange', openFromHash);
+    return () => window.removeEventListener('hashchange', openFromHash);
+  }, []);
 
   return (
     <section id={SITE.sections.endorse.id} className="mx-auto max-w-5xl px-6 py-24">
@@ -46,7 +55,10 @@ export default function Endorsements({ orgsState, orgs, stats, statsFailed }: En
               <OrgChip key={org.name} name={org.name} url={org.url} />
             ))}
           </div>
-          <h3 className="mt-8 font-display text-lg text-purple-deep">{SITE.endorsementLabel}</h3>
+          <div className="mt-8 flex items-baseline justify-between gap-4">
+            <h3 className="font-display text-lg text-purple-deep">{SITE.endorsementLabel}</h3>
+            {orgsState === 'ready' ? <span className="text-sm text-ink/60">共 {orgs.length} 個</span> : null}
+          </div>
           {orgsState === 'loading' ? (
             <p className="mt-4 text-sm text-ink/60">連署團體名單載入中⋯</p>
           ) : null}
@@ -57,20 +69,30 @@ export default function Endorsements({ orgsState, orgs, stats, statsFailed }: En
             <p className="mt-4 text-sm text-ink/60">開放團體連署中，歡迎成為第一個響應的團體。</p>
           ) : null}
           {orgsState === 'ready' ? (
-            <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
-              {orgs.map((org) => (
-                <OrgChip key={org.name} name={org.name} url={org.url} />
-              ))}
-            </div>
+            <details
+              className="group mt-3"
+              open={orgListOpen}
+              onToggle={(event) => setOrgListOpen(event.currentTarget.open)}
+            >
+              <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 rounded-xl border border-purple-deep/20 bg-white/70 px-4 py-2 text-sm font-bold text-purple-deep transition-colors hover:border-purple-mid hover:bg-white [&::-webkit-details-marker]:hidden">
+                <span>{orgListOpen ? '收合完整名單' : '查看完整名單'}</span>
+                <svg viewBox="0 0 16 16" className="h-4 w-4 transition-transform group-open:rotate-180" fill="none" aria-hidden="true">
+                  <path d="M3 6 L8 11 L13 6" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </summary>
+              <div
+                role="region"
+                aria-label="完整連署團體名單"
+                className="mt-2 max-h-72 overflow-y-auto rounded-xl border border-ink/10 bg-white/80 p-4 shadow-sm"
+              >
+                <div className="grid gap-2.5 sm:grid-cols-2">
+                  {orgs.map((org) => (
+                    <OrgChip key={org.name} name={org.name} url={org.url} />
+                  ))}
+                </div>
+              </div>
+            </details>
           ) : null}
-        </div>
-        <div className="flex flex-col items-center justify-center rounded-3xl border border-ink/10 bg-white/70 px-10 py-8 text-center">
-          <p className="text-sm text-ink/70">已有</p>
-          <p className="gradient-title font-display text-6xl leading-tight">
-            {statsFailed ? '—' : <CountUp to={stats?.individualCount ?? 0} />}
-          </p>
-          <p className="text-sm text-ink/70">位公民加入連署</p>
-          {statsFailed ? <p className="mt-2 text-xs text-ink/50">人數暫時讀取失敗</p> : null}
         </div>
       </div>
       {messages.length > 0 ? (

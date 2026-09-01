@@ -40,8 +40,8 @@ export default function App() {
         <Hero
           signedCount={signedCount}
           groupCount={endorsingOrgs.state === 'ready' ? petitionStats?.groupCount ?? null : null}
-          groupNames={endorsingOrgs.data.map((org) => org.name)}
-          groupState={endorsingOrgs.state}
+          citizenCount={petitionStats?.individualCount ?? null}
+          citizenCountFailed={statsFailed}
         />
         <DataStory />
         <Demands />
@@ -51,7 +51,6 @@ export default function App() {
           orgsState={endorsingOrgs.state}
           orgs={endorsingOrgs.data}
           stats={petitionStats}
-          statsFailed={statsFailed}
         />
         <PetitionForm />
         <About />

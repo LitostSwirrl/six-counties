@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import { DEMO_ENDORSING_ORGS } from '../data/demo';
-import { CITY_SKYLINE_URLS, JOIN_SECTION_HREF, PETITION_URL, SITE } from './site';
+import {
+  CITY_SKYLINE_URLS,
+  HERO_CITIZEN_LABEL,
+  HERO_GROUP_LIST_HREF,
+  HERO_GROUP_LIST_LABEL,
+  JOIN_SECTION_HREF,
+  PETITION_URL,
+  SITE,
+} from './site';
 
 describe('網站固定文案與連署入口', () => {
   it('使用指定的 Google 表單網址', () => {
@@ -13,6 +21,15 @@ describe('網站固定文案與連署入口', () => {
 
   it('首頁連署統計使用連署團體標籤', () => {
     expect(SITE.endorsementLabel).toBe('連署團體');
+  });
+
+  it('首頁團體統計提供完整名單入口', () => {
+    expect(HERO_GROUP_LIST_LABEL).toBe('>> 查看完整名單');
+    expect(HERO_GROUP_LIST_HREF).toBe('#endorse');
+  });
+
+  it('首頁第三個統計盒顯示公民連署數量', () => {
+    expect(HERO_CITIZEN_LABEL).toBe('公民連署數量');
   });
 
   it('示意連署名單有完整且不重複的團體名稱', () => {
