@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import type { EndorsingOrg } from '../data/types';
 import type { PetitionStats } from '../data/petition';
 import { ORGS } from '../content/orgs';
@@ -31,16 +30,6 @@ function OrgChip({ name, url }: { name: string; url: string }) {
 
 export default function Endorsements({ orgsState, orgs, stats }: EndorsementsProps) {
   const messages = stats?.publicMessages ?? [];
-  const [orgListOpen, setOrgListOpen] = useState(false);
-
-  useEffect(() => {
-    const openFromHash = () => {
-      if (window.location.hash === `#${SITE.sections.endorse.id}`) setOrgListOpen(true);
-    };
-    openFromHash();
-    window.addEventListener('hashchange', openFromHash);
-    return () => window.removeEventListener('hashchange', openFromHash);
-  }, []);
 
   return (
     <section id={SITE.sections.endorse.id} className="mx-auto max-w-5xl px-6 py-24">
@@ -69,29 +58,17 @@ export default function Endorsements({ orgsState, orgs, stats }: EndorsementsPro
             <p className="mt-4 text-sm text-ink/60">開放團體連署中，歡迎成為第一個響應的團體。</p>
           ) : null}
           {orgsState === 'ready' ? (
-            <details
-              className="group mt-3"
-              open={orgListOpen}
-              onToggle={(event) => setOrgListOpen(event.currentTarget.open)}
+            <div
+              role="region"
+              aria-label="完整連署團體名單"
+              className="mt-3 max-h-72 overflow-y-auto rounded-xl border border-ink/10 bg-white/80 p-4 shadow-sm"
             >
-              <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 rounded-xl border border-purple-deep/20 bg-white/70 px-4 py-2 text-sm font-bold text-purple-deep transition-colors hover:border-purple-mid hover:bg-white [&::-webkit-details-marker]:hidden">
-                <span>{orgListOpen ? '收合完整名單' : '查看完整名單'}</span>
-                <svg viewBox="0 0 16 16" className="h-4 w-4 transition-transform group-open:rotate-180" fill="none" aria-hidden="true">
-                  <path d="M3 6 L8 11 L13 6" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </summary>
-              <div
-                role="region"
-                aria-label="完整連署團體名單"
-                className="mt-2 max-h-72 overflow-y-auto rounded-xl border border-ink/10 bg-white/80 p-4 shadow-sm"
-              >
-                <div className="grid gap-2.5 sm:grid-cols-2">
-                  {orgs.map((org) => (
-                    <OrgChip key={org.name} name={org.name} url={org.url} />
-                  ))}
-                </div>
+              <div className="grid gap-2.5 sm:grid-cols-2">
+                {orgs.map((org) => (
+                  <OrgChip key={org.name} name={org.name} url={org.url} />
+                ))}
               </div>
-            </details>
+            </div>
           ) : null}
         </div>
       </div>

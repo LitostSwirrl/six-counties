@@ -23,7 +23,7 @@ interface StatChipProps {
 
 function StatChip({ label, count, unit, actionLabel, actionHref, errorLabel }: StatChipProps) {
   return (
-    <div className="flex min-h-24 flex-col justify-center border border-ink/15 bg-white/70 px-5 py-3 text-left">
+    <div className="relative flex min-h-32 flex-col justify-start border border-ink/15 bg-white/70 px-5 py-3 text-left">
       <span className="text-sm text-ink/70">{label}</span>
       <span className="mt-1 flex items-baseline gap-2">
         <span className="font-display text-3xl leading-none text-purple-deep">{count === null ? '—' : count}</span>
@@ -32,7 +32,7 @@ function StatChip({ label, count, unit, actionLabel, actionHref, errorLabel }: S
       {actionLabel && actionHref ? (
         <a
           href={actionHref}
-          className="mt-auto min-h-8 self-end whitespace-nowrap py-1 text-xs font-bold text-purple-deep transition-colors hover:text-purple-mid"
+          className="absolute bottom-3 right-5 min-h-8 whitespace-nowrap py-1 text-xs font-bold text-purple-deep transition-colors hover:text-purple-mid"
         >
           {actionLabel}
         </a>

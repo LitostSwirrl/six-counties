@@ -53,4 +53,10 @@ export const DEMO_ENDORSING_ORGS: EndorsingOrg[] = [
   { name: '示意團體（丁）', url: '', logoUrl: '' },
   { name: '示意團體（戊）', url: '', logoUrl: '' },
   { name: '示意團體（己）', url: '', logoUrl: '' },
+  { name: '示意團體（庚）', url: '', logoUrl: '' },
+  { name: '示意團體（辛）', url: '', logoUrl: '' },
+  { name: '示意團體（壬）', url: '', logoUrl: '' },
+  { name: '示意團體（癸）', url: '', logoUrl: '' },
+  { name: '示意團體（子）', url: '', logoUrl: '' },
+  { name: '示意團體（丑）', url: '', logoUrl: '' },
 ];

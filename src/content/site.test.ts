@@ -34,7 +34,7 @@ describe('網站固定文案與連署入口', () => {
 
   it('示意連署名單有完整且不重複的團體名稱', () => {
     const names = DEMO_ENDORSING_ORGS.map((org) => org.name);
-    expect(names).toHaveLength(6);
+    expect(names).toHaveLength(12);
     expect(new Set(names).size).toBe(names.length);
     expect(names.every((name) => name.startsWith('示意團體（'))).toBe(true);
   });
