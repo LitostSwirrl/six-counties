@@ -8,7 +8,7 @@ export default function RiskMatrix() {
         六都面對哪些氣候風險
       </h3>
       <p className="mx-auto mt-3 max-w-2xl text-center text-base leading-8 text-ink/75">
-        六個城市自己的氣候變遷調適計畫，就寫著各自要面對的災害。高溫之外，淹水、乾旱、海平面上升與坡地災害，分別排進了不同城市的風險清單。
+        六都面對高溫、水災或強降雨、乾旱、海平面上升、坡地・土砂、強風等氣候風險，而高溫調適和水患是六都的共同議題。
       </p>
       <div className="mt-8 overflow-x-auto rounded-3xl border border-ink/10 bg-white/80 p-5 md:p-8">
         <table className="w-full min-w-[560px] border-separate border-spacing-0">

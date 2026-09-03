@@ -2,8 +2,12 @@ interface SigningHandProps {
   className?: string;
 }
 
-const PALM = '#D9C4DC';
-const THUMB = '#B892BC';
+const PALM = '#F6D2D1';
+const THUMB = '#EEADAC';
+const PEN = '#93D6F3';
+const PEN_BAND = '#78A7F8';
+const PEN_CAP = '#4A5688';
+const LINE = '#ED6E35';
 
 export default function SigningHand({ className = '' }: SigningHandProps) {
   return (
@@ -15,10 +19,10 @@ export default function SigningHand({ className = '' }: SigningHandProps) {
         <circle cx={35} cy={57} r={5.5} fill={PALM} />
       </g>
       <g data-icon-part="pen" transform="translate(8 54) rotate(45)">
-        <path d="M0 0 L-4.5 -9 H4.5 Z" fill="var(--color-purple-deep)" />
-        <rect x={-4.5} y={-46} width={9} height={37} rx={1.5} fill="var(--color-sky)" />
-        <rect x={-4.5} y={-14} width={9} height={3} fill="var(--color-teal)" />
-        <rect x={-4.5} y={-54} width={9} height={9} rx={2} fill="var(--color-purple-deep)" />
+        <path d="M0 0 L-4.5 -9 H4.5 Z" fill={PEN_CAP} />
+        <rect x={-4.5} y={-46} width={9} height={37} rx={1.5} fill={PEN} />
+        <rect x={-4.5} y={-14} width={9} height={3} fill={PEN_BAND} />
+        <rect x={-4.5} y={-54} width={9} height={9} rx={2} fill={PEN_CAP} />
       </g>
       <rect
         data-icon-part="thumb"
@@ -30,7 +34,7 @@ export default function SigningHand({ className = '' }: SigningHandProps) {
         transform="translate(22 45) rotate(45)"
         fill={THUMB}
       />
-      <rect data-icon-part="line" x={55} y={30} width={6} height={26} rx={3} fill="var(--color-green)" />
+      <rect data-icon-part="line" x={55} y={30} width={6} height={26} rx={3} fill={LINE} />
     </svg>
   );
 }
