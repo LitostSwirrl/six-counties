@@ -309,3 +309,4 @@ Slogan:「面對城市的下一個十年，六都市長準備好了嗎？」
 - 簽名圖示：Phase 24 的紫色系配色不採用，改回參考圖顏色。以 PIL 取參考圖主要色值：手掌 #F6D2D1、拇指 #EEADAC、筆身 #93D6F3、筆環 #78A7F8、筆蓋與筆尖 #4A5688、直線 #ED6E35。不再引用主視覺 CSS 變數。
 - Joseph 追加：形狀也要更像參考圖。把參考圖（110×112px）逐列分色印成字元圖，量出各部件位置後，viewBox 改為參考圖座標「3 1 110 110」直接重畫：筆以筆尖 (13.5, 91) 為原點旋轉 33.6 度，筆身分淺藍（左上半）與中藍（右下半）兩色、筆尖收尖、藏青筆蓋；沿筆桿左上側一根深粉色手指（頂端貼近筆蓋、指尖在筆尖上方）；手掌從筆桿中線往右延伸，上緣在筆右側隆起後緩降到手腕，下緣圓弧；掌下兩根捲曲手指改為與掌相連的圓角矩形；橘色直條 x 95.5、高 46。與參考圖並排截圖確認 200px、64px、32px 三種尺寸。
 - 驗證：`tsc --noEmit`、vitest 10 檔 65 項、`npm run build`、`git diff --check` 通過；scratchpad/icon.html 以 chrome-devtools 截圖，200px、64px、32px 與參考圖並排比對，配色一致。
+- 發布：提交 `0e94f0a`（文字與配色）與 `9abe10e`（形狀重畫）已推送至 `main`，GitHub Actions 工作流程 `33721474172`、`33721750309` 建置與部署均成功。公開網址 `https://litostswirrl.github.io/six-counties/?rev=9abe10e` 的 JS 檔名 `index-BllkoFoo.js` 與本機 `dist/index.html` 一致；下載該 JS 確認含新版風險表說明、civic-flat 家族、參考圖六個色值與新 viewBox。
