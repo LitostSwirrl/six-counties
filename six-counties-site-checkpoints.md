@@ -12,6 +12,8 @@
 - **Phase 3 -- 互動段落與組裝（plan Tasks 9-11）**：完成（2026-08-27）
 - **Phase 4 -- 稽核與部署（plan Task 12）**：完成（2026-08-27）。上線 https://litostswirrl.github.io/six-counties/ ；剩餘人工待辦見 progress.md「Next／待辦」
 - **Phase 5 -- 修訂第一輪（Joseph 七項）**：進行中（2026-08-27），resume prompt 見下方
+- **Phase 5 至 Phase 20 -- 逐次修訂與公開部署**：完成（2026-08-27 至 2026-09-01），逐階段紀錄見 progress.md
+- **Phase 21 -- 全站審查修正批次（Joseph 2026-09-03 整批意見）＋連署資料改接表單回覆試算表**：本機驗證完成、尚未提交（2026-09-03）。決策、驗證結果與交接事項見 progress.md「Phase 21」。下一步待 Joseph 確認視覺後才能定案（提交推送公開複查，或再修一輪），因此尚未產 resume prompt
 
 ## Phase 5 Resume Prompt
 

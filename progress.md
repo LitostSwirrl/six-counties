@@ -240,3 +240,25 @@ Slogan:「面對城市的下一個十年，六都市長準備好了嗎？」
 - 公開網址：`https://litostswirrl.github.io/six-counties/?rev=7df8b7f`。
 - 公開驗證：公開網址在桌面確認三個標題頂端與數量列頂端分別對齊，入口與「12 個」同列；手機確認入口仍位於第二盒右下角，兩種尺寸均沒有水平溢出。
 - 已知訊息：公開頁面仍有既有 `/favicon.ico` 404；GitHub Actions 顯示既有 Node.js 20 動作棄用提示，均未阻擋建置或部署。
+
+## Phase 21 全站審查修正批次（本機驗證完成，尚未提交與部署，2026-09-03）
+- 目標：一次處理 Joseph 2026-09-03 提出的整批修正（選單命名、首頁標題與字體、六都現況文案與風險表、五大訴求版面、行動時程節點、候選人承諾標籤與圖示、連署團體真實名單與版面、區塊順序、頁尾文字），並把連署資料來源改接 Google 表單回覆試算表。
+- 資料來源事實（2026-09-03 以工作帳號 gws 讀取）：表單回覆試算表 `1TvrN08uKSxLQkbN2SpcNvwVD-MupXiHAZpLRHonPdTs` 只有一個工作表「表單回覆 1」，24 欄；團體 4 筆（TRENA 台灣再生能源推動聯盟、荒野保護協會、台灣綠黨、臺南市台南新芽協會）、個人 6 筆。個人「同意公開」且有留言者 0 筆，因此跑馬燈維持示意意見。試算表未公開（匿名 401），網站不能直接用 gviz 讀，必須經 Apps Script 中介。
+- 決策：
+  - 團體名單改由 Apps Script 回傳（表單回覆 D 欄 ＋ 試算表可選的「團體補登」工作表 A 欄），gviz「團體連署」工作表路徑移除；候選人簽署仍走 gviz。
+  - Apps Script 網址尚未部署前，網站顯示 `src/content/orgs.ts` 的 ENDORSING_GROUPS 六個真實團體（表單四個加 Joseph 指定的野薑花公民協會、綠色和平；名稱用通用簡稱：台灣再生能源推動聯盟、台南新芽協會）。
+  - 個人留言只在「同意公開」且留言非空時進跑馬燈；姓名依「希望公開哪些資訊」欄位：選公開姓名者遮第二字顯示，其餘顯示「連署公民」。
+  - 標題字體統一為內文字體：改 `--font-display` token 指向 Noto Sans TC，並移除 jf-openhuninn 的 @font-face；`public/fonts/jf-openhuninn-2.1.woff2` 不再被引用。
+  - 「已拜會」狀態整個移除（型別、解析、示意資料、文件）；候選人標籤改為 全數承諾／部分承諾 n 項／尚未回應。
+  - 高溫專區（HeatExplorer）與縣市高溫資料表（COUNTY_HEAT 等）一併移除，heatData 只留風險欄位定義。
+  - 行動時程：移除 9/11 節點，新增無日期的「選後持續監督」；無日期節點視為永遠可為目前節點，10/6 起紫色高亮停在該節點，不再有全綠完成狀態。
+  - 三個統計數字說明文字與風險表說明文字經比對已與 Joseph 給的版本相同，不需修改。
+- 已知取捨（待 Joseph 確認）：關於我們與公民社會連署響應相鄰且都列九個發起團體，內容重複。
+- 分工：Opus 工作者 A 負責圖示（簽名手勢、腳踏車、水災或強降雨合併表頭圖示、圖示測試）；Opus 工作者 B 負責 Apps Script 與文件；其餘由主迴圈處理。
+- 驗證：`tsc --noEmit` 通過；`vitest` 9 個檔案 61 項通過；`npm run build` 通過（字型路徑警告已隨 @font-face 移除消失）；`git diff --check` 通過。本機 `vite preview` 以 1200px 檢查：選單六項順序、h1 含「六都市長候選人」與簽名圖示、字體為 Noto Sans TC、統計盒兩個且各有入口、風險表五欄與備註、五大訴求編號標題與腳踏車圖示、時程五節點且目前停在 9/18、候選人標籤三種與空心圓、發起團體與連署團體各為三欄格狀、頁尾三行；區塊順序 top → why-six → demands → timeline → board → about → endorse → join。手機檢查：瀏覽器可縮到的最小寬度為 500px，無水平溢出，風險表在自身容器內橫向捲動。主控台只有既有 `/favicon.ico` 404。
+- 交接：Apps Script 尚未部署，`src/data/config.ts` 的 `APPS_SCRIPT_URL` 仍為空；部署步驟見 `docs/apps-script-deploy.md`（Code.gs 已改為讀表單回覆試算表，SHEET_ID 要填表單回覆試算表的編號 `1TvrN08uKSxLQkbN2SpcNvwVD-MupXiHAZpLRHonPdTs`）。`public/fonts/jf-openhuninn-2.1.woff2` 已無程式引用，可刪。`src/data/petition.ts` 的 `validatePetition`／`submitPetition` 是站內表單時代留下的既有未使用程式，未動。
+- Next：Joseph 確認視覺方向後提交並推送 `main`，等 GitHub Actions 完成再以公開網址複查桌機與手機。
+- 2026-09-03 第二輪（Joseph 回覆後）：公民社會連署響應移除發起團體格；「公民連署意見」改為「連署公民」，右側顯示「共 n 位」，跑馬燈維持公開意見。表單回覆試算表已有「團體補登」分頁（五筆、無標題列，與表單有三筆重複），Apps Script 改為：補登分頁標題列可有可無；表單名單與補登名單合併時忽略空白與臺／台差異、名稱互相包含即視為同一團體並以補登寫法顯示；本機以 node 驗證合併結果為六個團體。網站內建名單同步為 台灣再生能源推動聯盟、荒野保護協會、台灣綠黨、台南新芽、綠色和平、野薑花公民協會，連署公民人數快照 7（2026-09-03 表單個人回覆數）；Apps Script 部署後改為即時值。本機 dev server：http://localhost:5173/six-counties/
+- 2026-09-03 Apps Script 已由 Joseph 部署，網址填入 `src/data/config.ts` 的 `APPS_SCRIPT_URL`。匿名 curl 與瀏覽器（dev server）都確認抓到即時資料：7 位、6 個團體、1 則公開意見（顯示為「連署公民」），主控台無錯誤，代表跨網域讀取正常。`config.ts` 兩個常數改為明確 `string` 型別，避免字面值型別讓「是否為空」的比較被 TypeScript 判為永遠不成立。`petition.ts` 拆出 `FALLBACK_PETITION_STATS` 與 `parsePetitionResponse`，測試不再碰網路；62 項測試通過。目前只有一則真實公開意見，跑馬燈會重複同一張卡片，這是資料狀態不是錯誤。候選人簽署試算表仍待提供（`SHEET_ID` 留空，看板維持示意資料）。尚未提交。
+- 2026-09-03 候選人簽署試算表由我以工作帳號建立：`18MZP1jPFbK7Orn_W-66r-LjVsIpFIt1GkYwSlfvS_GY`（工作表「候選人簽署」，24 欄標題列、縣市與狀態下拉、訴求 1-18 勾選框、標題列凍結）。已設「知道連結的任何人可檢視」，匿名 gviz 讀取確認 status ok；`SHEET_ID` 已填入 `config.ts`。勾選框回傳 TRUE，`parseCheck` 原本就接受。目前無資料列，網站看板應顯示「名單整理中」空狀態。文件步驟一改為指向既有試算表。
+- 瀏覽器確認：試算表空表時看板顯示「名單整理中」、無示意標記、無主控台錯誤。首頁候選人數在空表狀態原本顯示「—」，改為 0（`App.tsx` 把 empty 也視為已讀到資料）。

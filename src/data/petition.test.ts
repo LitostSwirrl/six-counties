@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { DEMO_ENDORSING_ORGS } from './demo';
-import { fetchPetitionStats, validatePetition, maskName, type PetitionPayload } from './petition';
+import { ENDORSING_GROUPS, INDIVIDUAL_COUNT_SNAPSHOT } from '../content/orgs';
+import {
+  FALLBACK_PETITION_STATS,
+  PLACEHOLDER_MESSAGES,
+  parsePetitionResponse,
+  validatePetition,
+  maskName,
+  type PetitionPayload,
+} from './petition';
 
 function payload(overrides: Partial<PetitionPayload> = {}): PetitionPayload {
   return {
@@ -55,14 +62,32 @@ describe('maskName', () => {
   });
 });
 
-describe('fetchPetitionStats', () => {
-  it('示意團體數量與示意連署名單同步', async () => {
-    const stats = await fetchPetitionStats();
-    expect(stats.groupCount).toBe(DEMO_ENDORSING_ORGS.length);
+describe('連署統計', () => {
+  it('未接 Apps Script 時使用已確認的連署團體名單與人數快照', () => {
+    expect(FALLBACK_PETITION_STATS.groupNames).toEqual(ENDORSING_GROUPS);
+    expect(FALLBACK_PETITION_STATS.groupCount).toBe(ENDORSING_GROUPS.length);
+    expect(ENDORSING_GROUPS).toHaveLength(6);
+    expect(FALLBACK_PETITION_STATS.individualCount).toBe(INDIVIDUAL_COUNT_SNAPSHOT);
+    expect(FALLBACK_PETITION_STATS.publicMessages).toHaveLength(6);
   });
 
-  it('提供六則公民連署意見樣板', async () => {
-    const stats = await fetchPetitionStats();
-    expect(stats.publicMessages).toHaveLength(6);
+  it('Apps Script 回傳的名單與意見照用，沒有公開意見時改用樣板', () => {
+    const live = parsePetitionResponse({
+      ok: true,
+      individualCount: 7,
+      groupCount: 2,
+      groupNames: ['甲', '乙'],
+      publicMessages: [{ name: '連署公民', message: '真實意見' }],
+    });
+    expect(live.individualCount).toBe(7);
+    expect(live.groupNames).toEqual(['甲', '乙']);
+    expect(live.publicMessages).toEqual([{ name: '連署公民', message: '真實意見' }]);
+
+    const empty = parsePetitionResponse({ ok: true, individualCount: 0, groupCount: 0, groupNames: [], publicMessages: [] });
+    expect(empty.publicMessages).toBe(PLACEHOLDER_MESSAGES);
+  });
+
+  it('回應非 ok 時視為讀取失敗', () => {
+    expect(() => parsePetitionResponse({ ok: false })).toThrow('讀取連署資料失敗');
   });
 });

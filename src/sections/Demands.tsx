@@ -11,7 +11,8 @@ export default function Demands() {
       <h2 className="text-center font-display text-3xl tracking-[0.2em] text-ink md:text-4xl">
         {SITE.sections.demands.title}
       </h2>
-      <p className="mx-auto mt-4 max-w-2xl text-center text-base leading-7 text-ink/75">
+      <p className="mx-auto mt-4 max-w-2xl text-center text-base leading-7 text-ink/75">{SITE.demandsLead}</p>
+      <p className="mx-auto mt-3 max-w-2xl text-center text-base leading-7 text-ink/75">
         九個公民團體針對五大面向提出十八項政策訴求，邀請每一位六都市長候選人公開承諾。點開每個面向，看完整的政策內容。
       </p>
       <div className="mt-12 flex flex-col gap-4">
@@ -29,11 +30,8 @@ export default function Demands() {
                 onClick={() => setOpenId(open ? null : pillar.id)}
               >
                 <PillarIcon pillar={pillar.id} className="h-14 w-14 shrink-0" />
-                <span className="flex-1">
-                  <span className="block font-display text-sm text-purple-mid">
-                    {pillar.index}、{pillar.shortName}
-                  </span>
-                  <span className="mt-0.5 block font-display text-xl text-ink md:text-2xl">{pillar.fullName}</span>
+                <span className="flex-1 font-display text-xl text-ink md:text-2xl">
+                  {pillar.index}、{pillar.fullName}
                 </span>
                 <span className="flex items-center gap-2">
                   <span className="hidden text-sm text-ink/50 md:inline">共 {pillar.items.length} 項</span>

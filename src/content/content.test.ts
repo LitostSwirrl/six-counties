@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { PILLARS } from './demands';
-import { COUNTY_HEAT } from './heatData';
+import { HAZARD_COLUMNS, SIX_HAZARDS } from './heatData';
 
 describe('PILLARS', () => {
   it('共五個面向', () => {
@@ -32,23 +32,17 @@ describe('PILLARS', () => {
   });
 });
 
-describe('COUNTY_HEAT', () => {
-  it('涵蓋全台 22 縣市', () => {
-    expect(COUNTY_HEAT).toHaveLength(22);
+describe('氣候風險表', () => {
+  it('五個欄位，水災或強降雨合併為一欄', () => {
+    expect(HAZARD_COLUMNS.map((c) => c.label)).toEqual(['水災或強降雨', '乾旱', '海平面上升', '坡地・土砂', '強風']);
+    expect(HAZARD_COLUMNS[0]?.hazards).toEqual(['flood', 'rain']);
   });
 
-  it('六都標記正確', () => {
-    const six = COUNTY_HEAT.filter((c) => c.six).map((c) => c.city);
-    expect(new Set(six)).toEqual(
-      new Set(['臺北市', '新北市', '桃園市', '臺中市', '臺南市', '高雄市'])
-    );
-  });
-
-  it('每縣市四個情境值遞增', () => {
-    for (const c of COUNTY_HEAT) {
-      expect(c.delta[0]).toBeLessThanOrEqual(c.delta[1]);
-      expect(c.delta[1]).toBeLessThanOrEqual(c.delta[2]);
-      expect(c.delta[2]).toBeLessThanOrEqual(c.delta[3]);
+  it('六都風險都落在表格欄位內，且不含高溫', () => {
+    const covered = new Set(HAZARD_COLUMNS.flatMap((c) => c.hazards));
+    expect(SIX_HAZARDS).toHaveLength(6);
+    for (const row of SIX_HAZARDS) {
+      for (const hazard of row.hazards) expect(covered.has(hazard)).toBe(true);
     }
   });
 });

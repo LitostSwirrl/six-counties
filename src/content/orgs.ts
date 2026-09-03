@@ -14,3 +14,14 @@ export const ORGS: Org[] = [
   { name: '台灣河溪網協會', url: 'https://www.twrna.org/' },
   { name: '台灣身心障礙者自立生活聯盟', url: 'https://ciltw2018.blogspot.com/' },
 ];
+
+export const ENDORSING_GROUPS: string[] = [
+  '台灣再生能源推動聯盟',
+  '荒野保護協會',
+  '台灣綠黨',
+  '台南新芽',
+  '綠色和平',
+  '野薑花公民協會',
+];
+
+export const INDIVIDUAL_COUNT_SNAPSHOT = 7;

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { mapCandidateRow, mapCandidateRows, mapOrgRows, parseCheck, parseStatus } from './sheets';
+import { mapCandidateRow, mapCandidateRows, parseCheck, parseStatus } from './sheets';
 
 function row(overrides: Record<number, string>): string[] {
   const base = Array.from({ length: 24 }, () => '');
@@ -14,10 +14,10 @@ function row(overrides: Record<number, string>): string[] {
 }
 
 describe('parseStatus', () => {
-  it('對應四種狀態字串', () => {
+  it('對應三種狀態字串，已拜會視為尚未回應', () => {
     expect(parseStatus('已簽署')).toBe('signed');
     expect(parseStatus('部分簽署')).toBe('partial');
-    expect(parseStatus('已拜會')).toBe('met');
+    expect(parseStatus('已拜會')).toBe('none');
     expect(parseStatus('尚未回覆')).toBe('none');
     expect(parseStatus('')).toBe('none');
   });
@@ -68,18 +68,5 @@ describe('mapCandidateRows', () => {
 
   it('無標題列時全數保留', () => {
     expect(mapCandidateRows([row({}), row({ 1: '示意候選人（乙）' })])).toHaveLength(2);
-  });
-});
-
-describe('mapOrgRows', () => {
-  it('對應名稱、網址、logo 並濾掉空列', () => {
-    const result = mapOrgRows([
-      ['名稱', '網址', 'Logo'],
-      ['示意團體（甲）', 'https://example.org', 'logo.png'],
-      ['', '', ''],
-    ]);
-    expect(result).toEqual([
-      { name: '示意團體（甲）', url: 'https://example.org', logoUrl: 'logo.png' },
-    ]);
   });
 });

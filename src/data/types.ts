@@ -1,4 +1,4 @@
-export type SignStatus = 'signed' | 'partial' | 'met' | 'none';
+export type SignStatus = 'signed' | 'partial' | 'none';
 
 export interface Candidate {
   city: string;
@@ -9,10 +9,4 @@ export interface Candidate {
   signedDate: string;
   photoUrl: string;
   isDemo: boolean;
-}
-
-export interface EndorsingOrg {
-  name: string;
-  url: string;
-  logoUrl: string;
 }

@@ -66,12 +66,13 @@ export default function PillarIcon({ pillar, className = '' }: PillarIconProps) 
       ) : null}
       {pillar === 'transport' ? (
         <>
-          <g data-icon-part="bus">
-            <path d="M8 19 C8 15 11 13 15 13 H36 C41 13 44 16 44 20 V40 H8 Z" fill="var(--color-green)" {...S} />
-            <path d="M13 18 H23 V28 H13 Z M28 18 H39 V28 H28 Z" fill="var(--color-cream)" {...S} strokeWidth={1.8} />
-            <path d="M8 33 H44 M14 40 H38" fill="none" {...S} />
-            <circle cx={16} cy={40} r={4} fill="var(--color-ink)" />
-            <circle cx={35} cy={40} r={4} fill="var(--color-ink)" />
+          <g data-icon-part="bicycle">
+            <circle cx={14} cy={38} r={10} fill="var(--color-cream)" {...S} />
+            <circle cx={40} cy={38} r={10} fill="var(--color-cream)" {...S} />
+            <path d="M14 38 L23 38 M40 38 L34 24" fill="none" stroke="var(--color-ink)" strokeWidth={1.2} opacity={0.5} />
+            <path d="M14 38 L23 22 H34 L40 38 M23 38 L34 24" fill="none" stroke="var(--color-green)" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M20 22 H27 M31 20 L36 20" fill="none" {...S} strokeWidth={2.2} />
+            <path d="M34 24 V20" fill="none" {...S} strokeWidth={2} />
           </g>
           <path data-icon-part="direction" d="M47 21 H53 M50 18 L53 21 L50 24" fill="none" stroke="var(--color-purple-mid)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
         </>

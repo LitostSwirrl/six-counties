@@ -15,7 +15,7 @@ export function currentPhaseIndex(nodes: TimelineNode[], today: Date): number {
   const todayStr = taiwanDateKey(today);
   for (let i = 0; i < nodes.length; i += 1) {
     const node = nodes[i];
-    if (node && todayStr <= node.deadline) return i;
+    if (node && (node.deadline === '' || todayStr <= node.deadline)) return i;
   }
   return -1;
 }

@@ -6,8 +6,8 @@ const LINKS = [
   SITE.sections.demands,
   SITE.sections.timeline,
   SITE.sections.board,
-  SITE.sections.endorse,
   SITE.sections.about,
+  SITE.sections.endorse,
 ];
 
 function useActiveSection(): string {

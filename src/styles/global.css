@@ -11,14 +11,8 @@
   --color-teal: #639BA8;
   --color-sky: #6CB5EC;
   --color-sky-pale: #B0C5D6;
-  --font-display: "jf-openhuninn", "Noto Sans TC", sans-serif;
+  --font-display: "Noto Sans TC", sans-serif;
   --font-body: "Noto Sans TC", sans-serif;
-}
-
-@font-face {
-  font-family: "jf-openhuninn";
-  src: url("/six-counties/fonts/jf-openhuninn-2.1.woff2") format("woff2");
-  font-display: swap;
 }
 
 .tag-box {

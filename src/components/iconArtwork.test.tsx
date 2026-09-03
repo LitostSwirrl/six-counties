@@ -1,18 +1,18 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import BallotBox from './BallotBox';
+import HazardIcon from './HazardIcon';
 import PillarIcon from './PillarIcon';
-import RiskMatrix from './RiskMatrix';
+import SigningHand from './SigningHand';
 
 describe('網站圖示家族', () => {
-  it('投票箱保留紙張、投票箱、投入口與勾選符號', () => {
-    const markup = renderToStaticMarkup(<BallotBox />);
+  it('簽名圖示保留紙張、簽名、手與筆', () => {
+    const markup = renderToStaticMarkup(<SigningHand />);
 
     expect(markup).toContain('data-icon-family="civic-line"');
     expect(markup).toContain('data-icon-part="paper"');
-    expect(markup).toContain('data-icon-part="box"');
-    expect(markup).toContain('data-icon-part="slot"');
-    expect(markup).toContain('data-icon-part="check"');
+    expect(markup).toContain('data-icon-part="signature"');
+    expect(markup).toContain('data-icon-part="hand"');
+    expect(markup).toContain('data-icon-part="pen"');
   });
 
   it.each([
@@ -20,7 +20,7 @@ describe('網站圖示家族', () => {
     ['resilience', ['house', 'heart']],
     ['heat', ['sun', 'thermometer']],
     ['flood', ['cloud', 'rain', 'waves']],
-    ['transport', ['bus', 'direction']],
+    ['transport', ['bicycle', 'direction']],
   ] as const)('%s 圖示保留必要的主要部件', (pillar, parts) => {
     const markup = renderToStaticMarkup(<PillarIcon pillar={pillar} />);
 
@@ -30,10 +30,19 @@ describe('網站圖示家族', () => {
     }
   });
 
-  it('氣候風險圖示涵蓋七種風險的主要部件', () => {
-    const markup = renderToStaticMarkup(<RiskMatrix />);
+  it.each([
+    ['water', ['cloud', 'rain', 'house', 'waves']],
+    ['flood', ['house', 'waves']],
+    ['rain', ['cloud', 'rain']],
+    ['drought', ['sun', 'horizon']],
+    ['sea', ['waves']],
+    ['slope', ['slope']],
+    ['wind', ['wind']],
+  ] as const)('%s 風險圖示保留必要的主要部件', (hazard, parts) => {
+    const markup = renderToStaticMarkup(<HazardIcon hazard={hazard} active />);
 
-    for (const part of ['sun', 'house', 'cloud', 'horizon', 'waves', 'slope', 'wind']) {
+    expect(markup).toContain('data-icon-family="civic-line"');
+    for (const part of parts) {
       expect(markup).toContain(`data-icon-part="${part}"`);
     }
   });

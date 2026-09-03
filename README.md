@@ -4,10 +4,12 @@
 
 ## 網站怎麼更新資料
 
-網站的簽署與連署資料都來自一份 Google Sheet，改試算表、重新整理網頁就會更新，不需要動程式碼。設定步驟與工作表欄位定義見 `docs/apps-script-deploy.md`。
+網站的資料來自兩個地方，改資料來源、重新整理網頁就會更新，不需要動程式碼。設定步驟與欄位定義見 `docs/apps-script-deploy.md`。
 
-- 試算表建好後，把試算表 ID 與 Apps Script 網址填入 `src/data/config.ts`，重新部署一次。
-- 兩個值都留空時，網站以示意資料運作（畫面上會標示「示意資料」）。
+- 候選人簽署狀態：來自「候選人簽署」這份 Google Sheet，由工作人員手動維護，網站直接讀取。
+- 連署團體名單與個人留言：連署走 Google 表單，回覆會落在一份不公開的試算表，網站透過 Apps Script 網頁應用程式讀取整理過的結果，Email 等個資不會外流。
+- 兩個設定值填在 `src/data/config.ts`：`SHEET_ID` 是候選人簽署試算表的編號，`APPS_SCRIPT_URL` 是 Apps Script 的網頁應用程式網址。改完要重新部署一次。
+- 值填好之前，簽署看板顯示示意資料（畫面上會標示「示意資料」），連署團體則顯示網站內建的已確認名單。
 
 ## 開發
 
@@ -18,7 +20,7 @@ npm run build    產出靜態檔到 dist/
 npm run test     跑測試
 ```
 
-技術：React 18、TypeScript、Vite、Tailwind CSS v4、GSAP ScrollTrigger。字型：jf open 粉圓（標題）、Noto Sans TC（內文）。
+技術：React 18、TypeScript、Vite、Tailwind CSS v4、GSAP ScrollTrigger。字型：Noto Sans TC。
 
 ## 部署
 

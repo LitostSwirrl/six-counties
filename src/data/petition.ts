@@ -1,10 +1,24 @@
 import { APPS_SCRIPT_URL } from './config';
-import { DEMO_ENDORSING_ORGS } from './demo';
+import { ENDORSING_GROUPS, INDIVIDUAL_COUNT_SNAPSHOT } from '../content/orgs';
+
+export interface PetitionMessage {
+  name: string;
+  message: string;
+}
 
 export interface PetitionStats {
   individualCount: number;
   groupCount: number;
-  publicMessages: { name: string; message: string }[];
+  groupNames: string[];
+  publicMessages: PetitionMessage[];
+}
+
+export interface PetitionResponse {
+  ok?: boolean;
+  individualCount?: number;
+  groupCount?: number;
+  groupNames?: string[];
+  publicMessages?: PetitionMessage[];
 }
 
 export interface PetitionPayload {
@@ -18,6 +32,22 @@ export interface PetitionPayload {
 }
 
 const EMAIL_PATTERN = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+export const PLACEHOLDER_MESSAGES: PetitionMessage[] = [
+  { name: '林○安', message: '希望市長候選人把永續城市當成任期內就要交出成績的事。' },
+  { name: '陳○宇', message: '我住的社區夏天愈來愈熱，很想看到具體的降溫與綠地規劃。' },
+  { name: '黃○芳', message: '支持六都一起把永續城市的政策標準拉齊，不要各做各的。' },
+  { name: '張○庭', message: '希望城市把降溫、排水與行人安全一起納入長期規劃。' },
+  { name: '吳○哲', message: '支持候選人公開承諾，也期待未來定期說明執行進度。' },
+  { name: '蔡○玲', message: '讓不同城市都能安全生活，是公民參與地方治理的開始。' },
+];
+
+export const FALLBACK_PETITION_STATS: PetitionStats = {
+  individualCount: INDIVIDUAL_COUNT_SNAPSHOT,
+  groupCount: ENDORSING_GROUPS.length,
+  groupNames: ENDORSING_GROUPS,
+  publicMessages: PLACEHOLDER_MESSAGES,
+};
 
 export function validatePetition(p: PetitionPayload): string | null {
   if (p.website.trim() !== '') return '送出失敗，請再試一次';
@@ -49,33 +79,21 @@ export async function submitPetition(payload: PetitionPayload): Promise<void> {
   if (data.ok !== true) throw new Error('送出失敗');
 }
 
-export async function fetchPetitionStats(): Promise<PetitionStats> {
-  if (APPS_SCRIPT_URL === '') {
-    return {
-      individualCount: 128,
-      groupCount: DEMO_ENDORSING_ORGS.length,
-      publicMessages: [
-        { name: '林○安', message: '希望市長候選人把永續城市當成任期內就要交出成績的事。' },
-        { name: '陳○宇', message: '我住的社區夏天愈來愈熱，很想看到具體的降溫與綠地規劃。' },
-        { name: '黃○芳', message: '支持六都一起把永續城市的政策標準拉齊，不要各做各的。' },
-        { name: '張○庭', message: '希望城市把降溫、排水與行人安全一起納入長期規劃。' },
-        { name: '吳○哲', message: '支持候選人公開承諾，也期待未來定期說明執行進度。' },
-        { name: '蔡○玲', message: '讓不同城市都能安全生活，是公民參與地方治理的開始。' },
-      ],
-    };
-  }
-  const res = await fetch(APPS_SCRIPT_URL);
-  if (!res.ok) throw new Error('讀取連署資料失敗');
-  const data = (await res.json()) as {
-    ok?: boolean;
-    individualCount?: number;
-    groupCount?: number;
-    publicMessages?: { name: string; message: string }[];
-  };
+export function parsePetitionResponse(data: PetitionResponse): PetitionStats {
   if (data.ok !== true) throw new Error('讀取連署資料失敗');
+  const groupNames = data.groupNames ?? [];
+  const publicMessages = data.publicMessages ?? [];
   return {
     individualCount: data.individualCount ?? 0,
-    groupCount: data.groupCount ?? 0,
-    publicMessages: data.publicMessages ?? [],
+    groupCount: data.groupCount ?? groupNames.length,
+    groupNames,
+    publicMessages: publicMessages.length > 0 ? publicMessages : PLACEHOLDER_MESSAGES,
   };
+}
+
+export async function fetchPetitionStats(): Promise<PetitionStats> {
+  if (APPS_SCRIPT_URL === '') return FALLBACK_PETITION_STATS;
+  const res = await fetch(APPS_SCRIPT_URL);
+  if (!res.ok) throw new Error('讀取連署資料失敗');
+  return parsePetitionResponse((await res.json()) as PetitionResponse);
 }

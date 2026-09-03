@@ -29,7 +29,6 @@ function CheckGlyph({ checked }: { checked: boolean }) {
   return (
     <svg viewBox="0 0 20 20" className="h-5 w-5 shrink-0" aria-hidden="true">
       <circle cx="10" cy="10" r="9" fill="none" stroke="var(--color-ink)" strokeOpacity="0.25" strokeWidth="1.5" />
-      <path d="M6.5 10 H13.5" stroke="var(--color-ink)" strokeOpacity="0.35" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
@@ -67,7 +66,7 @@ export default function CandidateCard({ candidate }: CandidateCardProps) {
         <div className="flex flex-col items-end gap-2">
           <StatusBadge candidate={candidate} />
           <span className="flex items-center gap-1 text-xs text-ink/50">
-            {open ? '收合' : '看 18 項明細'}
+            {open ? '收合' : '展開看候選人承諾'}
             <svg viewBox="0 0 20 20" className={`h-4 w-4 transition-transform duration-300 ${open ? 'rotate-180' : ''}`} aria-hidden="true">
               <path d="M5 8 L10 13 L15 8" stroke="currentColor" strokeWidth={2} fill="none" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

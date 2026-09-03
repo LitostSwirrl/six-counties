@@ -1,7 +1,7 @@
 import { SHEET_ID, gvizUrl } from './config';
 import { parseGviz } from './gviz';
-import { DEMO_CANDIDATES, DEMO_ENDORSING_ORGS } from './demo';
-import type { Candidate, EndorsingOrg, SignStatus } from './types';
+import { DEMO_CANDIDATES } from './demo';
+import type { Candidate, SignStatus } from './types';
 
 const CHECK_START = 4;
 const CHECK_END = 22;
@@ -18,7 +18,6 @@ function cell(row: string[], index: number): string {
 export function parseStatus(raw: string): SignStatus {
   if (raw === '已簽署') return 'signed';
   if (raw === '部分簽署') return 'partial';
-  if (raw === '已拜會') return 'met';
   return 'none';
 }
 
@@ -49,13 +48,6 @@ export function mapCandidateRows(rows: string[][]): Candidate[] {
   return body.map(mapCandidateRow).filter((c) => c.name !== '');
 }
 
-export function mapOrgRows(rows: string[][]): EndorsingOrg[] {
-  const body = rows.length > 0 && cell(rows[0], 0) === '名稱' ? rows.slice(1) : rows;
-  return body
-    .map((row) => ({ name: cell(row, 0), url: cell(row, 1), logoUrl: cell(row, 2) }))
-    .filter((org) => org.name !== '');
-}
-
 async function fetchSheet(sheetName: string): Promise<string[][]> {
   const res = await fetch(gvizUrl(sheetName));
   if (!res.ok) throw new Error(`讀取「${sheetName}」失敗（HTTP ${res.status}）`);
@@ -68,12 +60,4 @@ export async function fetchCandidates(): Promise<Candidate[]> {
     return DEMO_CANDIDATES;
   }
   return mapCandidateRows(await fetchSheet('候選人簽署'));
-}
-
-export async function fetchEndorsingOrgs(): Promise<EndorsingOrg[]> {
-  if (SHEET_ID === '') {
-    await delay(DEMO_DELAY_MS);
-    return DEMO_ENDORSING_ORGS;
-  }
-  return mapOrgRows(await fetchSheet('團體連署'));
 }
