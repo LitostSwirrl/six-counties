@@ -25,8 +25,8 @@ describe('parseStatus', () => {
 
 describe('formatSignedDate', () => {
   it('yyyy-mm-dd 轉為中文日期，其他字串原樣回傳', () => {
-    expect(formatSignedDate('2026-09-25')).toBe('2026年9月25日');
-    expect(formatSignedDate('2026-10-05')).toBe('2026年10月5日');
+    expect(formatSignedDate('2026-09-25')).toBe('2026 年 9 月 25 日');
+    expect(formatSignedDate('2026-10-05')).toBe('2026 年 10 月 5 日');
     expect(formatSignedDate('')).toBe('');
     expect(formatSignedDate('十月初')).toBe('十月初');
   });
@@ -58,7 +58,7 @@ describe('mapCandidateRow', () => {
     expect(mapped.checks[2]).toBe(true);
     expect(mapped.checks[17]).toBe(true);
     expect(mapped.checks[1]).toBe(false);
-    expect(mapped.signedDate).toBe('2026年9月20日');
+    expect(mapped.signedDate).toBe('2026 年 9 月 20 日');
     expect(mapped.photoUrl).toBe('photo.jpg');
     expect(mapped.isDemo).toBe(false);
   });

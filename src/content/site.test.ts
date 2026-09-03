@@ -41,7 +41,7 @@ describe('網站固定文案與連署入口', () => {
 
   it('首頁說明分四行，六都現況說明分三行', () => {
     expect(SITE.heroLines).toHaveLength(4);
-    expect(SITE.heroLines[2]).toBe('2026年，九個公民團體提出五大訴求，十八項政策承諾，');
+    expect(SITE.heroLines[2]).toBe('2026 年，九個公民團體提出五大訴求，十八項政策承諾，');
     expect(SITE.whySixLines).toHaveLength(3);
     expect(SITE.whySixLines[0]).toContain('七成以上的溫室氣體排放');
   });

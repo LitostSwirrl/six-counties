@@ -30,17 +30,17 @@ function candidate(
 }
 
 export const DEMO_CANDIDATES: Candidate[] = [
-  candidate('臺北市', '示意候選人（甲）', '示意政黨Ａ', 'signed', ALL, '2026年9月20日'),
+  candidate('臺北市', '示意候選人（甲）', '示意政黨Ａ', 'signed', ALL, '2026 年 9 月 20 日'),
   candidate('臺北市', '示意候選人（乙）', '示意政黨Ｂ', 'partial', [0, 1, 2, 5, 6, 9, 12, 13, 16], ''),
   candidate('臺北市', '示意候選人（丙）', '無黨籍', 'none', NONE, ''),
-  candidate('新北市', '示意候選人（丁）', '示意政黨Ａ', 'signed', ALL, '2026年9月22日'),
+  candidate('新北市', '示意候選人（丁）', '示意政黨Ａ', 'signed', ALL, '2026 年 9 月 22 日'),
   candidate('新北市', '示意候選人（戊）', '示意政黨Ｂ', 'none', NONE, ''),
   candidate('桃園市', '示意候選人（己）', '示意政黨Ｂ', 'partial', [0, 3, 4, 7, 8, 11, 14, 17], ''),
   candidate('桃園市', '示意候選人（庚）', '示意政黨Ａ', 'none', NONE, ''),
   candidate('桃園市', '示意候選人（辛）', '無黨籍', 'none', NONE, ''),
-  candidate('臺中市', '示意候選人（壬）', '示意政黨Ａ', 'signed', ALL, '2026年9月25日'),
+  candidate('臺中市', '示意候選人（壬）', '示意政黨Ａ', 'signed', ALL, '2026 年 9 月 25 日'),
   candidate('臺中市', '示意候選人（癸）', '示意政黨Ｂ', 'partial', [1, 2, 6, 7, 10, 15], ''),
-  candidate('臺南市', '示意候選人（子）', '示意政黨Ｂ', 'signed', ALL, '2026年9月28日'),
+  candidate('臺南市', '示意候選人（子）', '示意政黨Ｂ', 'signed', ALL, '2026 年 9 月 28 日'),
   candidate('臺南市', '示意候選人（丑）', '無黨籍', 'none', NONE, ''),
   candidate('高雄市', '示意候選人（寅）', '示意政黨Ａ', 'partial', [0, 1, 4, 5, 8, 9, 12, 16, 17], ''),
   candidate('高雄市', '示意候選人（卯）', '示意政黨Ｂ', 'none', NONE, ''),

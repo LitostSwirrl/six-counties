@@ -29,7 +29,7 @@ export function parseCheck(raw: string): boolean {
 export function formatSignedDate(raw: string): string {
   const match = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(raw.trim());
   if (!match) return raw.trim();
-  return `${match[1]}年${Number(match[2])}月${Number(match[3])}日`;
+  return `${match[1]} 年 ${Number(match[2])} 月 ${Number(match[3])} 日`;
 }
 
 export function mapCandidateRow(row: string[]): Candidate {
