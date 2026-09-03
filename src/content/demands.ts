@@ -167,3 +167,5 @@ export const PILLARS: DemandPillar[] = [
     ],
   },
 ];
+
+export const DEMAND_COUNT = PILLARS.reduce((sum, pillar) => sum + pillar.items.length, 0);

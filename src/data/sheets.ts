@@ -26,6 +26,12 @@ export function parseCheck(raw: string): boolean {
   return value === '1' || value === 'TRUE' || value === '是';
 }
 
+export function formatSignedDate(raw: string): string {
+  const match = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(raw.trim());
+  if (!match) return raw.trim();
+  return `${match[1]}年${Number(match[2])}月${Number(match[3])}日`;
+}
+
 export function mapCandidateRow(row: string[]): Candidate {
   const checks: boolean[] = [];
   for (let i = CHECK_START; i < CHECK_END; i += 1) {
@@ -37,7 +43,7 @@ export function mapCandidateRow(row: string[]): Candidate {
     party: cell(row, 2),
     status: parseStatus(cell(row, 3)),
     checks,
-    signedDate: cell(row, 22),
+    signedDate: formatSignedDate(cell(row, 22)),
     photoUrl: cell(row, 23),
     isDemo: false,
   };

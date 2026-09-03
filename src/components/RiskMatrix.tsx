@@ -18,7 +18,11 @@ export default function RiskMatrix() {
               {HAZARD_COLUMNS.map((col) => (
                 <th key={col.key} className="pb-3 text-center">
                   <span className="flex flex-col items-center gap-1">
-                    <HazardIcon hazard={col.key} active />
+                    <span className="flex items-center gap-1">
+                      {col.hazards.map((h) => (
+                        <HazardIcon key={h} hazard={h} active />
+                      ))}
+                    </span>
                     <span className="text-[13px] leading-4 font-medium whitespace-nowrap text-ink/75">{col.label}</span>
                   </span>
                 </th>

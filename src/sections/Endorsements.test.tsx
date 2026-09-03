@@ -26,7 +26,7 @@ describe('公民社會連署響應', () => {
     expect(markup).not.toContain('<a ');
   });
 
-  it('連署公民標題右側顯示人數，並以兩倍速跑馬燈呈現公開意見', () => {
+  it('連署公民標題右側顯示人數，跑馬燈依卡片數換算時間並補到至少六張', () => {
     const markup = renderToStaticMarkup(
       <Endorsements
         groupsState="ready"
@@ -39,8 +39,9 @@ describe('公民社會連署響應', () => {
     expect(markup).toContain('連署公民');
     expect(markup).not.toContain('公民連署意見');
     expect(markup).toContain('共 7 位');
-    expect(markup).toContain('marquee-track-fast');
-    expect(markup).toContain('測試意見');
+    expect(markup).not.toContain('marquee-track-fast');
+    expect(markup).toContain('animation-duration:22.5s');
+    expect(markup.match(/測試意見/g)).toHaveLength(12);
   });
 
   it('處理載入、錯誤與空名單狀態，人數未知時不顯示', () => {

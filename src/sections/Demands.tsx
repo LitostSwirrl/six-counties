@@ -12,8 +12,9 @@ export default function Demands() {
         {SITE.sections.demands.title}
       </h2>
       <p className="mx-auto mt-4 max-w-2xl text-center text-base leading-7 text-ink/75">{SITE.demandsLead}</p>
-      <p className="mx-auto mt-3 max-w-2xl text-center text-base leading-7 text-ink/75">
-        九個公民團體針對五大面向提出十八項政策訴求，邀請每一位六都市長候選人公開承諾。點開每個面向，看完整的政策內容。
+      <p className="mx-auto mt-6 max-w-2xl text-center text-base leading-7 text-ink/75">
+        <span className="block">九個公民團體針對五大面向提出十八項政策訴求，邀請每一位六都市長候選人公開承諾。</span>
+        <span className="block">點開每個面向，看完整的政策內容。</span>
       </p>
       <div className="mt-12 flex flex-col gap-4">
         {PILLARS.map((pillar) => {

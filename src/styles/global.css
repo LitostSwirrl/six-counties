@@ -123,10 +123,6 @@ section[id] {
   animation: marquee-scroll 45s linear infinite;
 }
 
-.marquee-track-fast {
-  animation-duration: 22.5s;
-}
-
 .marquee-wrap:hover .marquee-track,
 .marquee-wrap:focus-within .marquee-track {
   animation-play-state: paused;

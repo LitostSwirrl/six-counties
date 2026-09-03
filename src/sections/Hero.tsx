@@ -64,11 +64,11 @@ export default function Hero({ signedCount, groupCount }: HeroProps) {
     <section id="top" ref={rootRef} className="relative flex min-h-svh flex-col overflow-hidden">
       <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-6 pt-28 pb-4 text-center">
         <h1 className="hero-enter font-display leading-tight tracking-wide">
-          <span className="flex items-center justify-center gap-3 text-[clamp(1.3rem,4vw,1.9rem)] tracking-[0.3em] text-ink">
-            <SigningHand className="h-11 w-11 shrink-0" />
-            {SITE.heroKicker}
+          <span className="flex items-center justify-center gap-3 text-[clamp(2.2rem,7vw,4rem)]">
+            <SigningHand className="h-[0.95em] w-[0.95em] shrink-0" />
+            <span className="gradient-title">{SITE.heroKicker}</span>
           </span>
-          <span className="gradient-title mt-3 block text-[clamp(2.2rem,7vw,4rem)]">永續韌性城市</span>
+          <span className="gradient-title block text-[clamp(2.2rem,7vw,4rem)]">永續韌性城市</span>
           <span className="gradient-title block text-[clamp(2.2rem,7vw,4rem)]">政策承諾</span>
         </h1>
         <p className="hero-enter mt-5 font-display text-[clamp(1.1rem,3.5vw,1.5rem)] text-ink">

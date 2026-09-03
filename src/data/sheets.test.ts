@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { mapCandidateRow, mapCandidateRows, parseCheck, parseStatus } from './sheets';
+import { formatSignedDate, mapCandidateRow, mapCandidateRows, parseCheck, parseStatus } from './sheets';
 
 function row(overrides: Record<number, string>): string[] {
   const base = Array.from({ length: 24 }, () => '');
@@ -20,6 +20,15 @@ describe('parseStatus', () => {
     expect(parseStatus('已拜會')).toBe('none');
     expect(parseStatus('尚未回覆')).toBe('none');
     expect(parseStatus('')).toBe('none');
+  });
+});
+
+describe('formatSignedDate', () => {
+  it('yyyy-mm-dd 轉為中文日期，其他字串原樣回傳', () => {
+    expect(formatSignedDate('2026-09-25')).toBe('2026年9月25日');
+    expect(formatSignedDate('2026-10-05')).toBe('2026年10月5日');
+    expect(formatSignedDate('')).toBe('');
+    expect(formatSignedDate('十月初')).toBe('十月初');
   });
 });
 
@@ -49,7 +58,7 @@ describe('mapCandidateRow', () => {
     expect(mapped.checks[2]).toBe(true);
     expect(mapped.checks[17]).toBe(true);
     expect(mapped.checks[1]).toBe(false);
-    expect(mapped.signedDate).toBe('2026-09-20');
+    expect(mapped.signedDate).toBe('2026年9月20日');
     expect(mapped.photoUrl).toBe('photo.jpg');
     expect(mapped.isDemo).toBe(false);
   });

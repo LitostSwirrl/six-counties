@@ -31,7 +31,6 @@ describe('網站圖示家族', () => {
   });
 
   it.each([
-    ['water', ['cloud', 'rain', 'house', 'waves']],
     ['flood', ['house', 'waves']],
     ['rain', ['cloud', 'rain']],
     ['drought', ['sun', 'horizon']],
@@ -45,5 +44,16 @@ describe('網站圖示家族', () => {
     for (const part of parts) {
       expect(markup).toContain(`data-icon-part="${part}"`);
     }
+  });
+});
+
+describe('風險表表頭', () => {
+  it('水災或強降雨欄位並排顯示淹水與強降雨兩顆圖示', async () => {
+    const { default: RiskMatrix } = await import('./RiskMatrix');
+    const markup = renderToStaticMarkup(<RiskMatrix />);
+    const header = markup.slice(markup.indexOf('<thead'), markup.indexOf('</thead>'));
+
+    expect(header.match(/data-icon-part="house"/g)).toHaveLength(1);
+    expect(header.match(/data-icon-part="cloud"/g)).toHaveLength(1);
   });
 });

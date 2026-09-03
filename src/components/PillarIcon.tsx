@@ -18,13 +18,13 @@ export default function PillarIcon({ pillar, className = '' }: PillarIconProps) 
       {pillar === 'energy' ? (
         <>
           <g data-icon-part="sun">
-            <circle cx={14} cy={12} r={5.5} fill="#FFE9A3" {...S} />
-            <path d="M14 2 V5 M14 19 V22 M4 12 H7 M21 12 H24 M6.9 4.9 L9 7 M21.1 4.9 L19 7 M6.9 19.1 L9 17 M21.1 19.1 L19 17" fill="none" {...S} strokeWidth={1.8} />
+            <circle cx={13} cy={12} r={5.5} fill="#FFE9A3" {...S} />
+            <path d="M13 2 V4.5 M13 19.5 V22 M3 12 H5.5 M20.5 12 H23 M5.9 4.9 L7.7 6.7 M20.1 4.9 L18.3 6.7 M5.9 19.1 L7.7 17.3 M20.1 19.1 L18.3 17.3" fill="none" {...S} strokeWidth={1.8} />
           </g>
           <g data-icon-part="solar-panel">
-            <path d="M9 29 L34 25 L42 41 L17 45 Z" fill="var(--color-sky-pale)" {...S} />
-            <path d="M15 28 L21 44 M23 27 L29 42 M31 26 L37 41 M11 35 L39 31 M14 40 L40 36" fill="none" stroke="var(--color-ink)" strokeWidth={1.4} strokeLinecap="round" />
-            <path d="M29 45 V51 M21 51 H37" fill="none" {...S} />
+            <path d="M10 28 L38 24 L44 42 L16 46 Z" fill="var(--color-sky-pale)" {...S} />
+            <path d="M19.33 26.67 L25.33 44.67 M28.67 25.33 L34.67 43.33 M13 37 L41 33" fill="none" stroke="var(--color-ink)" strokeWidth={1.6} strokeLinecap="round" />
+            <path d="M30 46 V51 M22 51 H38" fill="none" {...S} />
           </g>
         </>
       ) : null}
@@ -32,7 +32,7 @@ export default function PillarIcon({ pillar, className = '' }: PillarIconProps) 
         <>
           <g data-icon-part="house">
             <path d="M8 26 L27 10 L45 25 V49 H9 V25" fill="var(--color-green-pale)" {...S} />
-            <path d="M19 49 V34 H30 V49 M34 29 H40 V35 H34 Z" fill="var(--color-cream)" {...S} strokeWidth={2} />
+            <path d="M20 49 V35 H31 V49 M13 31 H19 V37 H13 Z" fill="var(--color-cream)" {...S} strokeWidth={2} />
           </g>
           <path data-icon-part="heart" d="M43 35 C45.5 31.5 51 32.5 51 37 C50.5 41 47 44 43 48 C39 44 36 41 36 37 C36 32.5 40.5 31.5 43 35 Z" fill="var(--color-purple-light)" {...S} />
         </>
@@ -59,22 +59,21 @@ export default function PillarIcon({ pillar, className = '' }: PillarIconProps) 
             <path d="M18 35 L16 41 M28 35 L26 41 M38 35 L36 41" />
           </g>
           <g data-icon-part="waves" fill="none" stroke="var(--color-teal)" strokeWidth={2.5} strokeLinecap="round">
-            <path d="M5 47 Q12 42 19 47 T33 47 T47 47" />
-            <path d="M5 53 Q12 48 19 53 T33 53 T47 53" />
+            <path d="M5 45.5 Q12 40.5 19 45.5 T33 45.5 T47 45.5" />
+            <path d="M5 51.5 Q12 46.5 19 51.5 T33 51.5 T47 51.5" />
           </g>
         </>
       ) : null}
       {pillar === 'transport' ? (
         <>
           <g data-icon-part="bicycle">
-            <circle cx={14} cy={38} r={10} fill="var(--color-cream)" {...S} />
-            <circle cx={40} cy={38} r={10} fill="var(--color-cream)" {...S} />
-            <path d="M14 38 L23 38 M40 38 L34 24" fill="none" stroke="var(--color-ink)" strokeWidth={1.2} opacity={0.5} />
-            <path d="M14 38 L23 22 H34 L40 38 M23 38 L34 24" fill="none" stroke="var(--color-green)" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M20 22 H27 M31 20 L36 20" fill="none" {...S} strokeWidth={2.2} />
-            <path d="M34 24 V20" fill="none" {...S} strokeWidth={2} />
+            <circle cx={14} cy={39} r={9.5} fill="var(--color-cream)" {...S} />
+            <circle cx={42} cy={39} r={9.5} fill="var(--color-cream)" {...S} />
+            <path d="M14 39 L22 23 L36 23 L42 39 M22 23 L28 40 L36 23 M28 40 L14 39" fill="none" stroke="var(--color-green)" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx={28} cy={40} r={2.2} fill="var(--color-cream)" {...S} strokeWidth={2} />
+            <path d="M17.5 21 H26 M36 23 L37 18.5 M32.5 18.5 H41.5" fill="none" {...S} strokeWidth={2.2} />
           </g>
-          <path data-icon-part="direction" d="M47 21 H53 M50 18 L53 21 L50 24" fill="none" stroke="var(--color-purple-mid)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
+          <path data-icon-part="direction" d="M45 14 H52 M49 10.5 L52.5 14 L49 17.5" fill="none" stroke="var(--color-purple-mid)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
         </>
       ) : null}
     </svg>

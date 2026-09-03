@@ -2,6 +2,16 @@ import OrgGrid from '../components/OrgGrid';
 import type { PetitionMessage } from '../data/petition';
 import { SITE } from '../content/site';
 
+const MIN_CARDS = 6;
+const SECONDS_PER_CARD = 3.75;
+
+function fillCards(messages: PetitionMessage[]): PetitionMessage[] {
+  if (messages.length === 0) return [];
+  const cards: PetitionMessage[] = [];
+  while (cards.length < MIN_CARDS) cards.push(...messages);
+  return cards;
+}
+
 interface EndorsementsProps {
   groupsState: 'loading' | 'error' | 'empty' | 'ready';
   groupNames: string[];
@@ -10,6 +20,7 @@ interface EndorsementsProps {
 }
 
 export default function Endorsements({ groupsState, groupNames, individualCount, messages }: EndorsementsProps) {
+  const cards = fillCards(messages);
   return (
     <section id={SITE.sections.endorse.id} className="mx-auto max-w-5xl px-6 py-24">
       <h2 className="text-center font-display text-3xl tracking-[0.2em] text-ink md:text-4xl">
@@ -36,14 +47,17 @@ export default function Endorsements({ groupsState, groupNames, individualCount,
           <h3 className="font-display text-lg text-purple-deep">連署公民</h3>
           {individualCount === null ? null : <span className="text-sm text-ink/60">共 {individualCount} 位</span>}
         </div>
-        {messages.length > 0 ? (
+        {cards.length > 0 ? (
           <div className="marquee-wrap mt-4" aria-label="連署人留言">
-            <div className="marquee-track marquee-track-fast flex gap-4">
-              {[...messages, ...messages].map((m, i) => (
+            <div
+              className="marquee-track flex gap-4"
+              style={{ animationDuration: `${cards.length * SECONDS_PER_CARD}s` }}
+            >
+              {[...cards, ...cards].map((m, i) => (
                 <figure
                   key={`${m.name}-${i}`}
                   className="w-64 shrink-0 rounded-2xl border border-ink/10 bg-white/85 p-4"
-                  aria-hidden={i >= messages.length}
+                  aria-hidden={i >= cards.length}
                 >
                   <blockquote className="text-sm leading-6 text-ink/80">{m.message}</blockquote>
                   <figcaption className="mt-2 text-xs font-bold text-purple-mid">{m.name}</figcaption>

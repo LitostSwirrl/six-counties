@@ -1,5 +1,4 @@
 export type HazardKey = 'flood' | 'rain' | 'drought' | 'sea' | 'slope' | 'wind';
-export type HazardIconKey = HazardKey | 'water';
 
 export interface HazardColumn {
   key: 'water' | 'drought' | 'sea' | 'slope' | 'wind';

@@ -8,7 +8,8 @@ export default function PetitionForm() {
           {SITE.sections.join.title}
         </h2>
         <p className="mt-4 text-base leading-7 text-ink/75">
-          連署名單會在十月的記者會上，連同候選人簽署結果一起公開。留下你的名字，一起要求候選人公開承諾。
+          <span className="block">連署名單會在十月的記者會上，連同候選人簽署結果一起公開。</span>
+          <span className="block">留下你的名字，一起要求候選人公開承諾。</span>
         </p>
         <a
           href={PETITION_URL}
