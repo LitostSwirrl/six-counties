@@ -26,7 +26,7 @@ export const SITE = {
   endorsementLabel: '連署團體',
   sections: {
     whySix: { id: 'why-six', nav: '六都現況', title: '六都現況' },
-    demands: { id: 'demands', nav: '五大訴求', title: '五大面向，十八項政策訴求' },
+    demands: { id: 'demands', nav: '五大訴求', title: '五大訴求，十八項政策承諾' },
     timeline: { id: 'timeline', nav: '行動時程', title: '行動時程' },
     board: { id: 'board', nav: '候選人承諾', title: '候選人承諾' },
     endorse: { id: 'endorse', nav: '連署團體', title: '公民社會連署響應' },

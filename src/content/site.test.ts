@@ -26,7 +26,7 @@ describe('網站固定文案與連署入口', () => {
     expect(SITE.sections.endorse.title).toBe('公民社會連署響應');
     expect(SITE.sections.board.nav).toBe('候選人承諾');
     expect(SITE.sections.board.title).toBe('候選人承諾');
-    expect(SITE.sections.demands.title).toBe('五大面向，十八項政策訴求');
+    expect(SITE.sections.demands.title).toBe('五大訴求，十八項政策承諾');
   });
 
   it('首頁統計盒標籤與入口', () => {
