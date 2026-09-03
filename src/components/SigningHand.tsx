@@ -3,38 +3,29 @@ interface SigningHandProps {
 }
 
 const PALM = '#F6D2D1';
-const THUMB = '#EEADAC';
-const PEN = '#93D6F3';
-const PEN_BAND = '#78A7F8';
+const FINGER = '#EEADAC';
+const PEN_LIGHT = '#93D6F3';
+const PEN_DARK = '#78A7F8';
 const PEN_CAP = '#4A5688';
 const LINE = '#ED6E35';
 
 export default function SigningHand({ className = '' }: SigningHandProps) {
   return (
-    <svg viewBox="0 0 64 64" className={className} role="img" aria-label="簽名圖示" data-icon-family="civic-flat">
+    <svg viewBox="3 1 110 110" className={className} role="img" aria-label="簽名圖示" data-icon-family="civic-flat">
       <g data-icon-part="hand">
-        <path d="M7 42 Q7 30 19 28 L42 24 Q50 23 50 31 V55 H17 Q7 55 7 46 Z" fill={PALM} />
-        <circle cx={13} cy={54} r={5.5} fill={PALM} />
-        <circle cx={24} cy={57} r={5.5} fill={PALM} />
-        <circle cx={35} cy={57} r={5.5} fill={PALM} />
+        <rect x={26.5} y={77} width={11} height={14.5} rx={5.5} fill={FINGER} />
+        <rect x={38} y={77} width={11} height={14.5} rx={5.5} fill={FINGER} />
+        <path d="M21 80 L47 41.5 Q52 37.5 58 39 C66 40 78 47.5 100 52 V80 C100 84 88 86.5 70 86.5 C60 86.5 54 83 53 80 Z" fill={PALM} />
       </g>
-      <g data-icon-part="pen" transform="translate(8 54) rotate(45)">
-        <path d="M0 0 L-4.5 -9 H4.5 Z" fill={PEN_CAP} />
-        <rect x={-4.5} y={-46} width={9} height={37} rx={1.5} fill={PEN} />
-        <rect x={-4.5} y={-14} width={9} height={3} fill={PEN_BAND} />
-        <rect x={-4.5} y={-54} width={9} height={9} rx={2} fill={PEN_CAP} />
+      <g transform="translate(13.5 91) rotate(33.6)">
+        <rect data-icon-part="thumb" x={-14} y={-71} width={12} height={60} rx={6} fill={FINGER} />
+        <g data-icon-part="pen">
+          <path d="M0 0 L-5.5 -8 V-72 H0 Z" fill={PEN_LIGHT} />
+          <path d="M0 0 L5.5 -8 V-72 H0 Z" fill={PEN_DARK} />
+          <rect x={-5.5} y={-86} width={11} height={14} rx={3} fill={PEN_CAP} />
+        </g>
       </g>
-      <rect
-        data-icon-part="thumb"
-        x={-4.5}
-        y={-19}
-        width={9}
-        height={19}
-        rx={4.5}
-        transform="translate(22 45) rotate(45)"
-        fill={THUMB}
-      />
-      <rect data-icon-part="line" x={55} y={30} width={6} height={26} rx={3} fill={LINE} />
+      <rect data-icon-part="line" x={95.5} y={43.5} width={11} height={46} rx={3} fill={LINE} />
     </svg>
   );
 }
