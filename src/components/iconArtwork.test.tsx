@@ -5,14 +5,15 @@ import PillarIcon from './PillarIcon';
 import SigningHand from './SigningHand';
 
 describe('網站圖示家族', () => {
-  it('簽名圖示保留紙張、簽名、手與筆', () => {
+  it('簽名圖示為無外框的平面手勢，含手、拇指、筆與線條', () => {
     const markup = renderToStaticMarkup(<SigningHand />);
 
-    expect(markup).toContain('data-icon-family="civic-line"');
-    expect(markup).toContain('data-icon-part="paper"');
-    expect(markup).toContain('data-icon-part="signature"');
+    expect(markup).toContain('data-icon-family="civic-flat"');
     expect(markup).toContain('data-icon-part="hand"');
+    expect(markup).toContain('data-icon-part="thumb"');
     expect(markup).toContain('data-icon-part="pen"');
+    expect(markup).toContain('data-icon-part="line"');
+    expect(markup).not.toContain('stroke=');
   });
 
   it.each([
