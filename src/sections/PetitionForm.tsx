@@ -2,7 +2,7 @@ import { PETITION_URL, SITE } from '../content/site';
 
 export default function PetitionForm() {
   return (
-    <section id={SITE.sections.join.id} className="bg-purple-deep/5 py-24">
+    <section id={SITE.sections.join.id} className="bg-purple-deep/[0.03] py-24">
       <div className="mx-auto max-w-xl px-6 text-center">
         <h2 className="font-display text-3xl tracking-[0.2em] text-ink md:text-4xl">
           {SITE.sections.join.title}

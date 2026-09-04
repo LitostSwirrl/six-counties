@@ -15,11 +15,10 @@ function fillCards(messages: PetitionMessage[]): PetitionMessage[] {
 interface EndorsementsProps {
   groupsState: 'loading' | 'error' | 'empty' | 'ready';
   groupNames: string[];
-  individualCount: number | null;
   messages: PetitionMessage[];
 }
 
-export default function Endorsements({ groupsState, groupNames, individualCount, messages }: EndorsementsProps) {
+export default function Endorsements({ groupsState, groupNames, messages }: EndorsementsProps) {
   const cards = fillCards(messages);
   return (
     <section id={SITE.sections.endorse.id} className="mx-auto max-w-5xl px-6 py-24">
@@ -43,10 +42,7 @@ export default function Endorsements({ groupsState, groupNames, individualCount,
         ) : null}
       </div>
       <div className="mt-12">
-        <div className="flex items-baseline justify-between gap-4">
-          <h3 className="font-display text-lg text-purple-deep">連署公民</h3>
-          {individualCount === null ? null : <span className="text-sm text-ink/60">共 {individualCount} 位</span>}
-        </div>
+        <h3 className="font-display text-lg text-purple-deep">公民連署意見</h3>
         {cards.length > 0 ? (
           <div className="marquee-wrap mt-4" aria-label="連署人留言">
             <div

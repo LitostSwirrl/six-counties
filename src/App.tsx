@@ -53,7 +53,6 @@ export default function App() {
         <Endorsements
           groupsState={groupsState}
           groupNames={petitionStats?.groupNames ?? []}
-          individualCount={petitionStats?.individualCount ?? null}
           messages={petitionStats?.publicMessages ?? []}
         />
         <PetitionForm />

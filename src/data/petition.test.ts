@@ -66,7 +66,7 @@ describe('連署統計', () => {
   it('未接 Apps Script 時使用已確認的連署團體名單與人數快照', () => {
     expect(FALLBACK_PETITION_STATS.groupNames).toEqual(ENDORSING_GROUPS);
     expect(FALLBACK_PETITION_STATS.groupCount).toBe(ENDORSING_GROUPS.length);
-    expect(ENDORSING_GROUPS).toHaveLength(6);
+    expect(ENDORSING_GROUPS).toHaveLength(7);
     expect(FALLBACK_PETITION_STATS.individualCount).toBe(INDIVIDUAL_COUNT_SNAPSHOT);
     expect(FALLBACK_PETITION_STATS.publicMessages).toHaveLength(6);
   });

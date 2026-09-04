@@ -32,6 +32,7 @@ describe('網站圖示家族', () => {
   });
 
   it.each([
+    ['heat', ['sun']],
     ['flood', ['house', 'waves']],
     ['rain', ['cloud', 'rain']],
     ['drought', ['sun', 'horizon']],

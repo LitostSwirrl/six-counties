@@ -6,6 +6,23 @@ const S = { stroke: INK, strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoi
 export default function HazardIcon({ hazard, active }: { hazard: HazardKey; active: boolean }) {
   return (
     <svg viewBox="0 0 28 28" className={`h-7 w-7 ${active ? '' : 'opacity-0'}`} aria-hidden="true" data-icon-family="civic-line">
+      {hazard === 'heat' ? (
+        <>
+          <g data-icon-part="sun">
+            <circle cx={14} cy={14} r={5.5} {...S} fill="var(--color-purple-light)" />
+            <g {...S} strokeWidth={1.6}>
+              <line x1={14} y1={2.5} x2={14} y2={5} />
+              <line x1={14} y1={23} x2={14} y2={25.5} />
+              <line x1={2.5} y1={14} x2={5} y2={14} />
+              <line x1={23} y1={14} x2={25.5} y2={14} />
+              <line x1={5.7} y1={5.7} x2={7.5} y2={7.5} />
+              <line x1={20.5} y1={20.5} x2={22.3} y2={22.3} />
+              <line x1={22.3} y1={5.7} x2={20.5} y2={7.5} />
+              <line x1={7.5} y1={20.5} x2={5.7} y2={22.3} />
+            </g>
+          </g>
+        </>
+      ) : null}
       {hazard === 'flood' ? (
         <>
           <g data-icon-part="house">

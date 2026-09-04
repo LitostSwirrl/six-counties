@@ -4,24 +4,28 @@ const EXTRA_GROUP_SHEET = '團體補登';
 
 function doGet() {
   const ss = SpreadsheetApp.openById(SHEET_ID);
-  const rows = ss.getSheetByName(RESPONSE_SHEET).getDataRange().getValues().slice(1)
-    .filter(function (r) { return text(r[2]) !== ''; });
+  const rows = ss.getSheetByName(RESPONSE_SHEET).getDataRange().getValues().slice(1);
 
   const individuals = rows.filter(function (r) { return text(r[2]) === '個人'; });
-  const groups = rows.filter(function (r) { return text(r[2]) === '團體' && text(r[3]) !== ''; });
+  const groups = rows.filter(function (r) { return text(r[3]) !== ''; });
 
   const groupNames = mergeGroupNames(
     groups.map(function (r) { return text(r[3]); }),
     extraGroupNames(ss.getSheetByName(EXTRA_GROUP_SHEET))
   );
 
-  const publicMessages = individuals
+  const groupMessages = groups
+    .filter(function (r) { return agrees(r[11]) && text(r[9]) !== ''; })
+    .map(function (r) { return { name: mask(text(r[5])), message: text(r[9]) }; });
+
+  const individualMessages = individuals
     .filter(function (r) { return text(r[20]) === '同意公開' && text(r[19]) !== ''; })
-    .slice(-30)
     .map(function (r) {
       const open = text(r[21]).indexOf('公開我的姓名') === 0;
       return { name: open ? mask(text(r[13])) : '連署公民', message: text(r[19]) };
     });
+
+  const publicMessages = groupMessages.concat(individualMessages).slice(-30);
 
   return json({
     ok: true,
@@ -30,6 +34,10 @@ function doGet() {
     groupNames: groupNames,
     publicMessages: publicMessages
   });
+}
+
+function agrees(value) {
+  return text(value).indexOf('同意') === 0;
 }
 
 function extraGroupNames(sheet) {

@@ -33,15 +33,16 @@ describe('PILLARS', () => {
 });
 
 describe('氣候風險表', () => {
-  it('五個欄位，水災或強降雨合併為一欄', () => {
-    expect(HAZARD_COLUMNS.map((c) => c.label)).toEqual(['水災或強降雨', '乾旱', '海平面上升', '坡地・土砂', '強風']);
-    expect(HAZARD_COLUMNS[0]?.hazards).toEqual(['flood', 'rain']);
+  it('六個欄位，高溫在首欄，水災或強降雨合併為一欄', () => {
+    expect(HAZARD_COLUMNS.map((c) => c.label)).toEqual(['高溫', '水災或強降雨', '乾旱', '海平面上升', '坡地・土砂', '強風']);
+    expect(HAZARD_COLUMNS[1]?.hazards).toEqual(['flood', 'rain']);
   });
 
-  it('六都風險都落在表格欄位內，且不含高溫', () => {
+  it('六都風險都落在表格欄位內，且六都皆有高溫', () => {
     const covered = new Set(HAZARD_COLUMNS.flatMap((c) => c.hazards));
     expect(SIX_HAZARDS).toHaveLength(6);
     for (const row of SIX_HAZARDS) {
+      expect(row.hazards).toContain('heat');
       for (const hazard of row.hazards) expect(covered.has(hazard)).toBe(true);
     }
   });

@@ -1,12 +1,13 @@
-export type HazardKey = 'flood' | 'rain' | 'drought' | 'sea' | 'slope' | 'wind';
+export type HazardKey = 'heat' | 'flood' | 'rain' | 'drought' | 'sea' | 'slope' | 'wind';
 
 export interface HazardColumn {
-  key: 'water' | 'drought' | 'sea' | 'slope' | 'wind';
+  key: 'heat' | 'water' | 'drought' | 'sea' | 'slope' | 'wind';
   label: string;
   hazards: HazardKey[];
 }
 
 export const HAZARD_COLUMNS: HazardColumn[] = [
+  { key: 'heat', label: '高溫', hazards: ['heat'] },
   { key: 'water', label: '水災或強降雨', hazards: ['flood', 'rain'] },
   { key: 'drought', label: '乾旱', hazards: ['drought'] },
   { key: 'sea', label: '海平面上升', hazards: ['sea'] },
@@ -17,10 +18,10 @@ export const HAZARD_COLUMNS: HazardColumn[] = [
 export const RISK_MATRIX_NOTE = '未列出表示持續關注中，只是調適執行方案中的相對風險';
 
 export const SIX_HAZARDS: { city: string; hazards: HazardKey[] }[] = [
-  { city: '臺北市', hazards: ['rain', 'drought'] },
-  { city: '新北市', hazards: ['flood', 'slope'] },
-  { city: '桃園市', hazards: ['wind', 'rain', 'drought'] },
-  { city: '臺中市', hazards: ['rain', 'drought', 'sea', 'wind'] },
-  { city: '臺南市', hazards: ['flood', 'drought', 'slope'] },
-  { city: '高雄市', hazards: ['rain', 'sea', 'drought'] },
+  { city: '臺北市', hazards: ['heat', 'rain', 'drought'] },
+  { city: '新北市', hazards: ['heat', 'flood', 'slope'] },
+  { city: '桃園市', hazards: ['heat', 'wind', 'rain', 'drought'] },
+  { city: '臺中市', hazards: ['heat', 'rain', 'drought', 'sea', 'wind'] },
+  { city: '臺南市', hazards: ['heat', 'flood', 'drought', 'slope'] },
+  { city: '高雄市', hazards: ['heat', 'rain', 'sea', 'drought'] },
 ];
