@@ -15,7 +15,7 @@ export const HAZARD_COLUMNS: HazardColumn[] = [
   { key: 'wind', label: '強風', hazards: ['wind'] },
 ];
 
-export const RISK_MATRIX_NOTE = '本表呈現六都氣候變遷調適執行方案所評估的相對風險；未列出不代表該縣市不存在相關災害，仍需持續關注該項風險。';
+export const RISK_MATRIX_NOTE = '本表呈現六都各自在氣候變遷調適執行方案所評估的相對主要風險；未列出不代表該縣市不存在相關災害，仍需持續關注該項風險。';
 
 export const SIX_HAZARDS: { city: string; hazards: HazardKey[] }[] = [
   { city: '臺北市', hazards: ['heat', 'rain', 'drought'] },
