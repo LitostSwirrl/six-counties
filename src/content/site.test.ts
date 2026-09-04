@@ -25,8 +25,15 @@ describe('網站固定文案與連署入口', () => {
     expect(SITE.sections.endorse.nav).toBe('連署團體');
     expect(SITE.sections.endorse.title).toBe('公民社會連署響應');
     expect(SITE.sections.board.nav).toBe('候選人承諾');
-    expect(SITE.sections.board.title).toBe('候選人承諾');
+    expect(SITE.sections.board.title).toBe('候選人簽署看板');
     expect(SITE.sections.demands.title).toBe('五大訴求，十八項政策承諾');
+  });
+
+  it('訴求區與簽署看板使用 2026-09-04 提供的說明文字', () => {
+    expect(SITE.demandsLead).toHaveLength(2);
+    expect(SITE.demandsLead[0]).toContain('隨著氣候變遷加劇');
+    expect(SITE.demandsLead[1]).toContain('針對六都市長選舉');
+    expect(SITE.boardLead).toBe('我們邀請六都市長候選人回應五大訴求，以下是各候選人簽署政策承諾情形，供選民參考。');
   });
 
   it('首頁統計盒標籤與入口', () => {

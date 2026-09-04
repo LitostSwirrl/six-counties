@@ -37,9 +37,7 @@ export default function SignBoard({ state, candidates, onRetry }: SignBoardProps
         <h2 className="text-center font-display text-3xl tracking-[0.2em] text-ink md:text-4xl">
           {SITE.sections.board.title}
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-center text-base leading-7 text-ink/75">
-          每一位六都市長候選人都收到了同一份承諾書。誰簽了、簽了哪幾項、誰還沒有回應，都在這裡公開更新。
-        </p>
+        <p className="mx-auto mt-4 max-w-2xl text-center text-base leading-7 text-ink/75">{SITE.boardLead}</p>
         {hasDemo ? (
           <p className="tag-box mx-auto mt-6 block w-fit text-center text-sm text-ink/80">
             以下為示意資料，正式名單將於候選人回應後更新
