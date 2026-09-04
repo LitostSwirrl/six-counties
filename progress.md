@@ -334,3 +334,8 @@ Slogan:「面對城市的下一個十年，六都市長準備好了嗎？」
 - 配色比較輸出：`design/color-schemes/` 六張首頁截圖、`comparison.png` 並排圖與 `README.md`（色碼與對比值）。
 - 未完成／待 Joseph：(a) 表單回覆試算表欄位 F／J／L 的對應未能開表核對，gws 需重新登入（`gws auth login`）後才能驗證；Apps Script 修改後要在 script.google.com 貼上新版 Code.gs 並以「管理部署作業→新版本」重新部署，網址不變。(b) 配色尚未定案，程式仍是紫色；選定後只改 `global.css` 三個變數。(c) 尚未提交。
 - 2026-09-04 Joseph 重新登入 gws 並重新部署 Apps Script 後核對：表單回覆 1 的欄位為 C 身分、D 團體名稱、F 聯絡人、J 團體連署理由、L 團體是否同意公開；個人段為 N 姓名、T 理由、U 同意公開、V 公開哪些資訊，與程式假設一致。試算表 15 筆回覆中 5 筆團體（C 欄都是「團體」）、10 筆個人。新版線上輸出：個人 10、團體 7（含 TRENA 與環盟）、公開意見 5 則（新增荒野與環盟兩則團體理由，名字為聯絡人遮罩「林○蘭」「林○淵」）。之前看到缺漏應是網站備援名單（僅六個）而非試算表問題。
+
+## Phase 27 公開完成紀錄（2026-09-04）
+- 配色決定：暫留現行紫，候選只剩紫與琥珀；程式未改色。
+- 發布：提交 `a9bcc05` 已推送至 `main`；GitHub Actions 工作流程 `33830241304` 成功（npm ci 步驟約十分鐘，較往常慢，屬 runner 狀況）。公開網址 `https://litostswirrl.github.io/six-counties/?rev=a9bcc05` 的 JS 檔名 `index-DfMriJJX.js` 與本機 `dist/index.html` 一致；HTML 含 `<meta name="robots" content="noindex">`；CSS 含 #fdf9f2；JS 含「公民連署意見」、三段新文案、「台灣環境保護聯盟」、高溫欄標籤與縮小後的簽名圖示尺寸，且不再含「連署公民」字串（Apps Script 回傳的匿名名字仍會顯示為連署公民，那是資料不是程式字串）。
+- 後續待辦：琥珀若採用，改 `global.css` 三個變數並把中色加深到對比 4.5 以上；團體意見卡片的名字是否改顯示團體名，待 Joseph 決定。
