@@ -11,9 +11,13 @@ export default function Demands() {
       <h2 className="text-center font-display text-3xl tracking-[0.2em] text-ink md:text-4xl">
         {SITE.sections.demands.title}
       </h2>
-      {SITE.demandsLead.map((line) => (
-        <p key={line} className="mx-auto mt-4 max-w-2xl text-center text-base leading-7 text-ink/75">
-          {line}
+      {SITE.demandsLead.map((lines) => (
+        <p key={lines[0]} className="mx-auto mt-4 max-w-3xl text-center text-base leading-7 text-ink/75">
+          {lines.map((line) => (
+            <span key={line} className="md:block">
+              {line}
+            </span>
+          ))}
         </p>
       ))}
       <p className="mx-auto mt-6 max-w-2xl text-center text-base leading-7 text-ink/75">點開每個面向，看完整的政策內容。</p>

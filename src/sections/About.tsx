@@ -8,10 +8,14 @@ export default function About() {
       <h2 className="text-center font-display text-3xl tracking-[0.2em] text-ink md:text-4xl">
         {SITE.sections.about.title}
       </h2>
-      <p className="mx-auto mt-4 max-w-2xl text-center text-base leading-7 text-ink/75">
-        這場行動由九個公民團體共同發起，成員長期分別耕耘能源、氣候、防災、河川、交通與障礙者權益等領域，這次共同要求六都市長候選人把永續與韌性納入市政承諾。
+      <p className="mx-auto mt-4 text-center text-base leading-7 text-ink/75">
+        {SITE.aboutLines.map((line) => (
+          <span key={line} className="lg:block">
+            {line}
+          </span>
+        ))}
       </p>
-      <OrgGrid items={ORGS} className="mt-10" />
+      <OrgGrid items={ORGS} variant="tile" className="mx-auto mt-10 max-w-3xl" />
     </section>
   );
 }

@@ -5,6 +5,7 @@ import DataStory from './sections/DataStory';
 import Demands from './sections/Demands';
 import Timeline from './sections/Timeline';
 import SignBoard from './sections/SignBoard';
+import News from './sections/News';
 import Endorsements from './sections/Endorsements';
 import PetitionForm from './sections/PetitionForm';
 import About from './sections/About';
@@ -49,6 +50,7 @@ export default function App() {
         <Demands />
         <Timeline />
         <SignBoard state={candidates.state} candidates={candidates.data} onRetry={candidates.retry} />
+        <News />
         <About />
         <Endorsements
           groupsState={groupsState}

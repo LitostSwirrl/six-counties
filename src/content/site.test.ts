@@ -8,7 +8,6 @@ import {
   HERO_GROUP_LABEL,
   HERO_GROUP_LIST_HREF,
   HERO_GROUP_LIST_LABEL,
-  JOIN_SECTION_HREF,
   PETITION_URL,
   SITE,
 } from './site';
@@ -29,10 +28,12 @@ describe('網站固定文案與連署入口', () => {
     expect(SITE.sections.demands.title).toBe('五大訴求，十八項政策承諾');
   });
 
-  it('訴求區與簽署看板使用 2026-09-04 提供的說明文字', () => {
-    expect(SITE.demandsLead).toHaveLength(2);
-    expect(SITE.demandsLead[0]).toContain('隨著氣候變遷加劇');
-    expect(SITE.demandsLead[1]).toContain('針對六都市長選舉');
+  it('訴求區說明分三段並照 2026-09-08 指定位置斷行', () => {
+    expect(SITE.demandsLead).toHaveLength(3);
+    expect(SITE.demandsLead.map((lines) => lines.length)).toEqual([3, 2, 2]);
+    expect(SITE.demandsLead[0][0]).toBe('隨著氣候變遷加劇，城市面臨的災害風險也日益升高。');
+    expect(SITE.demandsLead[1][0]).toContain('針對六都市長選舉');
+    expect(SITE.demandsLead[2][1]).toBe('成為安全、宜居且具韌性的永續城市。');
     expect(SITE.boardLead).toBe('我們邀請六都市長候選人回應五大訴求，以下是各候選人簽署政策承諾情形，供選民參考。');
   });
 
@@ -58,8 +59,17 @@ describe('網站固定文案與連署入口', () => {
     expect(ENDORSING_GROUPS).toContain('野薑花公民協會');
   });
 
-  it('上方加入連署導向頁面內的加入連署區段', () => {
-    expect(JOIN_SECTION_HREF).toBe('#join');
+  it('風險表、關於我們與加入連署的說明照指定位置斷行', () => {
+    expect(SITE.riskLeadLines).toHaveLength(2);
+    expect(SITE.aboutLines).toHaveLength(2);
+    expect(SITE.aboutLines[0]).toContain('本次行動由九個公民團體共同發起');
+    expect(SITE.joinLines).toHaveLength(5);
+    expect(SITE.joinLines[0]).toBe('你期待生活在一座什麼樣的城市？');
+    expect(SITE.joinCta).toBe('連署影響力');
+  });
+
+  it('最新消息區排在候選人承諾與關於我們之間', () => {
+    expect(SITE.sections.news).toEqual({ id: 'news', nav: '最新消息', title: '最新消息' });
   });
 
   it('提供日間與夜間天際線圖檔', () => {

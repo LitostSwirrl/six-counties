@@ -23,7 +23,13 @@ export default function DataStory() {
             <p className="gradient-title mt-2 font-display text-[clamp(3.6rem,7vw,5.2rem)] leading-none">
               <CountUp to={stat.value} decimals={stat.value % 1 === 0 ? 0 : 1} suffix={stat.suffix} />
             </p>
-            <p className="mt-4 max-w-sm text-base leading-8 text-ink/80">{stat.description}</p>
+            <p className="mt-4 text-[15px] leading-7 text-ink/80">
+              {stat.description.map((line) => (
+                <span key={line} className="xl:block">
+                  {line}
+                </span>
+              ))}
+            </p>
           </div>
         ))}
       </div>

@@ -1,4 +1,5 @@
 import { HAZARD_COLUMNS, RISK_MATRIX_NOTE, SIX_HAZARDS } from '../content/heatData';
+import { SITE } from '../content/site';
 import HazardIcon from './HazardIcon';
 
 export default function RiskMatrix() {
@@ -8,7 +9,11 @@ export default function RiskMatrix() {
         六都面對哪些氣候風險
       </h3>
       <p className="mx-auto mt-3 max-w-2xl text-center text-base leading-8 text-ink/75">
-        六都面對高溫、水災或強降雨、乾旱、海平面上升、坡地・土砂、強風等氣候風險，而高溫調適和水患是六都的共同議題。
+        {SITE.riskLeadLines.map((line) => (
+          <span key={line} className="md:block">
+            {line}
+          </span>
+        ))}
       </p>
       <div className="mt-8 overflow-x-auto rounded-3xl border border-ink/10 bg-white/80 p-5 md:p-8">
         <table className="w-full min-w-[560px] border-separate border-spacing-0">
