@@ -414,3 +414,4 @@ Slogan:「面對城市的下一個十年，六都市長準備好了嗎？」
 
 ## Phase 34 加入連署區按鈕文字改回「加入連署」（2026-09-09）
 - Joseph 指示：「連署影響力 文字 改回 加入連署」。只改 `src/content/site.ts` 的 joinCta 與 site.test 對應斷言；右上角導覽列按鈕本來就是「加入連署」，不動。
+- 發布：提交 `f2675d7` 已推送至 `main`，GitHub Actions `34305783597` 成功；公開網址 JS `index-Co8bAL_C.js` 與本機 dist 一致，內容已無「連署影響力」。
