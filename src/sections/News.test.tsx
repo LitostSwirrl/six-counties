@@ -33,12 +33,12 @@ describe('最新消息', () => {
     expect(markup.match(/<li/g)).toHaveLength(6);
   });
 
-  it('沒有縮圖的消息以類別字樣的色塊代替圖片', () => {
+  it('沒有縮圖的消息以灰色色塊代替圖片', () => {
     const items = mockNews(3);
     const withoutImage = items.filter((item) => !item.image);
     expect(withoutImage).toHaveLength(1);
     const markup = renderToStaticMarkup(<NewsCards items={items} />);
     expect(markup.match(/<img/g)).toHaveLength(2);
-    expect(markup).toContain('bg-purple-deep/[0.06]');
+    expect(markup).toContain('bg-ink/[0.07]');
   });
 });

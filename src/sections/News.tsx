@@ -25,9 +25,7 @@ function NewsCard({ item }: { item: NewsItem }) {
       {item.image ? (
         <img src={item.image} alt={item.imageAlt ?? ''} loading="lazy" className="aspect-[4/3] w-full object-cover" />
       ) : (
-        <div className="flex aspect-[4/3] w-full items-center justify-center bg-purple-deep/[0.06]">
-          <span className="font-display text-2xl tracking-[0.3em] text-purple-deep/50">{item.kind}</span>
-        </div>
+        <div className="aspect-[4/3] w-full bg-ink/[0.07]" />
       )}
       <div className="flex flex-1 flex-col px-5 pt-4 pb-5">
         <div className="flex items-center justify-between gap-3 border-b border-ink/10 pb-3">
