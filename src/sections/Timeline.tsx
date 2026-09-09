@@ -13,7 +13,8 @@ export default function Timeline() {
   }, [today]);
 
   return (
-    <section id={SITE.sections.timeline.id} className="mx-auto max-w-5xl px-6 py-24">
+    <section id={SITE.sections.timeline.id} className="bg-white/40 py-24">
+      <div className="mx-auto max-w-5xl px-6">
       <h2 className="text-center font-display text-3xl tracking-[0.2em] text-ink md:text-4xl">
         {SITE.sections.timeline.title}
       </h2>
@@ -59,6 +60,7 @@ export default function Timeline() {
           );
         })}
       </ol>
+      </div>
     </section>
   );
 }

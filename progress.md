@@ -380,3 +380,14 @@ Slogan:「面對城市的下一個十年，六都市長準備好了嗎？」
 - 驗證（2026-09-09）：`tsc --noEmit`、vitest 11 檔 69 項、`npm run build`、`git diff --check` 通過。dev server：1400px 兩個長名稱各兩行且斷在指定位置，其餘單行，方格 264×176；640px 斷行生效；390px 斷行隱藏、自然折成兩行、兩欄 163×109、無水平溢出。hover 與 active 樣式與前次相同。截圖 `design/org-tiles/live-d2-rest.png`、`live-d2-active.png`、`live-d2-mobile.png`。
 - 插曲：改字級時用 `git checkout` 還原檔案，把整個 D2 改動一起還原了，已重新套用並重跑全部檢查。
 - 發布：提交 `d36fdd6` 已推送至 `main`，GitHub Actions 工作流程 `34299721689` 成功（2026-09-09 01:34 UTC）。公開網址 `?rev=d36fdd6` 的 JS 檔名 `index-IF4uAQQa.js` 與本機一致且逐位元相同，內含 `lines:["台灣氣候行動網絡","研究中心"]`、`lines:["台灣身心障礙者","自立生活聯盟"]`；CSS 含 aspect 3/2、border-b 5px、active translate-y 3.5px。
+
+## Phase 32 最新消息輪播、區塊底色交錯、簽名圖示換圖（2026-09-09）
+- 目標：Joseph 2026-09-09 三項：(1) 測試最新消息有 3／6／12 則、混入投書與無圖項目時的呈現，多則時改輪播而非格狀；(2) 相鄰區塊底色不得相同；(3) 首頁標題旁的簽名圖示與 favicon 換成他提供的手寫插圖（1080×1080 透明底 PNG）。
+- 輪播做法：三則以內維持原本置中的格狀；超過三則改成水平捲動的 scroll-snap 軌道，桌機一頁三張、平板兩張、手機一張（85% 寬露出下一張邊緣提示可滑），左右圓形按鈕捲一頁，到頭時停用，手機隱藏按鈕靠滑動。捲軸隱藏（`.news-track`）。
+- 無圖項目：`image`／`imageAlt` 改選填，沒有圖時放同比例的淡紫底方塊，中央顯示類別字樣，讓卡片高度對齊。
+- 測試資料：不放進 `news.ts`。`src/content/newsMock.ts` 依數量產生假資料（三種類別輪替、每三則一則無圖、日期每週往前推），News 只在 `import.meta.env.DEV` 且網址帶 `?news=N` 時使用，正式建置會被 tree-shake 掉。
+- 底色：原本 Demands／Timeline 同為米色、SignBoard／News 同為白 40%、About／Endorsements 同為米色。改成從 DataStory 起嚴格交錯：DataStory 白、Demands 米、Timeline 白、SignBoard 米、News 白、About 米、Endorsements 白、加入連署維持紫 3%。Timeline 與 Endorsements 原本把 max-w 放在 section 上，改成 section 帶底色、內層 div 帶寬度。
+- 圖示：原 `SigningHand.tsx` SVG 元件改為 `<img>` 引用 `public/images/signing-hand.png`（裁掉透明邊後縮成 240px 寬），元件與其測試一併移除。favicon 用原圖直接縮成 32／192 與 apple-touch-icon 180，放 `public/` 根目錄，index.html 加三個 link。
+- favicon 路徑：index.html 一開始寫 `/six-counties/favicon-32.png`，Vite 對 index.html 內的 link href 會再加一次 base，dev 變成 `/six-counties/six-counties/…`；改成 `/favicon-32.png` 讓 Vite 自己加 base，dev 與 dist 都正確。（news.ts 的圖片路徑是 JS 字串，Vite 不處理，所以那邊要自己寫完整路徑，兩者規則不同。）
+- 驗證（2026-09-09）：`tsc --noEmit` 通過；vitest 11 檔 71 項通過（News.test 新增格狀／輪播／無圖三項，iconArtwork.test 移除簽名圖示一項，Hero.test 改查 `alt="簽名圖示"`）；`npm run build` 通過且 dist JS 不含「測試標題」（mock 已被 tree-shake）；`git diff --check` 通過。Playwright 檢查 dev server：1400px 下 `?news=3` 為三欄格狀無按鈕；`?news=6` 軌道 1037px、卡片 329px 一頁三張、捲動寬 2099px 剛好兩頁，按下一頁後顯示第 4–6 則且下一頁按鈕停用；`?news=12` 捲動寬 4224px 四頁；無圖項目顯示淡紫底「投書」字樣色塊，卡片高度與有圖者一致。各區 computed background：top 透明、why-six 白 40%、demands 透明、timeline 白 40%、board 透明、news 白 40%、about 透明、endorse 白 40%、join 紫 3%、footer 紫深，相鄰皆不同。首頁圖示為 240×184 PNG，1400px 下顯示約 37×28、390px 下 32×24。390px：卡片 288px（85%）、無水平溢出、按鈕隱藏靠滑動。favicon 三個檔案與 signing-hand.png 皆回 200。截圖存 `design/news-carousel/`。
+- 狀態：尚未提交、推送或部署。

@@ -2,20 +2,8 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import HazardIcon from './HazardIcon';
 import PillarIcon from './PillarIcon';
-import SigningHand from './SigningHand';
 
 describe('網站圖示家族', () => {
-  it('簽名圖示為無外框的平面手勢，含手、拇指、筆與線條', () => {
-    const markup = renderToStaticMarkup(<SigningHand />);
-
-    expect(markup).toContain('data-icon-family="civic-flat"');
-    expect(markup).toContain('data-icon-part="hand"');
-    expect(markup).toContain('data-icon-part="thumb"');
-    expect(markup).toContain('data-icon-part="pen"');
-    expect(markup).toContain('data-icon-part="line"');
-    expect(markup).not.toContain('stroke=');
-  });
-
   it.each([
     ['energy', ['sun', 'solar-panel']],
     ['resilience', ['house', 'heart']],

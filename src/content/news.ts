@@ -4,8 +4,8 @@ export interface NewsItem {
   title: string;
   summary: string;
   href: string;
-  image: string;
-  imageAlt: string;
+  image?: string;
+  imageAlt?: string;
 }
 
 export const NEWS: NewsItem[] = [

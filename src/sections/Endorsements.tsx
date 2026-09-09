@@ -21,7 +21,8 @@ interface EndorsementsProps {
 export default function Endorsements({ groupsState, groupNames, messages }: EndorsementsProps) {
   const cards = fillCards(messages);
   return (
-    <section id={SITE.sections.endorse.id} className="mx-auto max-w-5xl px-6 py-24">
+    <section id={SITE.sections.endorse.id} className="bg-white/40 py-24">
+      <div className="mx-auto max-w-5xl px-6">
       <h2 className="text-center font-display text-3xl tracking-[0.2em] text-ink md:text-4xl">
         {SITE.sections.endorse.title}
       </h2>
@@ -62,6 +63,7 @@ export default function Endorsements({ groupsState, groupNames, messages }: Endo
             </div>
           </div>
         ) : null}
+      </div>
       </div>
     </section>
   );

@@ -32,7 +32,7 @@ export default function SignBoard({ state, candidates, onRetry }: SignBoardProps
   const hasDemo = candidates.some((c) => c.isDemo);
 
   return (
-    <section id={SITE.sections.board.id} className="bg-white/40 py-24">
+    <section id={SITE.sections.board.id} className="py-24">
       <div className="mx-auto max-w-5xl px-6">
         <h2 className="text-center font-display text-3xl tracking-[0.2em] text-ink md:text-4xl">
           {SITE.sections.board.title}

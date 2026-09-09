@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import CityBackdrop from '../components/CityBackdrop';
-import SigningHand from '../components/SigningHand';
 import {
   HERO_BOARD_CTA,
   HERO_CANDIDATE_LABEL,
@@ -65,7 +64,7 @@ export default function Hero({ signedCount, groupCount }: HeroProps) {
       <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-6 pt-28 pb-4 text-center">
         <h1 className="hero-enter font-display leading-tight tracking-wide">
           <span className="mb-2 flex items-center justify-center gap-2 text-[clamp(1.1rem,3.5vw,1.5rem)] tracking-normal text-ink">
-            <SigningHand className="h-[1.2em] w-[1.2em] shrink-0" />
+            <img src="/six-counties/images/signing-hand.png" alt="簽名圖示" className="h-[1.3em] w-auto shrink-0" />
             <span>{SITE.heroKicker}</span>
           </span>
           <span className="gradient-title block text-[clamp(2.2rem,7vw,4rem)]">永續韌性城市</span>
