@@ -1,0 +1,232 @@
+<meta charset="utf-8">
+<title>發起團體方格比較</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FDF9F2;
+    --ink: #111111;
+    --purple-deep: #4E3C64;
+    --purple-mid: #7D5184;
+    --purple-light: #925D91;
+    --font: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    --ratio: 5 / 4;
+    --pad-y: 16px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .page { max-width: 880px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-size: 22px; font-weight: 500; letter-spacing: 0.1em; margin: 0 0 6px; }
+  .lead { color: rgba(17,17,17,.7); margin: 0 0 24px; max-width: 42em; }
+
+  .controls {
+    position: sticky; top: 0; z-index: 2;
+    display: flex; flex-wrap: wrap; gap: 20px 32px; align-items: center;
+    padding: 14px 18px; margin: 0 0 40px;
+    background: rgba(253,249,242,.94);
+    border: 1px solid rgba(17,17,17,.12);
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+  }
+  .controls fieldset { border: 0; padding: 0; margin: 0; display: flex; gap: 6px 14px; flex-wrap: wrap; align-items: center; }
+  .controls legend { float: left; font-size: 12px; letter-spacing: .12em; color: rgba(17,17,17,.6); margin-right: 8px; padding: 0; }
+  .controls label { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; font-size: 14px; }
+  .controls input { accent-color: var(--purple-mid); margin: 0; }
+
+  .variant { margin: 0 0 56px; }
+  .variant header { display: flex; align-items: baseline; gap: 14px; margin: 0 0 14px; flex-wrap: wrap; }
+  .variant h2 { font-size: 17px; font-weight: 500; margin: 0; }
+  .variant h2 small { font-weight: 400; color: rgba(17,17,17,.55); margin-left: 8px; font-size: 13px; }
+  .variant p { margin: 0; color: rgba(17,17,17,.65); font-size: 13.5px; }
+  .grid {
+    max-width: 768px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  }
+  @media (max-width: 560px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .tile {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    aspect-ratio: var(--ratio);
+    padding: var(--pad-y) 16px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background-color .15s, border-color .15s, border-width .15s, color .15s, transform .15s, box-shadow .15s;
+  }
+  .tile:focus-visible { outline: 2px solid var(--purple-mid); outline-offset: 2px; }
+  .tile svg { position: absolute; top: 12px; right: 12px; width: 14px; height: 14px; opacity: .45; transition: opacity .15s, transform .15s; }
+  @media (prefers-reduced-motion: reduce) { .tile, .tile svg { transition: none; } }
+
+  /* 基準：目前線上版 */
+  .v0 .tile { border-radius: 16px; border: 1px solid rgba(17,17,17,.12); background: rgba(255,255,255,.75); }
+  .v0 .tile:hover, .hover-on .v0 .tile:first-child { border-color: var(--purple-mid); color: var(--purple-deep); }
+
+  /* A 整卡淡色 hover */
+  .vA .tile { border-radius: 12px; border: 1px solid rgba(17,17,17,.12); background: #fff; }
+  .vA .tile:hover, .hover-on .vA .tile:first-child { background: rgba(78,60,100,.07); border-color: var(--purple-mid); color: var(--purple-deep); }
+  .vA .tile:hover svg, .hover-on .vA .tile:first-child svg { opacity: 1; }
+
+  /* B 左緣強調 */
+  .vB .tile { border-radius: 8px; border: 1px solid rgba(17,17,17,.12); border-left: 4px solid rgba(17,17,17,.12); background: #fff; }
+  .vB .tile:hover, .hover-on .vB .tile:first-child { border-left-color: var(--purple-mid); background: rgba(78,60,100,.04); color: var(--purple-deep); }
+  .vB .tile:hover svg, .hover-on .vB .tile:first-child svg { opacity: 1; }
+
+  /* C 淡色填底按鈕 */
+  .vC .tile { border-radius: 10px; border: 0; background: rgba(78,60,100,.06); color: var(--purple-deep); font-weight: 500; }
+  .vC .tile:hover, .hover-on .vC .tile:first-child { background: rgba(78,60,100,.14); }
+  .vC .tile svg { opacity: .55; }
+  .vC .tile:hover svg, .hover-on .vC .tile:first-child svg { opacity: 1; transform: translate(2px,-2px); }
+
+  /* D 外框按鈕反白 */
+  .vD .tile { border-radius: 10px; border: 1.5px solid var(--purple-mid); background: transparent; color: var(--purple-deep); font-weight: 500; }
+  .vD .tile:hover, .hover-on .vD .tile:first-child { background: var(--purple-deep); border-color: var(--purple-deep); color: #fff; }
+  .vD .tile svg { opacity: .6; }
+  .vD .tile:hover svg, .hover-on .vD .tile:first-child svg { opacity: 1; }
+
+  /* D1 硬陰影偏移 */
+  .vD1 .tile { border-radius: 10px; border: 1.5px solid var(--purple-deep); background: #fff; color: var(--purple-deep); font-weight: 500; box-shadow: 4px 4px 0 var(--purple-deep); }
+  .vD1 .tile:hover, .hover-on .vD1 .tile:first-child { background: rgba(78,60,100,.07); transform: translate(1px,1px); box-shadow: 3px 3px 0 var(--purple-deep); }
+  .vD1 .tile:active, .press-on .vD1 .tile:nth-child(2) { transform: translate(4px,4px); box-shadow: 0 0 0 var(--purple-deep); background: var(--purple-deep); color: #fff; }
+  .vD1 .tile svg { opacity: .6; }
+
+  /* D2 底邊厚度（鍵帽） */
+  .vD2 .tile { border-radius: 10px; border: 1.5px solid var(--purple-mid); border-bottom-width: 5px; background: #fff; color: var(--purple-deep); font-weight: 500; }
+  .vD2 .tile:hover, .hover-on .vD2 .tile:first-child { background: rgba(78,60,100,.07); border-color: var(--purple-deep); }
+  .vD2 .tile:active, .press-on .vD2 .tile:nth-child(2) { border-bottom-width: 1.5px; transform: translateY(3.5px); background: var(--purple-deep); border-color: var(--purple-deep); color: #fff; }
+  .vD2 .tile svg { opacity: .6; }
+
+  /* D3 柔陰影浮起 */
+  .vD3 .tile { border-radius: 10px; border: 1.5px solid var(--purple-mid); background: #fff; color: var(--purple-deep); font-weight: 500; box-shadow: 0 1px 2px rgba(17,17,17,.06), 0 3px 8px rgba(78,60,100,.10); }
+  .vD3 .tile:hover, .hover-on .vD3 .tile:first-child { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(17,17,17,.06), 0 8px 18px rgba(78,60,100,.18); border-color: var(--purple-deep); }
+  .vD3 .tile:active, .press-on .vD3 .tile:nth-child(2) { transform: translateY(0); box-shadow: inset 0 2px 4px rgba(17,17,17,.18); background: rgba(78,60,100,.10); }
+  .vD3 .tile svg { opacity: .6; }
+
+  /* D4 內光與漸層 */
+  .vD4 .tile { border-radius: 10px; border: 1.5px solid var(--purple-mid); background: linear-gradient(#fff, #F3EEF3); color: var(--purple-deep); font-weight: 500; box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 1px 0 rgba(78,60,100,.25); }
+  .vD4 .tile:hover, .hover-on .vD4 .tile:first-child { background: linear-gradient(#fff, #EAE2EA); border-color: var(--purple-deep); }
+  .vD4 .tile:active, .press-on .vD4 .tile:nth-child(2) { background: linear-gradient(#E4DCE4, #EFE9EF); box-shadow: inset 0 2px 3px rgba(78,60,100,.28); transform: translateY(1px); }
+  .vD4 .tile svg { opacity: .6; }
+
+  .divider { max-width: 768px; margin: 8px auto 32px; padding-top: 24px; border-top: 1px dashed rgba(17,17,17,.2); font-size: 13px; letter-spacing: .12em; color: rgba(17,17,17,.55); }
+
+  .note { max-width: 768px; margin: 48px auto 0; padding-top: 20px; border-top: 1px solid rgba(17,17,17,.12); color: rgba(17,17,17,.65); font-size: 13.5px; }
+  .note ul { margin: 6px 0 0; padding-left: 1.2em; }
+</style>
+
+<div class="page">
+  <h1>發起團體方格比較</h1>
+  <p class="lead">關於我們區的九個團體方格。每組都是實際容器寬度（768px）的三欄排版，可直接滑過去看 hover 效果。</p>
+
+  <div class="controls">
+    <fieldset>
+      <legend>高度</legend>
+      <label><input type="radio" name="h" value="5 / 4" checked> 5:4（目前）</label>
+      <label><input type="radio" name="h" value="3 / 2"> 3:2</label>
+      <label><input type="radio" name="h" value="2 / 1"> 2:1</label>
+      <label><input type="radio" name="h" value="auto"> 依內容（上下 20px）</label>
+    </fieldset>
+    <label><input type="checkbox" id="hover"> 固定顯示每組第一格的 hover 狀態</label>
+    <label><input type="checkbox" id="press"> 固定顯示第二格的按下狀態</label>
+  </div>
+
+  <section class="variant v0">
+    <header><h2>基準<small>目前線上版</small></h2><p>白底 75%、淡框、大圓角；hover 只換框色與字色。</p></header>
+    <div class="grid" data-grid></div>
+  </section>
+
+  <section class="variant vA">
+    <header><h2>A<small>整卡淡色 hover</small></h2><p>平面白卡、圓角略縮；滑過整格淡紫填底，外連箭頭轉實。</p></header>
+    <div class="grid" data-grid></div>
+  </section>
+
+  <section class="variant vB">
+    <header><h2>B<small>左緣強調</small></h2><p>小圓角、左側 4px 邊條；滑過左緣轉紫，底色微染。</p></header>
+    <div class="grid" data-grid></div>
+  </section>
+
+  <section class="variant vC">
+    <header><h2>C<small>淡色填底按鈕</small></h2><p>無框、靜態即帶淡紫底與紫字、字重 500；滑過加深，箭頭外移。最接近平面按鈕。</p></header>
+    <div class="grid" data-grid></div>
+  </section>
+
+  <section class="variant vD">
+    <header><h2>D<small>外框按鈕反白</small></h2><p>紫框紫字；滑過整格反白成深紫底白字。按鈕感最強，靜態時也最搶眼。</p></header>
+    <div class="grid" data-grid></div>
+  </section>
+
+  <p class="divider">D 加立體元素</p>
+
+  <section class="variant vD1">
+    <header><h2>D1<small>硬陰影偏移</small></h2><p>深紫實框、右下 4px 硬陰影；滑過往陰影方向縮 1px，按下整格貼平並反白。無漸層、無模糊，平面語彙裡的立體。</p></header>
+    <div class="grid" data-grid></div>
+  </section>
+
+  <section class="variant vD2">
+    <header><h2>D2<small>底邊厚度</small></h2><p>底邊加厚到 5px 像鍵帽；按下底邊縮回、格子下沉 3.5px 並反白。滑過只淡紫染底。</p></header>
+    <div class="grid" data-grid></div>
+  </section>
+
+  <section class="variant vD3">
+    <header><h2>D3<small>柔陰影浮起</small></h2><p>靜態帶淡柔影；滑過上浮 2px、影子變深，按下改為內凹陰影。最接近一般網頁的卡片按鈕。</p></header>
+    <div class="grid" data-grid></div>
+  </section>
+
+  <section class="variant vD4">
+    <header><h2>D4<small>內光與漸層</small></h2><p>白到淡紫的垂直漸層、頂端一線內光、底下一線深紫；按下轉內陰影。這個最接近擬物，放進來當上限參考。</p></header>
+    <div class="grid" data-grid></div>
+  </section>
+
+  <div class="note">
+    比較時可留意：
+    <ul>
+      <li>「依內容」高度下，十三字的「台灣身心障礙者自立生活聯盟」會折成兩行，其餘單行，格高會不一致。</li>
+      <li>C 與 D 靜態就用紫色，會和上方「加入連署」按鈕、下方連署團體橫條搶視覺；A、B 靜態仍是白卡，只在 hover 才出現紫。</li>
+      <li>圓角：基準 16px、A 12px、B 8px、C／D 系列 10px。</li>
+      <li>D1 的硬陰影往右下佔 4px，九宮格右欄與底列會比其他版本多出 4px，實作時容器要留邊。</li>
+      <li>D2、D3 的位移靠 transform，實作時需保留 transition 並在 reduced-motion 下關閉。</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const ORGS = [
+    ['綠色公民行動聯盟', 'https://gcaa.org.tw/'],
+    ['台灣氣候行動網絡研究中心', 'https://tcan2050.org.tw/'],
+    ['台灣環境規劃協會', 'https://tep.org.tw/'],
+    ['主婦聯盟環境保護基金會', 'https://www.huf.org.tw/'],
+    ['環境權保障基金會', 'https://erf.org.tw/'],
+    ['地球公民基金會', 'https://www.cet-taiwan.org/'],
+    ['還路於民行人路權促進會', 'https://www.visionzero.tw/'],
+    ['台灣河溪網協會', 'https://www.twrna.org/'],
+    ['台灣身心障礙者自立生活聯盟', 'https://ciltw2018.blogspot.com/'],
+  ];
+  const ICON = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3 H13 V10 M13 3 L3 13" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  document.querySelectorAll('[data-grid]').forEach((grid) => {
+    grid.innerHTML = ORGS.map(([name, url]) =>
+      `<a class="tile" href="${url}" target="_blank" rel="noreferrer">${name}${ICON}</a>`
+    ).join('');
+  });
+  document.querySelectorAll('input[name="h"]').forEach((r) => {
+    r.addEventListener('change', () => {
+      const root = document.documentElement.style;
+      if (r.value === 'auto') { root.setProperty('--ratio', 'auto'); root.setProperty('--pad-y', '20px'); }
+      else { root.setProperty('--ratio', r.value); root.setProperty('--pad-y', '16px'); }
+    });
+  });
+  document.getElementById('hover').addEventListener('change', (e) => {
+    document.body.classList.toggle('hover-on', e.target.checked);
+  });
+  document.getElementById('press').addEventListener('change', (e) => {
+    document.body.classList.toggle('press-on', e.target.checked);
+  });
+</script>

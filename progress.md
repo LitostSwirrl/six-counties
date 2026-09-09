@@ -362,3 +362,20 @@ Slogan:「面對城市的下一個十年，六都市長準備好了嗎？」
 - 驗證（2026-09-08）：`tsc --noEmit` 通過；vitest 11 檔 69 項通過（site.test 改為三段斷行、五處新文案與最新消息區段；新增 News.test）；`npm run build` 通過；`git diff --check` 通過。chrome-devtools 被既有瀏覽器占住，改用 Playwright 檢查本機 dev server：1400px 六都現況三格、風險表、訴求區三段、關於我們、加入連署所有指定行都各占一行；導覽列七個連結加「加入連署」在 1024px 剛好放得下（兩側各 13px）；發起團體 3×3 方格 264×211px；最新消息一張卡片置中；768px 只剩五大訴求既有的兩個長標題折行；390px 無水平溢出、方格兩欄、卡片滿版。右上角「加入連署」在 390px 折成兩行是公開網站既有現象（按鈕高 70px），本次未動。
 - 狀態：尚未提交、推送或部署。
 - 發布：提交 `411a025` 已推送至 `main`，GitHub Actions 工作流程 `34207133381` 建置與部署成功；公開網址 `?rev=411a025` 的 JS 檔名與本機 dist 一致，內含最新消息、連署影響力、新文案與方格樣式，縮圖 webp 回 200。
+
+## Phase 31 發起團體方格按鈕化比較（2026-09-08）
+- 目標：Joseph 希望關於我們區的九個團體方格再矮一點、看起來更像按鈕（hover 整格或左緣強調；風格走平面與現行之間）。這次只做比較原型，未改網站。
+- 產出：`design/org-tiles/comparison.html`（獨立頁面，沿用網站色碼與 Noto Sans TC，九個團體在 768px 容器三欄排版），已發布為 artifact https://claude.ai/code/artifact/7024046e-b6ba-49d2-b8ff-f6c5157dc835。頁面上方可切換高度（5:4 現行、3:2、2:1、依內容）與「固定顯示每組第一格 hover」。`comparison-3x2-hover.png` 為 3:2 加固定 hover 的全頁截圖。
+- 四個版本：A 整卡淡紫填底 hover（白卡、圓角 12px）；B 左緣 4px 邊條 hover 轉紫（圓角 8px）；C 靜態即淡紫底紫字的平面按鈕，hover 加深（無框、圓角 10px）；D 紫框紫字，hover 反白成深紫底白字。
+- 我的建議：A 或 B 搭 3:2（248×165，較現行 211 矮約 46px）。C／D 靜態就是紫色，會和右上「加入連署」按鈕與下方連署團體橫條搶視覺。2:1 時十三字團體名折成兩行後上下只剩約 20px，偏擠。
+- 觀察：「台灣氣候行動網絡研究中心」在 18px 三欄下折成「…研究中／心」，最後一字落單，線上版同樣如此；若要處理可縮字級到 17px 或用 `text-wrap: balance`，待定案時一併決定。
+- 選定後改動範圍：`OrgGrid.tsx` 的 TILE_BASE 與 hover class；B 版需加左邊框 class；C／D 改字色與字重。
+- Joseph 追問 D 能不能更有按鈕立體感。比較頁加了 D1 硬陰影偏移（右下 4px 實色陰影，按下貼平反白）、D2 底邊加厚成鍵帽（按下下沉 3.5px）、D3 柔陰影浮起（hover 上浮、按下內凹）、D4 內光加漸層（擬物上限參考），另加「固定顯示第二格按下狀態」開關；tile 的 transition 補上 box-shadow 與 border-width。artifact 已重新發布，網址不變。
+- 立體版本的取捨：D1 最貼合「平面但有立體感」，硬陰影和網站現有的平面插畫語彙相容，但九宮格右欄與底列會多出 4px 要留邊；D2 靜態最像實體按鈕；D3 是一般網頁常見做法，柔影會和米色底糊在一起；D4 已經是擬物，Joseph 之前說不要那麼擬物，放進來只是給上限。
+- 2026-09-09 Joseph 選 D2（底邊加厚的鍵帽式按鈕）。高度他沒指定，採之前建議的 3:2。
+- 實作：`OrgGrid.tsx` 的 TILE_BASE 改為 aspect 3:2、圓角 10px、紫中框 1.5px、底邊 5px、白底、紫深字、字重 500；方格版連結的互動 class 獨立成 TILE_LINK（hover 框轉紫深、底染紫深 7%；active 底邊縮回 1.5px、下沉 3.5px、整格反白），橫條版的 hover class 獨立成 ROW_LINK 維持原樣；方格版外連箭頭不透明度從 45% 提到 60%。transition 用 transition-all 150ms，reduced-motion 關閉。
+- 驗證（2026-09-09）：`tsc --noEmit` 通過；vitest 11 檔 69 項通過；`npm run build` 通過；`git diff --check` 通過。dev server 1400px：方格 264×176（原 211）、圓角 10px、上框 1.5px、底框 5px、框色 purple-mid、白底、字色 purple-deep、字重 500；hover 後底色為 purple-deep 7%、框色 purple-deep；按下時底框 1.5px、translate 3.5px、底色 purple-deep、白字。390px：兩欄、163×109、無水平溢出。連署團體橫條未動。截圖 `design/org-tiles/live-d2-active.png`（第一格按下）與 `live-d2-rest.png`。
+- Joseph 確認 3:2；長名稱先說縮到 17px，隨即改為指定斷行點：「台灣氣候行動網絡／研究中心」「台灣身心障礙者／自立生活聯盟」。既然斷行點固定，字級維持原本的 text-base／md:text-lg（17／19px），沒有縮。
+- 斷行做法：`Org` 與 `OrgGridItem` 加選填的 `lines` 字串陣列，`orgs.ts` 只在這兩個團體填；OrgGrid 用 `label()` 把各行以 `<br>` 接起來，`name` 仍是完整名稱（key 與連署區都不受影響）。`<br>` 加 `hidden sm:inline`：390px 兩欄格寬 163px，「台灣氣候行動網絡」八個字放不下會變三行，所以手機維持自然折行，sm 以上才強制斷行。
+- 驗證（2026-09-09）：`tsc --noEmit`、vitest 11 檔 69 項、`npm run build`、`git diff --check` 通過。dev server：1400px 兩個長名稱各兩行且斷在指定位置，其餘單行，方格 264×176；640px 斷行生效；390px 斷行隱藏、自然折成兩行、兩欄 163×109、無水平溢出。hover 與 active 樣式與前次相同。截圖 `design/org-tiles/live-d2-rest.png`、`live-d2-active.png`、`live-d2-mobile.png`。
+- 插曲：改字級時用 `git checkout` 還原檔案，把整個 D2 改動一起還原了，已重新套用並重跑全部檢查。
