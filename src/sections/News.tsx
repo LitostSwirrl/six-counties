@@ -135,7 +135,7 @@ export function NewsCards({ items }: { items: NewsItem[] }) {
   );
 }
 
-export function NewsBody({ state, items }: { state: SheetDataState; items: NewsItem[] }) {
+export function NewsBody({ state, items, retry }: { state: SheetDataState; items: NewsItem[]; retry: () => void }) {
   if (state === 'loading') {
     return (
       <ul aria-busy="true" className="mt-12 flex flex-wrap justify-center gap-6">
@@ -147,19 +147,35 @@ export function NewsBody({ state, items }: { state: SheetDataState; items: NewsI
       </ul>
     );
   }
-  if (state === 'error') return <NewsCards items={NEWS} />;
+  if (state === 'error') {
+    return (
+      <>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm text-ink/70">
+          <span>試算表讀取失敗，以下是網站內建的消息。</span>
+          <button
+            type="button"
+            onClick={retry}
+            className="rounded-full border border-ink/12 bg-white px-4 py-1.5 font-bold text-purple-deep transition-colors hover:border-purple-mid"
+          >
+            重新載入
+          </button>
+        </div>
+        <NewsCards items={NEWS} />
+      </>
+    );
+  }
   return <NewsCards items={items} />;
 }
 
 export default function News() {
-  const { state, data } = useSheetData(newsFetcher());
+  const { state, data, retry } = useSheetData(newsFetcher());
   return (
     <section id={SITE.sections.news.id} className="bg-white/40 py-24">
       <div className="mx-auto max-w-5xl px-6">
         <h2 className="text-center font-display text-3xl tracking-[0.2em] text-ink md:text-4xl">
           {SITE.sections.news.title}
         </h2>
-        <NewsBody state={state} items={data} />
+        <NewsBody state={state} items={data} retry={retry} />
       </div>
     </section>
   );

@@ -13,14 +13,16 @@ describe('最新消息', () => {
   });
 
   it('讀取中顯示骨架卡，不顯示任何消息', () => {
-    const markup = renderToStaticMarkup(<NewsBody state="loading" items={[]} />);
+    const markup = renderToStaticMarkup(<NewsBody state="loading" items={[]} retry={() => undefined} />);
     expect(markup).toContain('aria-busy="true"');
     expect(markup).toContain('animate-pulse');
     expect(markup).not.toContain('<a ');
   });
 
-  it('試算表讀取失敗時退回網站內建的新聞稿', () => {
-    const markup = renderToStaticMarkup(<NewsBody state="error" items={[]} />);
+  it('試算表讀取失敗時，卡片上方顯示讀取失敗提示與重新載入鈕，並退回網站內建的新聞稿', () => {
+    const markup = renderToStaticMarkup(<NewsBody state="error" items={[]} retry={() => undefined} />);
+    expect(markup).toContain('試算表讀取失敗，以下是網站內建的消息。');
+    expect(markup).toContain('>重新載入<');
     expect(NEWS.length).toBeGreaterThan(0);
     expect(markup).toContain('href="https://gcaa.org.tw/16551/"');
     expect(markup).toContain('src="/six-counties/images/news/20260812-press-conference.webp"');
@@ -31,14 +33,14 @@ describe('最新消息', () => {
   });
 
   it('試算表沒有可顯示的列時顯示尚無消息', () => {
-    const markup = renderToStaticMarkup(<NewsBody state="empty" items={[]} />);
+    const markup = renderToStaticMarkup(<NewsBody state="empty" items={[]} retry={() => undefined} />);
     expect(markup).toContain('目前還沒有消息');
     expect(markup).not.toContain('<a ');
   });
 
   it('讀取成功時顯示試算表的消息，每則是一張含縮圖、類別、日期、標題與摘要的卡片', () => {
     const items = mockNews(2);
-    const markup = renderToStaticMarkup(<NewsBody state="ready" items={items} />);
+    const markup = renderToStaticMarkup(<NewsBody state="ready" items={items} retry={() => undefined} />);
     expect(markup).toContain(`href="${items[0].href}"`);
     expect(markup).toContain(`dateTime="${items[0].date}"`);
     expect(markup).toContain(items[0].title);
