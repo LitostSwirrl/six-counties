@@ -379,3 +379,4 @@ Slogan:「面對城市的下一個十年，六都市長準備好了嗎？」
 - 斷行做法：`Org` 與 `OrgGridItem` 加選填的 `lines` 字串陣列，`orgs.ts` 只在這兩個團體填；OrgGrid 用 `label()` 把各行以 `<br>` 接起來，`name` 仍是完整名稱（key 與連署區都不受影響）。`<br>` 加 `hidden sm:inline`：390px 兩欄格寬 163px，「台灣氣候行動網絡」八個字放不下會變三行，所以手機維持自然折行，sm 以上才強制斷行。
 - 驗證（2026-09-09）：`tsc --noEmit`、vitest 11 檔 69 項、`npm run build`、`git diff --check` 通過。dev server：1400px 兩個長名稱各兩行且斷在指定位置，其餘單行，方格 264×176；640px 斷行生效；390px 斷行隱藏、自然折成兩行、兩欄 163×109、無水平溢出。hover 與 active 樣式與前次相同。截圖 `design/org-tiles/live-d2-rest.png`、`live-d2-active.png`、`live-d2-mobile.png`。
 - 插曲：改字級時用 `git checkout` 還原檔案，把整個 D2 改動一起還原了，已重新套用並重跑全部檢查。
+- 發布：提交 `d36fdd6` 已推送至 `main`，GitHub Actions 工作流程 `34299721689` 成功（2026-09-09 01:34 UTC）。公開網址 `?rev=d36fdd6` 的 JS 檔名 `index-IF4uAQQa.js` 與本機一致且逐位元相同，內含 `lines:["台灣氣候行動網絡","研究中心"]`、`lines:["台灣身心障礙者","自立生活聯盟"]`；CSS 含 aspect 3/2、border-b 5px、active translate-y 3.5px。
