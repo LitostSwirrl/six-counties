@@ -394,3 +394,15 @@ Slogan:「面對城市的下一個十年，六都市長準備好了嗎？」
 - 發布：提交 `3750cfa` 已推送至 `main`，GitHub Actions 工作流程 `34300740279` 成功（2026-09-09 01:50 UTC，這次不到三分鐘）。公開網址 `?rev=3750cfa` 的 JS 檔名 `index-KxEJeqXM.js` 與本機 dist 一致且 md5 相同（b2c6930b…），不含「測試標題」；HTML 含三個 favicon／apple-touch-icon link 且路徑正確；favicon 三檔與 signing-hand.png 皆回 200。
 - Joseph 看過本機預覽後要求無圖佈位改成純灰色塊，不放類別字樣。placeholder 改為 `bg-ink/[0.07]` 的空 div，測試同步改。
 - 發布：提交 `77b860c` 已推送至 `main`，GitHub Actions 工作流程 `34301191024` 成功。公開網址 `?rev=77b860c` 的 JS 檔名 `index-D2Fm1wj0.js` 與本機 dist 一致且 md5 相同（24201b5f…）；CSS 含灰色佈位的 7% 不透明度規則。
+
+## Phase 33 最新消息改讀 Google 試算表（2026-09-09）
+- 目標：Joseph 2026-09-09 提出：最新消息區的資料改由協作者在共用 Google 試算表填寫（含圖片網址），讓試算表成為這一區的「後台」。
+- 決策（Joseph 已確認）：(1) 放在既有「候選人簽署」試算表裡新增工作表「最新消息」，沿用同一個 SHEET_ID 與 gviz 讀法，不另建試算表。(2) 圖片只接受可直接顯示的公開圖片網址，不做 Google Drive 分享連結轉換（Drive 圖片直連不可靠）。已用 curl 驗證 gcaa.org.tw 的 wp-content 圖片帶 Referer 仍回 200，協作者可直接貼文章的特色圖片網址。(3) 加「顯示」勾選欄，未勾選的列不上站，方便先打草稿。(4) 試算表讀取失敗時退回網站內建的 8 月 12 日新聞稿那一則（`src/content/news.ts` 的 NEWS 保留當備援，webp 縮圖也保留）。
+- gviz 陷阱：工作表名稱不存在時 gviz 不會報錯，而是回第一個工作表（已用 `sheet=NOPE` 驗證回的是候選人欄位）。所以對應函式要檢查標題列第一格是「日期」，不是就當作讀取失敗，走備援。
+- 欄位（8 欄）：日期、類別、標題、摘要、連結、圖片網址、圖片說明、顯示。日期在 gviz 會依儲存格格式回字串（如 2026/8/12），程式統一轉成 YYYY-MM-DD；列依日期新到舊排序，協作者不必自己排。
+- 做法：`src/data/sheets.ts` 的 fetchSheet 改為匯出；新增 `src/data/newsSheet.ts`（mapNewsRows、fetchNews）；News 區改用 useSheetData，loading 顯示骨架卡、error 退回 NEWS、empty 維持「目前還沒有消息」。dev 的 `?news=N` 假資料照舊。
+- 驗證（2026-09-09）：TDD，先寫 `newsSheet.test.ts`（6 項：日期正規化、標題列守衛、對應、顯示過濾、排序、類別預設）與 News.test 四個狀態測試看它失敗，再實作。`tsc --noEmit` 通過；vitest 12 檔 80 項通過；`npm run build` 通過；`git diff --check` 通過。Playwright 檢查本機 dev server：工作表尚未建立時 gviz 回候選人資料、守衛拋錯、區塊在載入後顯示內建的 8 月 12 日那一則（1 張卡、webp 縮圖、無 aria-busy 殘留）；`?news=6` 假資料仍為輪播 6 張。
+- 阻塞：gws 的 OAuth token 失效（invalid_grant / invalid_rapt），建工作表的指令需要 Joseph 重新登入後執行。建表腳本已備在 scratchpad `setup-news-sheet.sh`：新增工作表「最新消息」（凍結標題列、8 欄）、寫入標題列與 8 月 12 日那一則（圖片改用 gcaa.org.tw 特色圖片網址）、A 欄日期格式 yyyy/mm/dd、B 欄下拉三種類別、H 欄勾選框、C／D 欄自動換行、欄寬。
+- code-reviewer 審查（2026-09-09）找到一個關鍵錯誤：gviz 偵測到標題列時會把它移到 `table.cols` 的 label，`rows` 裡沒有標題（對照實際回應：cols 是縣市／姓名…，rows[0] 已是資料）。原本用 rows[0][0] === '日期' 當守衛，真工作表建好後會永遠判失敗、永遠退回內建那一則；先前 `sheet=NOPE` 測試過的原因也是錯的（rows[0][0] 是「臺北市」這筆資料，不是標題）。修法：`gviz.ts` 新增 `parseGvizTable` 回 `{cols, rows}`，`parseGviz` 只包一層回 rows；`newsSheet.ts` 標題在 cols 或在 rows[0] 都認得（工作表只有標題列時 gviz 不會偵測標題），兩者都不是才拋錯。
+- 同批修正：(1) 日期改從 gviz 的 `Date(年,月,日)` 原值轉 ISO，不再依賴儲存格顯示格式（協作者改格式不會影響排序）。副作用：候選人簽署的「簽署日期」若是真正的日期儲存格，之前拿到的是顯示字串（如 2026/09/15）而 formatSignedDate 對不上就原樣顯示，現在會拿到 ISO 並顯示成「2026 年 9 月 15 日」，這是 formatSignedDate 原本的設計方向。(2) 連結必須 http 開頭才顯示，避免空連結、重複 key 與 javascript: 網址。(3) 測試改用 `parseGvizTable` 解析仿真 gviz 回應，不再手工把標題塞進 rows；News.test 補一項渲染 `<News />` 本體。
+- 審查者另建議在退回內建消息時顯示「讀取失敗」提示與重試鈕，好讓維護者察覺；Joseph 已選「退回目前只有一則新聞稿的狀態」，先不加，列為待確認。

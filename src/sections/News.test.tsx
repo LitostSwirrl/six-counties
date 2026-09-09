@@ -2,19 +2,49 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import { NEWS } from '../content/news';
 import { mockNews } from '../content/newsMock';
-import News, { NewsCards } from './News';
+import News, { NewsBody, NewsCards } from './News';
 
 describe('最新消息', () => {
-  it('每則消息是一張含縮圖、類別、日期、標題與摘要的卡片，連到外部文章', () => {
+  it('區塊帶標題與錨點，首次繪製時是讀取中', () => {
     const markup = renderToStaticMarkup(<News />);
-    expect(NEWS.length).toBeGreaterThan(0);
+    expect(markup).toContain('id="news"');
     expect(markup).toContain('最新消息');
+    expect(markup).toContain('aria-busy="true"');
+  });
+
+  it('讀取中顯示骨架卡，不顯示任何消息', () => {
+    const markup = renderToStaticMarkup(<NewsBody state="loading" items={[]} />);
+    expect(markup).toContain('aria-busy="true"');
+    expect(markup).toContain('animate-pulse');
+    expect(markup).not.toContain('<a ');
+  });
+
+  it('試算表讀取失敗時退回網站內建的新聞稿', () => {
+    const markup = renderToStaticMarkup(<NewsBody state="error" items={[]} />);
+    expect(NEWS.length).toBeGreaterThan(0);
     expect(markup).toContain('href="https://gcaa.org.tw/16551/"');
     expect(markup).toContain('src="/six-counties/images/news/20260812-press-conference.webp"');
     expect(markup).toContain('新聞稿');
     expect(markup).toContain('dateTime="2026-08-12"');
     expect(markup).toContain('【聯合新聞稿】六都市長候選人永續韌性城市政策承諾訴求發布');
     expect(markup.match(/<li/g)).toHaveLength(NEWS.length);
+  });
+
+  it('試算表沒有可顯示的列時顯示尚無消息', () => {
+    const markup = renderToStaticMarkup(<NewsBody state="empty" items={[]} />);
+    expect(markup).toContain('目前還沒有消息');
+    expect(markup).not.toContain('<a ');
+  });
+
+  it('讀取成功時顯示試算表的消息，每則是一張含縮圖、類別、日期、標題與摘要的卡片', () => {
+    const items = mockNews(2);
+    const markup = renderToStaticMarkup(<NewsBody state="ready" items={items} />);
+    expect(markup).toContain(`href="${items[0].href}"`);
+    expect(markup).toContain(`dateTime="${items[0].date}"`);
+    expect(markup).toContain(items[0].title);
+    expect(markup).toContain(items[0].summary);
+    expect(markup).toContain('<img');
+    expect(markup.match(/<li/g)).toHaveLength(2);
   });
 
   it('三則以內排成格狀，沒有翻頁按鈕', () => {

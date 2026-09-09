@@ -1,5 +1,5 @@
 import { SHEET_ID, gvizUrl } from './config';
-import { parseGviz } from './gviz';
+import { parseGvizTable, type GvizTable } from './gviz';
 import { DEMO_CANDIDATES } from './demo';
 import type { Candidate, SignStatus } from './types';
 
@@ -54,10 +54,14 @@ export function mapCandidateRows(rows: string[][]): Candidate[] {
   return body.map(mapCandidateRow).filter((c) => c.name !== '');
 }
 
-async function fetchSheet(sheetName: string): Promise<string[][]> {
+export async function fetchSheetTable(sheetName: string): Promise<GvizTable> {
   const res = await fetch(gvizUrl(sheetName));
   if (!res.ok) throw new Error(`讀取「${sheetName}」失敗（HTTP ${res.status}）`);
-  return parseGviz(await res.text());
+  return parseGvizTable(await res.text());
+}
+
+async function fetchSheet(sheetName: string): Promise<string[][]> {
+  return (await fetchSheetTable(sheetName)).rows;
 }
 
 export async function fetchCandidates(): Promise<Candidate[]> {

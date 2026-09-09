@@ -2,16 +2,33 @@ import { useEffect, useRef, useState } from 'react';
 import { NEWS, type NewsItem } from '../content/news';
 import { mockNews } from '../content/newsMock';
 import { SITE } from '../content/site';
+import { fetchNews } from '../data/newsSheet';
+import { useSheetData, type SheetDataState } from '../hooks/useSheetData';
 
 const GRID_MAX = 3;
 const CARD_WIDTH = 'w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]';
 
-function newsItems(): NewsItem[] {
+function newsFetcher(): () => Promise<NewsItem[]> {
   if (import.meta.env.DEV && typeof window !== 'undefined') {
     const count = Number(new URLSearchParams(window.location.search).get('news'));
-    if (count > 0) return mockNews(count);
+    if (count > 0) return () => Promise.resolve(mockNews(count));
   }
-  return NEWS;
+  return fetchNews;
+}
+
+function SkeletonCard() {
+  return (
+    <div className="animate-pulse overflow-hidden rounded-3xl border border-ink/10 bg-white/60 motion-reduce:animate-none">
+      <div className="aspect-[4/3] w-full bg-ink/10" />
+      <div className="px-5 pt-4 pb-5">
+        <div className="h-4 w-24 rounded bg-ink/10" />
+        <div className="mt-4 h-5 w-full rounded bg-ink/10" />
+        <div className="mt-2 h-5 w-3/4 rounded bg-ink/10" />
+        <div className="mt-4 h-3 w-full rounded bg-ink/10" />
+        <div className="mt-2 h-3 w-5/6 rounded bg-ink/10" />
+      </div>
+    </div>
+  );
 }
 
 function NewsCard({ item }: { item: NewsItem }) {
@@ -118,14 +135,31 @@ export function NewsCards({ items }: { items: NewsItem[] }) {
   );
 }
 
+export function NewsBody({ state, items }: { state: SheetDataState; items: NewsItem[] }) {
+  if (state === 'loading') {
+    return (
+      <ul aria-busy="true" className="mt-12 flex flex-wrap justify-center gap-6">
+        {Array.from({ length: GRID_MAX }, (_, i) => (
+          <li key={i} className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
+            <SkeletonCard />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  if (state === 'error') return <NewsCards items={NEWS} />;
+  return <NewsCards items={items} />;
+}
+
 export default function News() {
+  const { state, data } = useSheetData(newsFetcher());
   return (
     <section id={SITE.sections.news.id} className="bg-white/40 py-24">
       <div className="mx-auto max-w-5xl px-6">
         <h2 className="text-center font-display text-3xl tracking-[0.2em] text-ink md:text-4xl">
           {SITE.sections.news.title}
         </h2>
-        <NewsCards items={newsItems()} />
+        <NewsBody state={state} items={data} />
       </div>
     </section>
   );
