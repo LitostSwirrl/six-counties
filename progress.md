@@ -408,3 +408,6 @@ Slogan:「面對城市的下一個十年，六都市長準備好了嗎？」
 - 審查者另建議在退回內建消息時顯示「讀取失敗」提示與重試鈕，好讓維護者察覺；Joseph 已選「退回目前只有一則新聞稿的狀態」，先不加，列為待確認。
 - 發布：提交 `fb382c7` 已推送至 `main`，GitHub Actions 工作流程 `34303385853` 成功。公開網址 `?rev=fb382c7` 的 JS 檔名 `index-DZQFmbvu.js` 與本機 dist 一致且 md5 相同（c1afd6da…）。工作表尚未建立，公開站目前走備援、顯示內建那一則，與上線前畫面相同。
 - 待辦：Joseph 執行 `! gws auth login` 後，跑 scratchpad 的 `setup-news-sheet.sh` 建工作表，再用 curl 打 gviz `sheet=最新消息` 確認 cols 標籤是「日期…」，並到公開站確認卡片改吃試算表（縮圖網址應變成 gcaa.org.tw 的 jpg）。
+- Joseph 追加：要加「讀取失敗」提示（採納審查者建議）。TDD：News.test 先改 error 狀態要有「試算表讀取失敗，以下是網站內建的消息。」與「重新載入」鈕，NewsBody 加 retry prop，News 把 useSheetData 的 retry 傳下去。提交 `e8a4029`，GitHub Actions `34304831318` 成功，公開網址 JS `index-Ddce4rgG.js` 與本機 dist md5 相同（51a132fc…）。
+- 工作表建立與驗證（2026-09-09）：Joseph 重新登入 gws 後跑 `setup-news-sheet.sh`，新增工作表「最新消息」（sheetId 398357285）：8 欄標題列加粗淡紫底並凍結、A 欄日期格式、B 欄下拉三類別、H 欄勾選框、C／D 欄自動換行、欄寬；第 2 列寫入 8 月 12 日聯合新聞稿，縮圖改用 gcaa.org.tw 的特色圖片網址。gviz 驗證：cols label 為 日期…顯示，rows[0] A 欄 `Date(2026,7,12)`、H 欄 true（標題列確實被收進 cols，證實審查者的判斷）。公開站 DOM：卡片連結 gcaa.org.tw/16551、img src 為 gcaa.org.tw 的 jpg、捲到區塊後 naturalWidth 1920（從 github.io 頁面直連可載入）、alt 與日期正確、無讀取失敗提示。草稿測試：第 3 列填一筆 顯示=FALSE，gviz 回 false（程式端過濾有單元測試），測完已清掉。試算表裡另有建表時就存在的空白「工作表1」，未動。
+- 待辦：協作者填表說明在 docs/apps-script-deploy.md「最新消息工作表」，可直接轉給同事；請同事用 GCAA 帳號被加為該試算表編輯者。

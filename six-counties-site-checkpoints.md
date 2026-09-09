@@ -15,7 +15,7 @@
 - **Phase 5 至 Phase 20 -- 逐次修訂與公開部署**：完成（2026-08-27 至 2026-09-01），逐階段紀錄見 progress.md
 - **Phase 21 -- 全站審查修正批次（Joseph 2026-09-03 整批意見）＋連署資料改接表單回覆試算表**：完成（2026-09-03），提交 `3a60ff1` 已公開部署並驗證。Apps Script 與候選人簽署試算表均已接上。決策與驗證見 progress.md「Phase 21」。下一階段範圍未定（等同事填候選人資料或 Joseph 下一輪意見），尚未產 resume prompt
 - **Phase 22 至 Phase 32 -- 逐次修訂與公開部署**：完成（2026-09-03 至 2026-09-09），逐階段紀錄見 progress.md
-- **Phase 33 -- 最新消息改讀 Google 試算表**：程式完成並部署（2026-09-09，提交 `fb382c7`）；工作表「最新消息」尚未建立，卡在 gws OAuth 失效，續作 prompt 見下方「Phase 33 續作 Resume Prompt」
+- **Phase 33 -- 最新消息改讀 Google 試算表**：完成（2026-09-09）。程式部署 `fb382c7`、讀取失敗提示 `e8a4029`；工作表「最新消息」已建立並驗證公開站吃到試算表資料。下方「Phase 33 續作 Resume Prompt」已執行完畢、不需再用。下一階段範圍未定，尚未產 resume prompt
 
 ## Phase 5 Resume Prompt
 
