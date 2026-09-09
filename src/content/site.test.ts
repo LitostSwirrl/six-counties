@@ -65,7 +65,7 @@ describe('網站固定文案與連署入口', () => {
     expect(SITE.aboutLines[0]).toContain('本次行動由九個公民團體共同發起');
     expect(SITE.joinLines).toHaveLength(5);
     expect(SITE.joinLines[0]).toBe('你期待生活在一座什麼樣的城市？');
-    expect(SITE.joinCta).toBe('連署影響力');
+    expect(SITE.joinCta).toBe('加入連署');
   });
 
   it('最新消息區排在候選人承諾與關於我們之間', () => {
