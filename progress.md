@@ -393,3 +393,4 @@ Slogan:「面對城市的下一個十年，六都市長準備好了嗎？」
 - 狀態：尚未提交、推送或部署。
 - 發布：提交 `3750cfa` 已推送至 `main`，GitHub Actions 工作流程 `34300740279` 成功（2026-09-09 01:50 UTC，這次不到三分鐘）。公開網址 `?rev=3750cfa` 的 JS 檔名 `index-KxEJeqXM.js` 與本機 dist 一致且 md5 相同（b2c6930b…），不含「測試標題」；HTML 含三個 favicon／apple-touch-icon link 且路徑正確；favicon 三檔與 signing-hand.png 皆回 200。
 - Joseph 看過本機預覽後要求無圖佈位改成純灰色塊，不放類別字樣。placeholder 改為 `bg-ink/[0.07]` 的空 div，測試同步改。
+- 發布：提交 `77b860c` 已推送至 `main`，GitHub Actions 工作流程 `34301191024` 成功。公開網址 `?rev=77b860c` 的 JS 檔名 `index-D2Fm1wj0.js` 與本機 dist 一致且 md5 相同（24201b5f…）；CSS 含灰色佈位的 7% 不透明度規則。
